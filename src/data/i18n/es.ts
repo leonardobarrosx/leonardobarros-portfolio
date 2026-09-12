@@ -7,8 +7,10 @@ export const es: Strings = {
     statement: ["Diez años construyendo software que ", "funciona", " y se ve como debe. Web, móvil, datos y el pegamento entre ellos."],
     location: "João Pessoa, Brasil",
   },
-  nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", contact: "Contacto", menu: "Menú", close: "Cerrar", motion: "Animaciones", on: "on", off: "off", language: "Idioma" },
-  labels: { about: "Sobre mí", services: "Qué hago", work: "Trabajos seleccionados", experience: "Experiencia", stack: "Stack", contact: "Contacto", words: "Lo que dicen", certs: "Certificaciones", orgs: "Dónde he trabajado" },
+  nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", contact: "Contacto", menu: "Menú", close: "Cerrar", motion: "Animaciones", on: "on", off: "off", language: "Idioma", theme: "Tema" },
+  themes: { violet: "Violeta", red: "Rojo", orange: "Naranja", amber: "Ámbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
+  labels: { about: "Sobre mí", services: "Qué hago", work: "Trabajos seleccionados", experience: "Experiencia", stack: "Stack", contact: "Contacto", words: "Lo que dicen", certs: "Certificaciones", orgs: "Dónde he trabajado", toolbox: "La caja de herramientas completa" },
+  toolbox: { languages: "Lenguajes", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Datos & almacenamiento", messaging: "Mensajería & integraciones", testing: "Testing & calidad", security: "Seguridad", observability: "Observabilidad & operaciones", performance: "Rendimiento & caché", accessibility: "Accesibilidad & i18n", automation: "Automatización & IA", reporting: "Datos, BI & reportes", validation: "Validación & formularios", cloud: "Cloud & infraestructura", design: "Diseño & motion", methods: "Métodos & herramientas" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Datos", "データ", "Automatización", "自動化"],
   about: {
     quote: "Me importa cómo se ven las cosas y cómo se sienten al usarlas, no solo si funcionan.",

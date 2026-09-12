@@ -7,8 +7,10 @@ export const ja: Strings = {
     statement: ["10年間、", "ちゃんと動いて", "見た目も良いソフトウェアを作ってきました。Web、モバイル、データ、そしてそれらをつなぐもの。"],
     location: "ジョアン・ペソア、ブラジル",
   },
-  nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語" },
-  labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", orgs: "これまでの所属" },
+  nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語", theme: "テーマ" },
+  themes: { violet: "紫", red: "赤", orange: "橙", amber: "琥珀", green: "緑", teal: "青緑", blue: "青", pink: "桃", ink: "墨" },
+  labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", orgs: "これまでの所属", toolbox: "ツールボックスのすべて" },
+  toolbox: { languages: "言語", frontend: "フロントエンド", mobile: "モバイル", backend: "バックエンド & API", data: "データ & ストレージ", messaging: "メッセージング & 連携", testing: "テスト & 品質", security: "セキュリティ", observability: "可観測性 & 運用", performance: "パフォーマンス & キャッシュ", accessibility: "アクセシビリティ & i18n", automation: "自動化 & AI", reporting: "データ・BI・レポート", validation: "バリデーション & フォーム", cloud: "クラウド & インフラ", design: "デザイン & モーション", methods: "手法 & ツール" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "動くかどうかだけでなく、どう見えて、どう感じられるかを大切にしています。",

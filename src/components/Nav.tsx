@@ -4,6 +4,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
 import { decode } from "../lib/decode";
 import { LangMenu } from "./LangMenu";
+import { ThemeMenu } from "./ThemeMenu";
 
 function localTime() {
   return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: shared.timezone }).format(new Date());
@@ -102,6 +103,7 @@ export function Nav({ ready }: { ready: boolean }) {
           <div className="nav__right">
             <span className="mono nav__clock">JPA {time}</span>
             <LangMenu />
+            <ThemeMenu />
             <div className="pill seg">
               <button onClick={toggleMotion} aria-pressed={motionOn} title={t.nav.motion}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
             </div>
@@ -124,6 +126,7 @@ export function Nav({ ready }: { ready: boolean }) {
         </nav>
         <div className="menu__foot mono">
           <LangMenu inline />
+          <ThemeMenu inline />
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>
         </div>

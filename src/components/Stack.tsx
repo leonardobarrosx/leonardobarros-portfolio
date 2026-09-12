@@ -3,6 +3,7 @@ import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import { shared } from "../data/content";
+import { toolbox } from "../data/toolbox";
 import cisco from "../assets/certs/cisco.png";
 import google from "../assets/certs/google.png";
 import connect from "../assets/certs/connect.svg";
@@ -25,6 +26,19 @@ export function Stack() {
         <div className="stack__wall display" data-reveal>
           {shared.stack.map((s) => <span className="stack__word" key={s}>{s}</span>)}
         </div>
+        <h3 className="mono stack__certs-title" data-reveal>{t.labelsExtra.toolbox}</h3>
+        <dl className="toolbox">
+          {toolbox.map((g, i) => (
+            <div className="toolbox__row" key={g.id} data-reveal data-delay={Math.min(i, 3) * 0.04}>
+              <dt>
+                <span className="mono toolbox__n">{String(i + 1).padStart(2, "0")}</span>
+                <b>{t.toolbox[g.id]}</b>
+                <span className="jp toolbox__jp" aria-hidden="true">{g.jp}</span>
+              </dt>
+              <dd>{g.items.map((item) => <span className="tool" key={item}>{item}</span>)}</dd>
+            </div>
+          ))}
+        </dl>
         <h3 className="mono stack__certs-title" data-reveal>{t.labelsExtra.certs}</h3>
         <ul className="certs">
           {t.certs.map((c, i) => (

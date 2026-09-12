@@ -31,7 +31,7 @@ export const shared = {
   email: "xleonardobarros@gmail.com",
   linkedin: "https://www.linkedin.com/in/leonardobarrosx",
   github: "https://github.com/leonardobarrosx",
-  stack: ["React", "TypeScript", "Flutter", "Node.js", "Python", "Go", "C#", "Laravel", "Angular", "Vue", "Django", "PostgreSQL", "Oracle", "MongoDB", "Firebase", "Tailwind", "n8n", "Docker", "Figma", "GSAP"],
+  stack: ["React", "TypeScript", "Flutter", "Node.js", "Python", "Go", "C#", "Laravel", "Angular", "Vue", "Django", "Express", "PostgreSQL", "Oracle", "MongoDB", "Redis", "Firebase", "Supabase", "Tailwind", "n8n", "Docker", "Nginx", "GitHub Actions", "Jest", "Cypress", "Figma", "Illustrator", "GSAP"],
 };
 
 /** João Pessoa landmarks; decimal degrees rendered as DMS by the Landmarks component. */
@@ -102,6 +102,7 @@ export type Experience = (typeof xpBase)[XpId] & Strings["experience"][XpId];
 export interface Content {
   meta: Strings["meta"] & { roleJp: string; tagline: string; volume: string };
   nav: Strings["nav"];
+  themes: Strings["themes"];
   labels: Strings["labels"];
   marquee: string[];
   about: Strings["about"];
@@ -111,7 +112,8 @@ export interface Content {
   xp: Strings["xp"];
   experience: Experience[];
   orgsTitle: string;
-  labelsExtra: { words: string; certs: string };
+  labelsExtra: { words: string; certs: string; toolbox: string };
+  toolbox: Strings["toolbox"];
   testimonials: Strings["testimonials"];
   certs: { icon: "efset" | "cisco" | "google" | "connect"; id?: string; name: string; issuer: string; meta: string }[];
   credentials: string[];
@@ -122,6 +124,7 @@ function assemble(s: Strings): Content {
   return {
     meta: { ...s.meta, roleJp: shared.roleJp, tagline: shared.tagline, volume: shared.volume },
     nav: s.nav,
+    themes: s.themes,
     labels: s.labels,
     marquee: s.marquee,
     about: s.about,
@@ -131,7 +134,8 @@ function assemble(s: Strings): Content {
     xp: s.xp,
     experience: XP_ORDER.map((id) => ({ ...xpBase[id], ...s.experience[id] })),
     orgsTitle: s.labels.orgs,
-    labelsExtra: { words: s.labels.words, certs: s.labels.certs },
+    labelsExtra: { words: s.labels.words, certs: s.labels.certs, toolbox: s.labels.toolbox },
+    toolbox: s.toolbox,
     testimonials: s.testimonials,
     certs: certBase.map((c, i) => ({ ...c, ...s.certs[i] })),
     credentials: s.credentials,
