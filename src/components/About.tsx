@@ -5,6 +5,7 @@ import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import photo from "../assets/photo-cafe.jpg";
 import { DistortImage } from "./DistortImage";
+import { BrazilFlag } from "./BrazilFlag";
 
 export function About() {
   const { t } = usePrefs();
@@ -40,7 +41,7 @@ export function About() {
               {t.about.paragraphs.map((p, i) => <p key={i} data-split>{p}</p>)}
             </div>
             <ul className="about__facts mono">
-              {t.about.facts.map(([k, v], i) => <li key={k} data-reveal data-delay={i * 0.06}><span>{k}</span><span>{v}</span></li>)}
+              {t.about.facts.map(([k, v], i) => <li key={k} data-reveal data-delay={i * 0.06}><span>{k}</span><span className="fact">{v}{i === 0 && <BrazilFlag />}</span></li>)}
             </ul>
             <div className="about__values">
               <h3 className="mono about__values-title" data-reveal>{t.about.valuesTitle}</h3>

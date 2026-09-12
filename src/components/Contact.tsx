@@ -5,6 +5,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import { shared } from "../data/content";
+import { Landmarks } from "./Landmarks";
 
 export function Contact() {
   const { t } = usePrefs();
@@ -19,7 +20,7 @@ export function Contact() {
     if (!root.current || !motion.enabled) return;
     const ctx = gsap.context(() => {
       const chars = gsap.utils.toArray<HTMLElement>(".contact__title .line").flatMap((l) => new SplitText(l, { type: "chars", charsClass: "char" }).chars);
-      gsap.from(chars, { yPercent: 110, duration: 1.1, ease: "power4.out", stagger: 0.02, scrollTrigger: { trigger: ".contact__title", start: "top 82%", once: true } });
+      gsap.from(chars, { yPercent: 110, duration: 1.1, ease: "power4.out", stagger: 0.02, scrollTrigger: { trigger: ".contact__title", start: "top 82%", once: true }, onComplete: () => title.current?.classList.add("is-live") });
     }, root);
     return () => ctx.revert();
   }, [t]);
@@ -58,7 +59,7 @@ export function Contact() {
         </div>
         <footer className="footer mono">
           <span>© {year} {shared.name}</span>
-          <span>{t.meta.location} · {shared.coords}</span>
+          <Landmarks interval={6000} />
           <a href="#top" onClick={(e) => { e.preventDefault(); scrollToHash("#top"); }}>{t.contact.top} ↑</a>
         </footer>
       </div>

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { gsap } from "../lib/gsap";
-import { content, type Lang } from "../data/content";
+import { content, LANGS, type Lang } from "../data/content";
 
 /* Persisted preferences: language and motion. Read once, written on change. */
 const LS_LANG = "lb:lang";
@@ -18,10 +18,12 @@ const systemReduced = typeof window !== "undefined" && window.matchMedia("(prefe
 /** Module-level flag so non-React code (GSAP hooks) can check it at mount time. */
 export const motion = { enabled: !systemReduced && read(LS_MOTION) !== "off" };
 
+const CODES = LANGS.map((l) => l.code);
 function initialLang(): Lang {
-  const saved = read(LS_LANG);
-  if (saved === "en" || saved === "pt") return saved;
-  return navigator.language?.toLowerCase().startsWith("pt") ? "pt" : "en";
+  const saved = read(LS_LANG) as Lang | null;
+  if (saved && CODES.includes(saved)) return saved;
+  const nav = (navigator.language || "en").toLowerCase().slice(0, 2) as Lang;
+  return CODES.includes(nav) ? nav : "en";
 }
 
 interface Prefs {
@@ -38,7 +40,7 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [motionOn, setMotionOn] = useState(motion.enabled);
 
-  useEffect(() => { document.documentElement.lang = lang === "pt" ? "pt-BR" : "en"; }, [lang]);
+  useEffect(() => { document.documentElement.lang = LANGS.find((l) => l.code === lang)?.html ?? "en"; }, [lang]);
 
   const setLang = useCallback((l: Lang) => {
     if (l === lang) return;
