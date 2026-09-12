@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "../lib/gsap";
 import { decode } from "../lib/decode";
 import { LS_ASKED, motion, read, usePrefs, write } from "../state/prefs";
-import { LS_THEME } from "../data/themes";
 import { Swatches } from "./ThemeMenu";
 
 /**
@@ -17,12 +16,14 @@ export function Ask({ ready }: { ready: boolean }) {
   const question = useRef<HTMLParagraphElement>(null);
 
   // Show after the intro, once the visitor has started reading: a little scroll, or a few seconds.
+  // Never again after it was answered or skipped (or a theme was picked from the menu); `?ask` forces it.
   useEffect(() => {
-    if (!ready || read(LS_THEME) || read(LS_ASKED)) return;
+    const forced = new URLSearchParams(location.search).has("ask");
+    if (!ready || (read(LS_ASKED) && !forced)) return;
     let fired = false;
     const fire = () => { if (fired) return; fired = true; setShow(true); };
     const onScroll = () => { if (window.scrollY > 200) fire(); };
-    const timer = window.setTimeout(fire, 6500);
+    const timer = window.setTimeout(fire, 4500);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.clearTimeout(timer); window.removeEventListener("scroll", onScroll); };
   }, [ready]);
