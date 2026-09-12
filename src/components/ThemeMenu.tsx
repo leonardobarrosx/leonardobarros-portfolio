@@ -1,18 +1,21 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { THEMES } from "../data/themes";
+import { THEMES, type ThemeId } from "../data/themes";
 import { usePrefs } from "../state/prefs";
 
-function Swatches({ onPick }: { onPick?: () => void }) {
-  const { theme, setTheme, t } = usePrefs();
+/** The nine hues as dots. Hovering tries a theme on, clicking keeps it. */
+export function Swatches({ onPick, onHover, size }: { onPick?: (id: ThemeId) => void; onHover?: (id: ThemeId | null) => void; size?: "lg" }) {
+  const { theme, setTheme, previewTheme, t } = usePrefs();
+  const hover = (id: ThemeId | null) => { previewTheme(id); onHover?.(id); };
   return (
-    <div className="swatches" role="group" aria-label={t.nav.theme}>
+    <div className={`swatches ${size === "lg" ? "swatches--lg" : ""}`} role="group" aria-label={t.nav.theme} onPointerLeave={() => hover(null)}>
       {THEMES.map((th) => (
         <button
           key={th.id}
           type="button"
           className={`swatch ${th.id === theme ? "is-active" : ""}`}
           style={{ "--sw": th.tokens["--accent"], "--sw-2": th.tokens["--accent-light"] } as CSSProperties}
-          onClick={() => { setTheme(th.id); onPick?.(); }}
+          onPointerEnter={() => hover(th.id)}
+          onClick={() => { setTheme(th.id); onPick?.(th.id); }}
           aria-pressed={th.id === theme}
           aria-label={t.themes[th.id]}
           title={t.themes[th.id]}
@@ -29,6 +32,7 @@ function Swatches({ onPick }: { onPick?: () => void }) {
 export function ThemeMenu({ inline = false }: { inline?: boolean }) {
   const { theme, t } = usePrefs();
   const [open, setOpen] = useState(false);
+  const [hover, setHover] = useState<ThemeId | null>(null);
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,8 +47,8 @@ export function ThemeMenu({ inline = false }: { inline?: boolean }) {
   if (inline) {
     return (
       <div className="themes">
-        <span className="mono">{t.nav.theme} · {t.themes[theme]}</span>
-        <Swatches />
+        <span className="mono">{t.nav.theme} · {t.themes[hover ?? theme]}</span>
+        <Swatches onHover={setHover} />
       </div>
     );
   }
@@ -56,8 +60,8 @@ export function ThemeMenu({ inline = false }: { inline?: boolean }) {
       </button>
       {open && (
         <div className="thememenu__pop">
-          <Swatches onPick={() => setOpen(false)} />
-          <span className="mono thememenu__name">{t.themes[theme]}</span>
+          <Swatches onPick={() => setOpen(false)} onHover={setHover} />
+          <span className="mono thememenu__name">{t.themes[hover ?? theme]}</span>
         </div>
       )}
     </div>

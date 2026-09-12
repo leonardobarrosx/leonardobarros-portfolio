@@ -34,6 +34,7 @@ export interface Strings {
   meta: { role: string; badge: string; statement: [string, string, string]; location: string };
   nav: { work: string; about: string; experience: string; contact: string; menu: string; close: string; motion: string; on: string; off: string; language: string; theme: string };
   themes: Record<ThemeId, string>;
+  ask: { kicker: string; question: string; hint: string; thanks: string; skip: string };
   labels: { about: string; services: string; work: string; experience: string; stack: string; contact: string; words: string; certs: string; orgs: string; toolbox: string };
   toolbox: Record<ToolGroupId, string>;
   marquee: string[];

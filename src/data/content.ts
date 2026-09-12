@@ -103,6 +103,7 @@ export interface Content {
   meta: Strings["meta"] & { roleJp: string; tagline: string; volume: string };
   nav: Strings["nav"];
   themes: Strings["themes"];
+  ask: Strings["ask"];
   labels: Strings["labels"];
   marquee: string[];
   about: Strings["about"];
@@ -125,6 +126,7 @@ function assemble(s: Strings): Content {
     meta: { ...s.meta, roleJp: shared.roleJp, tagline: shared.tagline, volume: shared.volume },
     nav: s.nav,
     themes: s.themes,
+    ask: s.ask,
     labels: s.labels,
     marquee: s.marquee,
     about: s.about,
