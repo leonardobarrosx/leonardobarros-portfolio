@@ -88,6 +88,7 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((id: ThemeId) => {
     write(LS_THEME, id);
+    write(LS_ASKED, "1"); // whoever picks a theme has answered the colour question
     ease();
     setThemeState(id);
   }, []);
