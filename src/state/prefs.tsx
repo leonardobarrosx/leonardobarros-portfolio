@@ -6,11 +6,13 @@ import { applyTheme, DEFAULT_THEME, isThemeId, LS_THEME, type ThemeId } from "..
 /* Persisted preferences: language, motion and colour theme. Read once, written on change. */
 const LS_LANG = "lb:lang";
 const LS_MOTION = "lb:motion";
+/** Set once the colour question has been shown (answered or skipped). */
+export const LS_ASKED = "lb:asked";
 
-function read(key: string): string | null {
+export function read(key: string): string | null {
   try { return localStorage.getItem(key); } catch { return null; }
 }
-function write(key: string, v: string) {
+export function write(key: string, v: string) {
   try { localStorage.setItem(key, v); } catch { /* private mode etc. */ }
 }
 
@@ -39,12 +41,22 @@ interface Prefs {
   toggleMotion: () => void;
   theme: ThemeId;
   setTheme: (id: ThemeId) => void;
+  /** Try a theme on without saving it (hover); `null` restores the chosen one. */
+  previewTheme: (id: ThemeId | null) => void;
   t: (typeof content)["en"];
 }
 
 const Ctx = createContext<Prefs | null>(null);
 
 let themeTimer = 0;
+/** Every colour on the page eases to the new palette for half a second. */
+function ease() {
+  if (!motion.enabled) return;
+  const root = document.documentElement;
+  root.classList.add("is-theming");
+  window.clearTimeout(themeTimer);
+  themeTimer = window.setTimeout(() => root.classList.remove("is-theming"), 650);
+}
 
 export function PrefsProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
@@ -76,19 +88,18 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((id: ThemeId) => {
     write(LS_THEME, id);
-    const root = document.documentElement;
-    if (motion.enabled) {
-      // Every colour on the page eases to the new palette for half a second.
-      root.classList.add("is-theming");
-      window.clearTimeout(themeTimer);
-      themeTimer = window.setTimeout(() => root.classList.remove("is-theming"), 650);
-    }
+    ease();
     setThemeState(id);
   }, []);
 
+  const previewTheme = useCallback((id: ThemeId | null) => {
+    ease();
+    applyTheme(id ?? theme);
+  }, [theme]);
+
   const value = useMemo<Prefs>(
-    () => ({ lang, setLang, motionOn, toggleMotion, theme, setTheme, t: content[lang] }),
-    [lang, setLang, motionOn, toggleMotion, theme, setTheme],
+    () => ({ lang, setLang, motionOn, toggleMotion, theme, setTheme, previewTheme, t: content[lang] }),
+    [lang, setLang, motionOn, toggleMotion, theme, setTheme, previewTheme],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

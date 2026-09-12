@@ -9,6 +9,7 @@ export const zh: Strings = {
   },
   nav: { work: "作品", about: "关于", experience: "经历", contact: "联系", menu: "菜单", close: "关闭", motion: "动效", on: "开", off: "关", language: "语言", theme: "主题" },
   themes: { violet: "紫", red: "红", orange: "橙", amber: "琥珀", green: "绿", teal: "青", blue: "蓝", pink: "粉", ink: "墨" },
+  ask: { kicker: "一个小问题", question: "你最喜欢哪种颜色？", hint: "随时可以通过菜单里的圆点更改。", thanks: "选得好。现在这个网站是你的了。", skip: "跳过" },
   labels: { about: "关于我", services: "我做什么", work: "精选作品", experience: "工作经历", stack: "技术栈", contact: "联系", words: "评价", certs: "证书", orgs: "我工作过的地方", toolbox: "完整工具箱" },
   toolbox: { languages: "语言", frontend: "前端", mobile: "移动端", backend: "后端与 API", data: "数据与存储", messaging: "消息与集成", testing: "测试与质量", security: "安全", observability: "可观测性与运维", performance: "性能与缓存", accessibility: "无障碍与国际化", automation: "自动化与 AI", reporting: "数据、BI 与报表", validation: "校验与表单", cloud: "云与基础设施", design: "设计与动效", methods: "方法与工具" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],

@@ -9,6 +9,7 @@ export const pt: Strings = {
   },
   nav: { work: "Trabalhos", about: "Sobre", experience: "Experiência", contact: "Contato", menu: "Menu", close: "Fechar", motion: "Animações", on: "on", off: "off", language: "Idioma", theme: "Tema" },
   themes: { violet: "Violeta", red: "Vermelho", orange: "Laranja", amber: "Âmbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
+  ask: { kicker: "Uma pergunta rápida", question: "Qual é a sua cor preferida?", hint: "Dá pra mudar depois na bolinha do menu.", thanks: "Boa escolha. Agora o site é seu.", skip: "Pular" },
   labels: { about: "Sobre", services: "O que eu faço", work: "Trabalhos selecionados", experience: "Experiência", stack: "Stack", contact: "Contato", words: "Depoimentos", certs: "Certificações", orgs: "Por onde passei", toolbox: "A caixa de ferramentas completa" },
   toolbox: { languages: "Linguagens", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Dados & armazenamento", messaging: "Mensageria & integrações", testing: "Testes & qualidade", security: "Segurança", observability: "Observabilidade & operações", performance: "Performance & cache", accessibility: "Acessibilidade & i18n", automation: "Automação & IA", reporting: "Dados, BI & relatórios", validation: "Validação & formulários", cloud: "Cloud & infraestrutura", design: "Design & motion", methods: "Métodos & ferramentas" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Dados", "データ", "Automação", "自動化"],
