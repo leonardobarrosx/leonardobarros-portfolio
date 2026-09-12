@@ -1,9 +1,11 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { gsap, SplitText } from "../lib/gsap";
+import { gsap, SplitText, lenisRef, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
 import { scramble } from "../lib/scramble";
 import { useProximity } from "../hooks/useProximity";
+
+const COLS = Array.from({ length: 12 });
 
 export function Hero({ ready }: { ready: boolean }) {
   const { t } = usePrefs();
@@ -16,35 +18,96 @@ export function Hero({ ready }: { ready: boolean }) {
     const el = root.current;
     if (!motion.enabled) {
       gsap.set(el.querySelector(".hero__sun"), { scale: 1 });
+      gsap.set(el.querySelectorAll(".hero__grid i"), { scaleY: 1 });
       return;
     }
     const ctx = gsap.context(() => {
+      const title = el.querySelector<HTMLElement>(".hero__title")!;
       const lines = gsap.utils.toArray<HTMLElement>(".hero__title .line");
       const chars = lines.flatMap((l) => new SplitText(l, { type: "chars", charsClass: "char" }).chars);
       const role = el.querySelector<HTMLElement>(".scramble")!;
+      const turb = el.querySelector<SVGElement>("#liquid feTurbulence")!;
+      const disp = el.querySelector<SVGElement>("#liquid feDisplacementMap")!;
+      const sun = el.querySelector<HTMLElement>(".hero__sun")!;
 
+      // ---- intro
       gsap.timeline({ defaults: { ease: "power4.out" } })
-        .from(chars, { yPercent: 110, rotate: 3, duration: 1.3, stagger: 0.03 }, 0)
-        .to(".hero__sun", { scale: 1, duration: 1.5, ease: "expo.out" }, 0.2)
-        .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.6)
-        .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.5)
-        .add(scramble(role, t.meta.role, 1.1), 0.7)
-        .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 0.9)
+        .from(".hero__grid i", { scaleY: 0, transformOrigin: "top", duration: 1.2, stagger: 0.04, ease: "power3.inOut" }, 0)
+        .from(chars, { yPercent: 110, rotate: 3, duration: 1.3, stagger: 0.03 }, 0.1)
+        .to(sun, { scale: 1, duration: 1.6, ease: "elastic.out(1, 0.55)" }, 0.35)
+        .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.7)
+        .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.6)
+        .add(scramble(role, t.meta.role, 1.1), 0.8)
+        .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 1)
+        .from(".hero__badge", { opacity: 0, scale: 0.6, duration: 0.9, ease: "back.out(1.6)" }, 1.1)
         .add(() => setDistort(true));
 
-      // Parallax as the hero scrolls away.
+      // ---- the sun breathes; displacement grows when the pointer comes close
+      gsap.to(turb, { attr: { baseFrequency: "0.016 0.022" }, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
+      gsap.to(turb, { attr: { seed: 12 }, duration: 12, yoyo: true, repeat: -1, ease: "none" });
+      const dispState = { scale: 12 };
+      const dispTo = (v: number) => gsap.to(dispState, { scale: v, duration: 0.8, ease: "power3", overwrite: true, onUpdate: () => disp.setAttribute("scale", dispState.scale.toFixed(1)) });
+
+      // ---- pointer: depth layers, RGB split by velocity, sun agitation
+      const layers: [string, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5], [".hero__grid", 4], [".hero__sun", 26]];
+      const movers = layers.map(([sel, depth]) => ({ depth, x: gsap.quickTo(sel, "x", { duration: 1.1, ease: "power3" }), y: gsap.quickTo(sel, "y", { duration: 1.1, ease: "power3" }) }));
+      const split = { x: 0, y: 0 };
+      const applySplit = () => { title.style.setProperty("--ox", split.x.toFixed(2)); title.style.setProperty("--oy", split.y.toFixed(2)); };
+      const splitTo = (x: number, y: number) => gsap.to(split, { x, y, duration: 0.5, ease: "power3", overwrite: true, onUpdate: applySplit });
+      let decay = 0;
+      const onMove = (e: PointerEvent) => {
+        const r = el.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        movers.forEach((m) => { m.x(nx * m.depth * 2); m.y(ny * m.depth * 2); });
+        splitTo(gsap.utils.clamp(-10, 10, e.movementX * 0.5), gsap.utils.clamp(-10, 10, e.movementY * 0.5));
+        window.clearTimeout(decay);
+        decay = window.setTimeout(() => splitTo(0, 0), 90);
+        const s = sun.getBoundingClientRect();
+        const d = Math.hypot(e.clientX - (s.left + s.width / 2), e.clientY - (s.top + s.height / 2));
+        dispTo(gsap.utils.clamp(12, 42, 12 + (1 - Math.min(d / (s.width * 0.9), 1)) * 30));
+      };
+      const onLeave = () => { movers.forEach((m) => { m.x(0); m.y(0); }); splitTo(0, 0); dispTo(12); };
+      el.addEventListener("pointermove", onMove);
+      el.addEventListener("pointerleave", onLeave);
+
+      // ---- scroll: parallax exit, letters drift apart, skew with velocity, badge spins faster
       const st = { trigger: el, start: "top top", end: "bottom top", scrub: true };
-      gsap.to(".hero__title", { yPercent: 14, ease: "none", scrollTrigger: st });
-      gsap.to(".hero__sun", { yPercent: -24, ease: "none", scrollTrigger: st });
-      gsap.to(".hero__statement, .hero__role", { y: 28, ease: "none", scrollTrigger: st });
+      const mid = (chars.length - 1) / 2;
+      gsap.to(chars, { x: (i: number) => (i - mid) * 14, ease: "none", scrollTrigger: st });
+      gsap.to(".hero__body", { yPercent: 10, scale: 0.96, transformOrigin: "left top", ease: "none", scrollTrigger: st });
+      gsap.to(sun, { yPercent: -30, ease: "none", scrollTrigger: st });
+      gsap.to(".hero__jp", { yPercent: -40, ease: "none", scrollTrigger: st });
+      const badgeSpin = gsap.to(".hero__badge svg", { rotation: 360, duration: 18, repeat: -1, ease: "none" });
+      const skew = gsap.quickTo(title, "skewX", { duration: 0.5, ease: "power3" });
+      const onScroll = (e: { velocity: number }) => {
+        skew(gsap.utils.clamp(-8, 8, e.velocity * 0.06));
+        gsap.to(badgeSpin, { timeScale: 1 + Math.min(Math.abs(e.velocity) / 8, 5), duration: 0.2, overwrite: true, onComplete: () => gsap.to(badgeSpin, { timeScale: 1, duration: 1.2 }) });
+      };
+      const lenis = lenisRef.current;
+      lenis?.on("scroll", onScroll);
+
+      return () => {
+        el.removeEventListener("pointermove", onMove);
+        el.removeEventListener("pointerleave", onLeave);
+        lenis?.off("scroll", onScroll);
+        window.clearTimeout(decay);
+      };
     }, el);
     return () => ctx.revert();
   }, [ready, t]);
 
   const [pre, em, post] = t.meta.statement;
+  const badgeText = `${shared.name} • ${t.meta.role.replace(/ Developer| Desenvolvedor/i, "").replace("Desenvolvedor ", "")} • `;
 
   return (
     <section className="hero wrap" id="top" ref={root}>
+      <svg className="hero__defs" aria-hidden="true" width="0" height="0">
+        <filter id="liquid" x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="3" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+
       <div className="hero__meta mono">
         <span>{t.meta.volume}</span>
         <span>{t.meta.location} · {shared.coords}</span>
@@ -52,6 +115,7 @@ export function Hero({ ready }: { ready: boolean }) {
       </div>
 
       <div className="hero__body grid">
+        <div className="hero__grid" aria-hidden="true">{COLS.map((_, i) => <i key={i} />)}</div>
         <div className="hero__jp jp vertical" aria-hidden="true">{shared.nameJp} — {t.meta.roleJp}</div>
         <h1 className="hero__title display">
           <span className="line">{shared.first}</span>
@@ -62,6 +126,13 @@ export function Hero({ ready }: { ready: boolean }) {
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
         </div>
         <p className="hero__statement">{pre}<em className="serif-i">{em}</em>{post}</p>
+        <button className="hero__badge" type="button" onClick={() => scrollToHash("#about")} aria-label="Scroll to about">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="badge-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
+            <text textLength="288" lengthAdjust="spacing"><textPath href="#badge-circle" textLength="288" lengthAdjust="spacing">{badgeText}</textPath></text>
+          </svg>
+          <span aria-hidden="true">↓</span>
+        </button>
       </div>
 
       <div className="hero__foot mono">
