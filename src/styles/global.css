@@ -416,12 +416,14 @@ h1, h2, h3, p, figure { margin: 0; }
 @media (max-width: 560px) { .case__cover { aspect-ratio: 4 / 3; } }
 
 /* ---------- hero: premium layer ---------- */
-.hero__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .hero__grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); pointer-events: none; z-index: 0; }
 .hero__grid i { display: block; border-left: 1px solid var(--line); opacity: 0.55; }
 .hero__grid i:last-child { border-right: 1px solid var(--line); }
-.hero__sun { filter: url(#liquid); will-change: transform; }
-.hero__title { --ox: 0; --oy: 0; will-change: transform; }
+.hero__sun { will-change: transform; overflow: visible; }
+.hero__sun.is-gl { background: transparent; }
+.hero__sun canvas { position: absolute; inset: -2%; width: 104%; height: 104%; display: block; }
+.hero__title { will-change: transform; }
+.hero__title .char { --ox: 0; --oy: 0; }
 .hero__title .char {
   text-shadow:
     calc(var(--ox) * 1px) calc(var(--oy) * 1px) 0 var(--accent),

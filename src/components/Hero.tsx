@@ -4,6 +4,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
 import { scramble } from "../lib/scramble";
 import { useProximity } from "../hooks/useProximity";
+import { LiquidSun } from "./LiquidSun";
 
 const COLS = Array.from({ length: 12 });
 
@@ -11,7 +12,7 @@ export function Hero({ ready }: { ready: boolean }) {
   const { t } = usePrefs();
   const root = useRef<HTMLElement>(null);
   const [distort, setDistort] = useState(false);
-  useProximity(root, ".hero__title .char", distort, 260);
+  useProximity(root, ".hero__title .char", distort, 260, { split: true });
 
   useLayoutEffect(() => {
     if (!ready || !root.current) return;
@@ -26,8 +27,6 @@ export function Hero({ ready }: { ready: boolean }) {
       const lines = gsap.utils.toArray<HTMLElement>(".hero__title .line");
       const chars = lines.flatMap((l) => new SplitText(l, { type: "chars", charsClass: "char" }).chars);
       const role = el.querySelector<HTMLElement>(".scramble")!;
-      const turb = el.querySelector<SVGElement>("#liquid feTurbulence")!;
-      const disp = el.querySelector<SVGElement>("#liquid feDisplacementMap")!;
       const sun = el.querySelector<HTMLElement>(".hero__sun")!;
 
       // ---- intro
@@ -42,31 +41,15 @@ export function Hero({ ready }: { ready: boolean }) {
         .from(".hero__badge", { opacity: 0, scale: 0.6, duration: 0.9, ease: "back.out(1.6)" }, 1.1)
         .add(() => setDistort(true));
 
-      // ---- the sun breathes; displacement grows when the pointer comes close
-      gsap.to(turb, { attr: { baseFrequency: "0.016 0.022" }, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
-      gsap.to(turb, { attr: { seed: 12 }, duration: 12, yoyo: true, repeat: -1, ease: "none" });
-      const dispState = { scale: 12 };
-      const dispTo = (v: number) => gsap.to(dispState, { scale: v, duration: 0.8, ease: "power3", overwrite: true, onUpdate: () => disp.setAttribute("scale", dispState.scale.toFixed(1)) });
-
-      // ---- pointer: depth layers, RGB split by velocity, sun agitation
+      // ---- pointer: depth layers follow the cursor with inertia
       const layers: [string, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5], [".hero__grid", 4], [".hero__sun", 26]];
       const movers = layers.map(([sel, depth]) => ({ depth, x: gsap.quickTo(sel, "x", { duration: 1.1, ease: "power3" }), y: gsap.quickTo(sel, "y", { duration: 1.1, ease: "power3" }) }));
-      const split = { x: 0, y: 0 };
-      const applySplit = () => { title.style.setProperty("--ox", split.x.toFixed(2)); title.style.setProperty("--oy", split.y.toFixed(2)); };
-      const splitTo = (x: number, y: number) => gsap.to(split, { x, y, duration: 0.5, ease: "power3", overwrite: true, onUpdate: applySplit });
-      let decay = 0;
       const onMove = (e: PointerEvent) => {
         const r = el.getBoundingClientRect();
         const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
         movers.forEach((m) => { m.x(nx * m.depth * 2); m.y(ny * m.depth * 2); });
-        splitTo(gsap.utils.clamp(-10, 10, e.movementX * 0.5), gsap.utils.clamp(-10, 10, e.movementY * 0.5));
-        window.clearTimeout(decay);
-        decay = window.setTimeout(() => splitTo(0, 0), 90);
-        const s = sun.getBoundingClientRect();
-        const d = Math.hypot(e.clientX - (s.left + s.width / 2), e.clientY - (s.top + s.height / 2));
-        dispTo(gsap.utils.clamp(12, 42, 12 + (1 - Math.min(d / (s.width * 0.9), 1)) * 30));
       };
-      const onLeave = () => { movers.forEach((m) => { m.x(0); m.y(0); }); splitTo(0, 0); dispTo(12); };
+      const onLeave = () => movers.forEach((m) => { m.x(0); m.y(0); });
       el.addEventListener("pointermove", onMove);
       el.addEventListener("pointerleave", onLeave);
 
@@ -90,7 +73,6 @@ export function Hero({ ready }: { ready: boolean }) {
         el.removeEventListener("pointermove", onMove);
         el.removeEventListener("pointerleave", onLeave);
         lenis?.off("scroll", onScroll);
-        window.clearTimeout(decay);
       };
     }, el);
     return () => ctx.revert();
@@ -101,13 +83,6 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <section className="hero wrap" id="top" ref={root}>
-      <svg className="hero__defs" aria-hidden="true" width="0" height="0">
-        <filter id="liquid" x="-12%" y="-12%" width="124%" height="124%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="3" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-
       <div className="hero__meta mono">
         <span>{t.meta.volume}</span>
         <span>{t.meta.location} · {shared.coords}</span>
@@ -121,7 +96,7 @@ export function Hero({ ready }: { ready: boolean }) {
           <span className="line">{shared.first}</span>
           <span className="line">{shared.last}</span>
         </h1>
-        <div className="hero__sun" aria-hidden="true" />
+        <LiquidSun area={root} />
         <div className="hero__role mono">
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
         </div>
