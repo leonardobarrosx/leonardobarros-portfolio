@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/gsap";
 
-/** Dot that snaps to the pointer plus a ring that lags behind; grows on links, becomes "View" on posters. */
+/** Dot that snaps to the pointer plus a ring that lags behind; grows on links, "View" on posters, "✕" on dimmed backdrops. */
 export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
-  const [mode, setMode] = useState<"" | "is-link" | "is-view">("");
+  const [mode, setMode] = useState<"" | "is-link" | "is-view" | "is-close">("");
   const [on, setOn] = useState(false);
 
   useEffect(() => {
@@ -17,6 +17,7 @@ export function Cursor() {
     const modeFor = (t: Element | null) => {
       if (!t) return "";
       if (t.closest("[data-cursor='view']")) return "is-view";
+      if (t.closest("[data-cursor='close']")) return "is-close";
       if (t.closest("a, button, [data-cursor='link']")) return "is-link";
       return "";
     };
@@ -39,7 +40,7 @@ export function Cursor() {
   return (
     <div className={`cursor ${mode} ${on ? "is-on" : ""}`} aria-hidden="true">
       <div className="cursor__dot" ref={dot} />
-      <div className="cursor__ring" ref={ring}><span>View</span></div>
+      <div className="cursor__ring" ref={ring}><span>{mode === "is-close" ? "✕" : "View"}</span></div>
     </div>
   );
 }
