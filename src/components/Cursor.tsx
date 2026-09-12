@@ -14,18 +14,26 @@ export function Cursor() {
     const dy = gsap.quickTo(dot.current, "y", { duration: 0.12, ease: "power3" });
     const rx = gsap.quickTo(ring.current, "x", { duration: 0.45, ease: "power3" });
     const ry = gsap.quickTo(ring.current, "y", { duration: 0.45, ease: "power3" });
+    const modeFor = (t: Element | null) => {
+      if (!t) return "";
+      if (t.closest("[data-cursor='view']")) return "is-view";
+      if (t.closest("a, button, [data-cursor='link']")) return "is-link";
+      return "";
+    };
+    let last = { x: 0, y: 0 };
     const move = (e: PointerEvent) => {
       setOn(true);
+      last = { x: e.clientX, y: e.clientY };
       dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY);
-      const t = e.target as HTMLElement;
-      if (t.closest("[data-cursor='view']")) setMode("is-view");
-      else if (t.closest("a, button, [data-cursor='link']")) setMode("is-link");
-      else setMode("");
+      setMode(modeFor(e.target as Element));
     };
+    // After a click the element under the pointer may change (a panel opens); re-evaluate without waiting for movement.
+    const click = () => { window.setTimeout(() => setMode(modeFor(document.elementFromPoint(last.x, last.y))), 80); };
     const leave = () => setOn(false);
     window.addEventListener("pointermove", move);
+    window.addEventListener("click", click);
     document.documentElement.addEventListener("pointerleave", leave);
-    return () => { window.removeEventListener("pointermove", move); document.documentElement.removeEventListener("pointerleave", leave); };
+    return () => { window.removeEventListener("pointermove", move); window.removeEventListener("click", click); document.documentElement.removeEventListener("pointerleave", leave); };
   }, []);
 
   return (

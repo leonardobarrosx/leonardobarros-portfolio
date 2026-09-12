@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
+import { scramble } from "../lib/scramble";
 
 function localTime() {
   return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: shared.timezone }).format(new Date());
@@ -81,8 +82,13 @@ export function Nav({ ready }: { ready: boolean }) {
     scrollToHash(`#${id}`);
   };
 
+  const hoverScramble = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (!motion.enabled) return;
+    const el = e.currentTarget.querySelector<HTMLElement>("span");
+    if (el) scramble(el, el.dataset.text || el.textContent || "", 0.5);
+  };
   const links = SECTIONS.map((id) => (
-    <a key={id} href={`#${id}`} onClick={(e) => go(e, id)} className={active === id ? "is-active" : ""}>{t.nav[id]}</a>
+    <a key={id} href={`#${id}`} onClick={(e) => go(e, id)} onPointerEnter={hoverScramble} className={active === id ? "is-active" : ""}><span data-text={t.nav[id]}>{t.nav[id]}</span></a>
   ));
 
   return (
