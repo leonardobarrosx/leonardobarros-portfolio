@@ -6,7 +6,7 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 
 ## Features
 
-- Bilingual (EN / PT-BR) with the choice persisted in `localStorage`
+- Seven languages (EN, PT-BR, ES, DE, JA, KO, ZH) detected from the browser and persisted in `localStorage`
 - Motion toggle (persisted) that also honours `prefers-reduced-motion`
 - Intro plays once per session (`sessionStorage`)
 - Project details panel with deep links (`#work/<id>`)
@@ -23,7 +23,7 @@ npm run dev
 
 ## Structure
 
-- `src/data/content.ts` — all copy in both languages (bio, services, work, experience, testimonials, certifications). Edit this to update the site.
+- `src/data/i18n/<lang>.ts` — all copy per language; `src/data/content.ts` merges it with the language-neutral bases (project ids, years, stacks, logos, links). Edit these to update the site.
 - `src/state/prefs.tsx` — language and motion preferences.
 - `src/components/` — one component per section.
 - `src/styles/global.css` — design tokens, grid and all styles.

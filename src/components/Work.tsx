@@ -5,6 +5,7 @@ import { useReveal } from "../hooks/useReveal";
 import { useCharWave } from "../hooks/useCharWave";
 import { Label } from "./Label";
 import { Sheet, useSticky } from "./Sheet";
+import { decode } from "../lib/decode";
 import type { Work as WorkItem } from "../data/content";
 
 function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
@@ -112,6 +113,10 @@ export function Work() {
 
   const current = index >= 0 ? t.works[index] : null;
   const w = useSticky(current);
+  const topLine = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (current && topLine.current && motion.enabled) decode(topLine.current, topLine.current.dataset.text || "", 0.9);
+  }, [current]);
   const shownIndex = w ? t.works.findIndex((x) => x.id === w.id) : 0;
   const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -127,7 +132,7 @@ export function Work() {
         {w && (
           <>
             <div className="sheet__top mono">
-              <span>{pad(shownIndex + 1)} / {pad(t.works.length)} · {w.kind} · {w.year}</span>
+              <span ref={topLine} data-text={`${pad(shownIndex + 1)} / ${pad(t.works.length)} · ${w.kind} · ${w.year}`}>{pad(shownIndex + 1)} / {pad(t.works.length)} · {w.kind} · {w.year}</span>
               <button className="sheet__close mono" onClick={close}>{t.sheet.close} ✕</button>
             </div>
             <div className="sheet__body case">

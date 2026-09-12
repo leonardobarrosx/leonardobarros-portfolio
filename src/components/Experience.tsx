@@ -3,6 +3,8 @@ import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import { Sheet, useSticky } from "./Sheet";
+import { decode } from "../lib/decode";
+import { motion } from "../state/prefs";
 import dental from "../assets/logos/dental.png";
 import polybalas from "../assets/logos/polybalas.png";
 import ipec from "../assets/logos/ipec.png";
@@ -47,6 +49,10 @@ export function Experience() {
 
   const current = t.experience.find((x) => x.id === openId) ?? null;
   const x = useSticky(current);
+  const topLine = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (current && topLine.current && motion.enabled) decode(topLine.current, current.period, 0.9);
+  }, [current]);
   const host = (url?: string) => (url ? url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") : "");
 
   return (
@@ -81,7 +87,7 @@ export function Experience() {
         {x && (
           <>
             <div className="sheet__top mono">
-              <span>{x.period}</span>
+              <span ref={topLine}>{x.period}</span>
               <button className="sheet__close mono" onClick={close}>{t.sheet.close} ✕</button>
             </div>
             <div className="sheet__body">

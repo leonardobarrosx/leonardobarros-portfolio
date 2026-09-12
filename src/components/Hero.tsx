@@ -2,11 +2,10 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { gsap, SplitText, lenisRef, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
-import { scramble } from "../lib/scramble";
+import { decode } from "../lib/decode";
+import { Landmarks } from "./Landmarks";
 import { useProximity } from "../hooks/useProximity";
 import { LiquidSun } from "./LiquidSun";
-
-const COLS = Array.from({ length: 12 });
 
 export function Hero({ ready }: { ready: boolean }) {
   const { t } = usePrefs();
@@ -19,7 +18,7 @@ export function Hero({ ready }: { ready: boolean }) {
     const el = root.current;
     if (!motion.enabled) {
       gsap.set(el.querySelector(".hero__sun"), { scale: 1 });
-      gsap.set(el.querySelectorAll(".hero__grid i"), { scaleY: 1 });
+      el.querySelector(".hero__title")?.classList.add("is-live");
       return;
     }
     const ctx = gsap.context(() => {
@@ -31,18 +30,17 @@ export function Hero({ ready }: { ready: boolean }) {
 
       // ---- intro
       gsap.timeline({ defaults: { ease: "power4.out" } })
-        .from(".hero__grid i", { scaleY: 0, transformOrigin: "top", duration: 1.2, stagger: 0.04, ease: "power3.inOut" }, 0)
         .from(chars, { yPercent: 110, rotate: 3, duration: 1.3, stagger: 0.03 }, 0.1)
         .to(sun, { scale: 1, duration: 1.6, ease: "elastic.out(1, 0.55)" }, 0.35)
         .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.7)
         .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.6)
-        .add(scramble(role, t.meta.role, 1.1), 0.8)
+        .add(decode(role, t.meta.role, 1.6), 0.8)
         .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 1)
         .from(".hero__badge", { opacity: 0, scale: 0.6, duration: 0.9, ease: "back.out(1.6)" }, 1.1)
-        .add(() => setDistort(true));
+        .add(() => { title.classList.add("is-live"); setDistort(true); });
 
       // ---- pointer: depth layers follow the cursor with inertia
-      const layers: [string, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5], [".hero__grid", 4], [".hero__sun", 26]];
+      const layers: [string, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5], [".hero__sun", 26]];
       const movers = layers.map(([sel, depth]) => ({ depth, x: gsap.quickTo(sel, "x", { duration: 1.1, ease: "power3" }), y: gsap.quickTo(sel, "y", { duration: 1.1, ease: "power3" }) }));
       const onMove = (e: PointerEvent) => {
         const r = el.getBoundingClientRect();
@@ -79,18 +77,17 @@ export function Hero({ ready }: { ready: boolean }) {
   }, [ready, t]);
 
   const [pre, em, post] = t.meta.statement;
-  const badgeText = `${shared.name} • ${t.meta.role.replace(/ Developer| Desenvolvedor/i, "").replace("Desenvolvedor ", "")} • `;
+  const badgeText = `${shared.name} • ${t.meta.badge} • `;
 
   return (
     <section className="hero wrap" id="top" ref={root}>
       <div className="hero__meta mono">
         <span>{t.meta.volume}</span>
-        <span>{t.meta.location} · {shared.coords}</span>
+        <Landmarks />
         <span>{t.meta.role}</span>
       </div>
 
       <div className="hero__body grid">
-        <div className="hero__grid" aria-hidden="true">{COLS.map((_, i) => <i key={i} />)}</div>
         <div className="hero__jp jp vertical" aria-hidden="true">{shared.nameJp} — {t.meta.roleJp}</div>
         <h1 className="hero__title display">
           <span className="line">{shared.first}</span>

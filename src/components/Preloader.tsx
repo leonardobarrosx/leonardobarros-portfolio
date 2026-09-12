@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/gsap";
 import { motion } from "../state/prefs";
 import { shared } from "../data/content";
+import { decode } from "../lib/decode";
 import { usePrefs } from "../state/prefs";
 
 const GLYPHS = ["レ", "オ", "ナ", "ル", "ド", "バ", "ロ", "ス"];
@@ -30,6 +31,8 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     let g = 0;
     const glyphTimer = window.setInterval(() => { g = (g + 1) % GLYPHS.length; setGlyph(GLYPHS[g]); }, 80);
 
+    const nameEl = root.current?.querySelector<HTMLElement>(".loader__name");
+    if (nameEl) decode(nameEl, shared.name, 1.4);
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.classList.remove("is-loading");
@@ -49,7 +52,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="loader" ref={root} aria-hidden="true">
-      <div className="loader__top mono"><span>{shared.name}</span><span>{t.meta.volume}</span></div>
+      <div className="loader__top mono"><span className="loader__name">{shared.name}</span><span>{t.meta.volume}</span></div>
       <div className="loader__jp jp">{glyph}</div>
       <div className="loader__bottom">
         <span className="mono">{t.meta.location}</span>

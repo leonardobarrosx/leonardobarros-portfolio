@@ -2,7 +2,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
-import { scramble } from "../lib/scramble";
+import { decode } from "../lib/decode";
+import { LangMenu } from "./LangMenu";
 
 function localTime() {
   return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: shared.timezone }).format(new Date());
@@ -11,7 +12,7 @@ function localTime() {
 const SECTIONS = ["work", "about", "experience", "contact"] as const;
 
 export function Nav({ ready }: { ready: boolean }) {
-  const { t, lang, setLang, motionOn, toggleMotion } = usePrefs();
+  const { t, lang, motionOn, toggleMotion } = usePrefs();
   const [time, setTime] = useState(localTime());
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -85,7 +86,7 @@ export function Nav({ ready }: { ready: boolean }) {
   const hoverScramble = (e: React.PointerEvent<HTMLAnchorElement>) => {
     if (!motion.enabled) return;
     const el = e.currentTarget.querySelector<HTMLElement>("span");
-    if (el) scramble(el, el.dataset.text || el.textContent || "", 0.5);
+    if (el) decode(el, el.dataset.text || el.textContent || "", 0.7);
   };
   const links = SECTIONS.map((id) => (
     <a key={id} href={`#${id}`} onClick={(e) => go(e, id)} onPointerEnter={hoverScramble} className={active === id ? "is-active" : ""}><span data-text={t.nav[id]}>{t.nav[id]}</span></a>
@@ -100,10 +101,7 @@ export function Nav({ ready }: { ready: boolean }) {
           <nav className="pill nav__links" aria-label="Sections">{links}</nav>
           <div className="nav__right">
             <span className="mono nav__clock">JPA {time}</span>
-            <div className="pill seg" role="group" aria-label="Language">
-              <button className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
-              <button className={lang === "pt" ? "is-active" : ""} onClick={() => setLang("pt")} aria-pressed={lang === "pt"}>PT</button>
-            </div>
+            <LangMenu />
             <div className="pill seg">
               <button onClick={toggleMotion} aria-pressed={motionOn} title={t.nav.motion}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
             </div>
@@ -125,6 +123,7 @@ export function Nav({ ready }: { ready: boolean }) {
           ))}
         </nav>
         <div className="menu__foot mono">
+          <LangMenu inline />
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>
         </div>
