@@ -532,4 +532,5 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 .ask__skip { white-space: nowrap; color: var(--lilac); border-bottom: 1px solid var(--line); transition: color 0.3s, border-color 0.3s; }
 .ask__skip:hover { color: var(--paper); border-color: var(--paper); }
 .ask.is-done .swatches, .ask.is-done .ask__foot { opacity: 0.35; pointer-events: none; transition: opacity 0.4s; }
+.ask.is-done .ask__q { max-width: none; }
 @media (max-width: 560px) { .ask { right: 12px; left: 12px; bottom: 12px; width: auto; } .ask .swatches { grid-template-columns: repeat(9, 1fr); } }

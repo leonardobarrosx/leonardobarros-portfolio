@@ -9,7 +9,7 @@ export const ko: Strings = {
   },
   nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마" },
   themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹" },
-  ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 이 사이트는 당신의 것입니다.", skip: "건너뛰기" },
+  ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 포트폴리오를 둘러보세요, 환영합니다!", skip: "건너뛰기" },
   labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", orgs: "일했던 곳", toolbox: "전체 툴박스" },
   toolbox: { languages: "언어", frontend: "프론트엔드", mobile: "모바일", backend: "백엔드 & API", data: "데이터 & 스토리지", messaging: "메시징 & 연동", testing: "테스트 & 품질", security: "보안", observability: "관측성 & 운영", performance: "성능 & 캐싱", accessibility: "접근성 & i18n", automation: "자동화 & AI", reporting: "데이터·BI·리포팅", validation: "검증 & 폼", cloud: "클라우드 & 인프라", design: "디자인 & 모션", methods: "방법론 & 도구" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
