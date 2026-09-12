@@ -4,6 +4,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import photo from "../assets/photo-cafe.jpg";
+import { DistortImage } from "./DistortImage";
 
 export function About() {
   const { t } = usePrefs();
@@ -17,7 +18,7 @@ export function About() {
     const ctx = gsap.context(() => {
       // Red block slides in after the clip reveal; the photo settles from a slight zoom while it stays pinned.
       gsap.fromTo(fig, { "--s": 0 }, { "--s": 1, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: fig, start: "top 75%", once: true }, delay: 0.5 });
-      gsap.fromTo(fig.querySelector("img"), { scale: 1.12 }, { scale: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top 80%", end: "bottom 40%", scrub: 1 } });
+      gsap.fromTo(fig.querySelector(".distort"), { scale: 1.12 }, { scale: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top 80%", end: "bottom 40%", scrub: 1 } });
     }, root);
     return () => ctx.revert();
   }, [t]);
@@ -28,7 +29,7 @@ export function About() {
         <Label n="01" text={t.labels.about} jp="紹介" />
         <div className="grid about">
           <figure className="about__figure" data-reveal="clip">
-            <img src={photo} alt="Leonardo Barros" loading="lazy" width="1000" height="1249" />
+            <DistortImage src={photo} alt="Leonardo Barros" width={1000} height={1249} />
             <span className="tag mono">LB — 026</span>
             <span className="jp vertical" aria-hidden="true">レオナルド</span>
           </figure>

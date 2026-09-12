@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { useProximity } from "../hooks/useProximity";
 import { gsap, SplitText, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
@@ -10,7 +11,9 @@ export function Contact() {
   const root = useRef<HTMLElement>(null);
   const btn = useRef<HTMLAnchorElement>(null);
   const [copied, setCopied] = useState(false);
+  const title = useRef<HTMLHeadingElement>(null);
   useReveal(root);
+  useProximity(title, ".char", true, 220);
 
   useLayoutEffect(() => {
     if (!root.current || !motion.enabled) return;
@@ -38,7 +41,7 @@ export function Contact() {
       <div className="wrap">
         <Label n="07" text={t.labels.contact} jp="連絡" />
         <div className="grid">
-          <h2 className="contact__title display">
+          <h2 className="contact__title display" ref={title}>
             <span className="line">{t.contact.title[0]}</span>
             <span className="line">{t.contact.title[1]}</span>
           </h2>

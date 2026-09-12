@@ -2,12 +2,14 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { gsap, lenisRef } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
+import { useCharWave } from "../hooks/useCharWave";
 import { Label } from "./Label";
 import { Sheet, useSticky } from "./Sheet";
 import type { Work as WorkItem } from "../data/content";
 
 function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
   const el = useRef<HTMLButtonElement>(null);
+  const wave = useCharWave(".poster__title");
 
   const onMove = (e: React.PointerEvent) => {
     if (!motion.enabled || !el.current) return;
@@ -15,14 +17,21 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
     gsap.to(el.current, { rotateY: px * 6, rotateX: -py * 6, duration: 0.6, ease: "power3.out", transformPerspective: 900 });
+    // the decoration "flows" toward the pointer
+    gsap.to(el.current.querySelector(".poster__deco"), { x: px * 24, y: py * 24, duration: 0.8, ease: "power3.out" });
   };
-  const onLeave = () => el.current && gsap.to(el.current, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power3.out" });
+  const onLeave = () => {
+    if (!el.current) return;
+    gsap.to(el.current, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power3.out" });
+    gsap.to(el.current.querySelector(".poster__deco"), { x: 0, y: 0, duration: 0.8, ease: "power3.out" });
+  };
 
   return (
     <button
       type="button"
       className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""}`}
       ref={el}
+      onPointerEnter={wave}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       onClick={() => onOpen(w.id)}
@@ -47,7 +56,7 @@ export function Work() {
   const [openId, setOpenId] = useState<string | null>(null);
   useReveal(root);
 
-  // Deep link: #work/<id> opens the sheet; the URL follows the panel.
+  // Deep link: #work/<id> opens the case study; the URL follows the panel.
   useEffect(() => {
     const fromHash = () => {
       const m = location.hash.match(/^#work\/([a-z0-9-]+)$/);
@@ -60,6 +69,30 @@ export function Work() {
 
   const open = useCallback((id: string) => { history.replaceState(null, "", `#work/${id}`); setOpenId(id); }, []);
   const close = useCallback(() => { history.replaceState(null, "", "#work"); setOpenId(null); }, []);
+
+  const index = t.works.findIndex((w) => w.id === openId);
+  const step = useCallback((dir: 1 | -1) => {
+    if (index < 0) return;
+    const next = t.works[(index + dir + t.works.length) % t.works.length];
+    const body = document.querySelector<HTMLElement>(".sheet--case .sheet__body");
+    if (motion.enabled && body) {
+      gsap.to(body, { opacity: 0, x: dir * -16, duration: 0.2, ease: "power2.in", onComplete: () => {
+        open(next.id);
+        gsap.fromTo(body, { opacity: 0, x: dir * 16 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out", clearProps: "all" });
+      } });
+    } else open(next.id);
+  }, [index, t.works, open]);
+
+  // Arrow keys move between case studies while one is open.
+  useEffect(() => {
+    if (index < 0) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index, step]);
 
   // Grid skews with scroll velocity, posters drift at different speeds.
   useLayoutEffect(() => {
@@ -77,8 +110,10 @@ export function Work() {
     return () => ctx.revert();
   }, [t]);
 
-  const current = t.works.find((w) => w.id === openId) ?? null;
+  const current = index >= 0 ? t.works[index] : null;
   const w = useSticky(current);
+  const shownIndex = w ? t.works.findIndex((x) => x.id === w.id) : 0;
+  const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
     <section className="section" id="work" ref={root}>
@@ -88,26 +123,49 @@ export function Work() {
           {t.works.map((item) => <Poster w={item} key={item.id} onOpen={open} />)}
         </div>
       </div>
-      <Sheet open={!!current} onClose={close} label={w?.title.join(" ")}>
+      <Sheet open={!!current} onClose={close} label={w?.title.join(" ")} className="sheet--case">
         {w && (
           <>
             <div className="sheet__top mono">
-              <span>{w.kind} · {w.year}</span>
+              <span>{pad(shownIndex + 1)} / {pad(t.works.length)} · {w.kind} · {w.year}</span>
               <button className="sheet__close mono" onClick={close}>{t.sheet.close} ✕</button>
             </div>
-            <div className="sheet__body">
-              <span className="sheet__jp jp">{w.jp}</span>
-              <h3 className="sheet__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
-              <p className="sheet__long">{w.long}</p>
-              <dl className="sheet__facts mono">
-                <b>{t.sheet.year}</b><span>{w.year}</span>
-                <b>{t.sheet.type}</b><span>{w.kind}</span>
-                <b>{t.sheet.stack}</b><span>{w.stack}</span>
-              </dl>
+            <div className="sheet__body case">
+              <div className={`case__cover poster poster--${w.variant}`} aria-hidden="true">
+                <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
+                <h3 className="poster__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
+                <span className="poster__jp jp vertical">{w.jp}</span>
+                <span className="poster__deco" />
+              </div>
+              <div className="case__meta mono">
+                <span><b>{t.sheet.year}</b> {w.year}</span>
+                <span><b>{t.sheet.type}</b> {w.kind}</span>
+                <span><b>{t.sheet.role}</b> {w.role.join(" · ")}</span>
+              </div>
+              <div className="case__block">
+                <h4 className="mono muted">{t.sheet.overview}</h4>
+                <p className="sheet__long">{w.long}</p>
+              </div>
+              <div className="case__block">
+                <h4 className="mono muted">{t.sheet.did}</h4>
+                <ul className="sheet__bullets">{w.highlights.map((h) => <li key={h}>{h}</li>)}</ul>
+              </div>
+              <div className="case__block">
+                <h4 className="mono muted">{t.sheet.deliverables}</h4>
+                <ul className="chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul>
+              </div>
+              <div className="case__block">
+                <h4 className="mono muted">{t.sheet.stack}</h4>
+                <ul className="chips chips--stack">{w.stackList.map((d) => <li key={d}>{d}</li>)}</ul>
+              </div>
             </div>
-            <div className="sheet__foot">
+            <div className="sheet__foot sheet__foot--case">
+              <div className="case__nav">
+                <button className="case__navbtn mono" onClick={() => step(-1)} aria-label={t.sheet.prev}>← {t.sheet.prev}</button>
+                <button className="case__navbtn mono" onClick={() => step(1)} aria-label={t.sheet.next}>{t.sheet.next} →</button>
+              </div>
               {w.href
-                ? <a className="btn" href={w.href} target="_blank" rel="noreferrer">{t.sheet.open} ↗</a>
+                ? <a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer">{t.sheet.open} ↗</a>
                 : <span className="mono muted">{t.sheet.private}</span>}
             </div>
           </>

@@ -1,28 +1,15 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { gsap, SplitText } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
-
-const KATA = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ";
-
-/** Resolve katakana noise into the final string, left to right. */
-function scramble(el: HTMLElement, text: string, duration = 1.2) {
-  const state = { p: 0 };
-  return gsap.to(state, {
-    p: 1, duration, ease: "power2.out",
-    onUpdate: () => {
-      const n = Math.floor(state.p * text.length);
-      let out = text.slice(0, n);
-      for (let i = n; i < text.length; i++) out += text[i] === " " ? " " : KATA[Math.floor(Math.random() * KATA.length)];
-      el.textContent = out;
-    },
-    onComplete: () => { el.textContent = text; },
-  });
-}
+import { scramble } from "../lib/scramble";
+import { useProximity } from "../hooks/useProximity";
 
 export function Hero({ ready }: { ready: boolean }) {
   const { t } = usePrefs();
   const root = useRef<HTMLElement>(null);
+  const [distort, setDistort] = useState(false);
+  useProximity(root, ".hero__title .char", distort, 260);
 
   useLayoutEffect(() => {
     if (!ready || !root.current) return;
@@ -42,7 +29,8 @@ export function Hero({ ready }: { ready: boolean }) {
         .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.6)
         .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.5)
         .add(scramble(role, t.meta.role, 1.1), 0.7)
-        .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 0.9);
+        .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 0.9)
+        .add(() => setDistort(true));
 
       // Parallax as the hero scrolls away.
       const st = { trigger: el, start: "top top", end: "bottom top", scrub: true };

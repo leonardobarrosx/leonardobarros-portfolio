@@ -209,7 +209,9 @@ h1, h2, h3, p, figure { margin: 0; }
 /* ---------- about ---------- */
 .about { align-items: start; }
 .about__figure { grid-column: 1 / 6; position: sticky; top: calc(var(--nav-h) + var(--s3)); align-self: start; }
-.about__figure img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.05); transform-origin: center; will-change: transform; }
+.about__figure .distort { position: relative; overflow: hidden; aspect-ratio: 4 / 5; transform-origin: center; will-change: transform; filter: grayscale(1) contrast(1.05); }
+.about__figure img { width: 100%; height: 100%; object-fit: cover; }
+.distort canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.25s; }
 .about__figure::before { content: ""; position: absolute; left: -6%; bottom: -6%; width: 52%; height: 40%; background: var(--accent); mix-blend-mode: multiply; z-index: 1; transform: scaleX(var(--s, 0)); transform-origin: left; }
 .about__figure .tag { position: absolute; top: 12px; left: 12px; z-index: 2; background: var(--paper); color: var(--ink); padding: 3px 7px; }
 .about__figure .jp { position: absolute; right: -0.5em; top: 0; z-index: 2; color: var(--accent); font-size: 18px; letter-spacing: 0.3em; }
@@ -265,6 +267,8 @@ h1, h2, h3, p, figure { margin: 0; }
 .poster__title { align-self: end; font-size: clamp(36px, 3.6vw, 56px); transform: translateZ(24px); transition: transform 0.5s var(--ease-out); }
 .poster--tall .poster__title { font-size: clamp(44px, 5vw, 84px); }
 .poster__title span { display: block; }
+.poster__title .wave-char { display: inline-block; will-change: transform; }
+.service__title .wave-char { display: inline-block; will-change: transform; }
 .poster__title span:nth-child(2) { padding-left: 0.3em; }
 .poster:hover .poster__title { transform: translateZ(24px) translateY(-4px); }
 .poster__jp { position: absolute; top: 16%; right: clamp(16px, 1.8vw, 24px); font-size: clamp(18px, 2vw, 28px); font-weight: 900; letter-spacing: 0.15em; opacity: 0.85; z-index: 2; }
@@ -389,3 +393,24 @@ h1, h2, h3, p, figure { margin: 0; }
 .cert__badge { width: 44px; height: 44px; border-radius: 8px; display: grid; place-items: center; background: #1fb6a8; color: #fff; font-family: var(--font-mono); font-size: 10px; line-height: 1.05; text-align: center; font-weight: 600; }
 @media (max-width: 900px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .certs { grid-template-columns: 1fr; } }
+
+/* ---------- case study ---------- */
+.sheet--case { width: min(760px, 100%); }
+.sheet__body.case { align-self: start; grid-template-columns: minmax(0, 1fr); gap: var(--s4); padding-block: var(--s3) var(--s4); }
+.sheet__body.case > * { grid-column: 1 / -1; grid-row: auto; }
+.sheet__body.case .case__cover { aspect-ratio: 16 / 9; cursor: default; pointer-events: none; width: 100%; grid-template-rows: auto 1fr; transform: none; }
+.case__cover .poster__title { font-size: clamp(56px, 9vw, 120px); }
+.case__cover .poster__title span:nth-child(2) { padding-left: 0.3em; }
+.case__meta { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--lilac); }
+.case__meta b { color: var(--paper); font-weight: 500; margin-right: 6px; }
+.case__block { display: grid; gap: 12px; }
+.case__block h4 { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--paper); }
+.chips--stack li { background: rgba(179, 156, 255, 0.1); border-color: rgba(179, 156, 255, 0.35); color: var(--accent-light); }
+.sheet__foot--case { justify-content: space-between; flex-wrap: wrap; gap: var(--s2); border-top: 1px solid var(--line-dark); padding-top: var(--s2); }
+.case__nav { display: flex; gap: 8px; }
+.case__navbtn { padding: 8px 12px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--paper); transition: background 0.3s, border-color 0.3s; }
+.case__navbtn:hover { background: var(--accent); border-color: var(--accent); }
+.btn--sm { font-size: 18px; padding: 10px 16px; }
+@media (max-width: 560px) { .case__cover { aspect-ratio: 4 / 3; } }

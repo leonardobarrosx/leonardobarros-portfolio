@@ -3,7 +3,7 @@ import { gsap, lenisRef } from "../lib/gsap";
 import { motion } from "../state/prefs";
 
 /** Right-hand slide-in panel with backdrop. Children are rendered by the caller; keep them mounted while closing. */
-export function Sheet({ open, onClose, label, children }: { open: boolean; onClose: () => void; label?: string; children: ReactNode }) {
+export function Sheet({ open, onClose, label, children, className = "" }: { open: boolean; onClose: () => void; label?: string; children: ReactNode; className?: string }) {
   const panel = useRef<HTMLElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
 
@@ -46,7 +46,7 @@ export function Sheet({ open, onClose, label, children }: { open: boolean; onClo
   return (
     <>
       <div className="sheet-backdrop" ref={backdrop} onClick={onClose} aria-hidden="true" />
-      <aside className="sheet" ref={panel} role="dialog" aria-modal="true" aria-hidden={!open} aria-label={label}>
+      <aside className={`sheet ${className}`} ref={panel} role="dialog" aria-modal="true" aria-hidden={!open} aria-label={label}>
         {children}
       </aside>
     </>
