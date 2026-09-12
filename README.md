@@ -2,7 +2,7 @@
 
 Personal portfolio of Leonardo Barros, Full-Stack & Mobile Developer.
 
-Editorial poster aesthetic on a 12-column grid: cream paper, poster red, coffee-toned darks, condensed display type and katakana accents. Built with Vite, React and TypeScript; animations with GSAP (ScrollTrigger, SplitText) and Lenis smooth scroll.
+Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum darks, condensed display type and katakana accents. Built with Vite, React and TypeScript; animations with GSAP (ScrollTrigger, SplitText) and Lenis smooth scroll.
 
 ## Features
 
