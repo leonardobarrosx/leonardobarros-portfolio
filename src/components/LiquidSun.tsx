@@ -62,9 +62,14 @@ export function LiquidSun({ area }: { area: React.RefObject<HTMLElement | null> 
     const uM = U("m"), uS = U("s"), uT = U("time"), uColor = U("color"), uDeep = U("deep"), uPx = U("px");
     gl.clearColor(0, 0, 0, 0);
 
-    const css = getComputedStyle(document.documentElement);
-    gl.uniform3fv(uColor, hexToRgb(css.getPropertyValue("--accent").trim() || "#6f2ff2"));
-    gl.uniform3fv(uDeep, hexToRgb(css.getPropertyValue("--accent-deep").trim() || "#5620c9"));
+    // Disc colours follow the theme tokens; on a theme change they ease over instead of snapping.
+    const readTheme = (): [number[], number[]] => {
+      const css = getComputedStyle(document.documentElement);
+      return [hexToRgb(css.getPropertyValue("--accent").trim() || "#6f2ff2"), hexToRgb(css.getPropertyValue("--accent-deep").trim() || "#5620c9")];
+    };
+    let [color, deep] = readTheme();
+    let [colorTo, deepTo] = [color, deep];
+    let tinting = false;
 
     let raf = 0, strength = 0, target = 0;
     const t0 = performance.now();
@@ -73,14 +78,30 @@ export function LiquidSun({ area }: { area: React.RefObject<HTMLElement | null> 
     const draw = () => {
       raf = 0;
       strength += (target - strength) * 0.1;
+      if (tinting) {
+        let d = 0;
+        color = color.map((c, i) => { const n = c + (colorTo[i] - c) * 0.12; d += Math.abs(colorTo[i] - n); return n; });
+        deep = deep.map((c, i) => { const n = c + (deepTo[i] - c) * 0.12; d += Math.abs(deepTo[i] - n); return n; });
+        if (d < 0.004) { color = colorTo; deep = deepTo; tinting = false; }
+        gl.uniform3fv(uColor, color);
+        gl.uniform3fv(uDeep, deep);
+      }
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(uM, mouse.x, mouse.y);
       gl.uniform1f(uS, strength);
       gl.uniform1f(uT, (performance.now() - t0) / 1000);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      if (strength > 0.002 || target > 0) raf = requestAnimationFrame(draw);
+      if (strength > 0.002 || target > 0 || tinting) raf = requestAnimationFrame(draw);
     };
     const kick = () => { if (!raf) raf = requestAnimationFrame(draw); };
+    gl.uniform3fv(uColor, color);
+    gl.uniform3fv(uDeep, deep);
+
+    const retint = () => {
+      // tokens land on <html> synchronously; read them on the next frame so the swap is complete
+      requestAnimationFrame(() => { [colorTo, deepTo] = readTheme(); tinting = true; kick(); });
+    };
+    window.addEventListener("lb:theme", retint);
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -112,6 +133,7 @@ export function LiquidSun({ area }: { area: React.RefObject<HTMLElement | null> 
       ro.disconnect();
       hero.removeEventListener("pointermove", move);
       hero.removeEventListener("pointerleave", leave);
+      window.removeEventListener("lb:theme", retint);
       host.classList.remove("is-gl");
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };

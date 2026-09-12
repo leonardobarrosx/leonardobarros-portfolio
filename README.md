@@ -8,6 +8,7 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 
 - Seven languages (EN, PT-BR, ES, DE, JA, KO, ZH) detected from the browser and persisted in `localStorage`
 - Motion toggle (persisted) that also honours `prefers-reduced-motion`
+- Nine colour themes (violet, red, orange, amber, green, teal, blue, pink, ink) from the swatch menu in the nav; persisted and applied before first paint
 - Intro plays once per session (`sessionStorage`)
 - Project details panel with deep links (`#work/<id>`)
 - Custom cursor, scroll progress, smooth anchors, full-screen mobile menu
@@ -24,7 +25,9 @@ npm run dev
 ## Structure
 
 - `src/data/i18n/<lang>.ts` — all copy per language; `src/data/content.ts` merges it with the language-neutral bases (project ids, years, stacks, logos, links). Edit these to update the site.
-- `src/state/prefs.tsx` — language and motion preferences.
+- `src/state/prefs.tsx` — language, motion and theme preferences.
+- `src/data/themes.ts` — the colour themes as CSS tokens (the per-theme CSS and the no-flash bootstrap are generated from it in `vite.config.ts`).
+- `src/data/toolbox.ts` — the grouped skills list in the Stack section (group titles live in the i18n files).
 - `src/components/` — one component per section.
 - `src/styles/global.css` — design tokens, grid and all styles.
 - `src/assets/` — photos, company logos and certification icons.

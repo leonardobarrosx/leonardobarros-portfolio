@@ -7,8 +7,10 @@ export const en: Strings = {
     statement: ["Ten years building software that ", "works", " and looks the part. Web, mobile, data and the glue in between."],
     location: "João Pessoa, Brazil",
   },
-  nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language" },
-  labels: { about: "About", services: "What I do", work: "Selected work", experience: "Experience", stack: "Stack", contact: "Contact", words: "Kind words", certs: "Certifications", orgs: "Where I've worked" },
+  nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language", theme: "Theme" },
+  themes: { violet: "Violet", red: "Red", orange: "Orange", amber: "Amber", green: "Green", teal: "Teal", blue: "Blue", pink: "Pink", ink: "Ink" },
+  labels: { about: "About", services: "What I do", work: "Selected work", experience: "Experience", stack: "Stack", contact: "Contact", words: "Kind words", certs: "Certifications", orgs: "Where I've worked", toolbox: "The full toolbox" },
+  toolbox: { languages: "Languages", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Data & storage", messaging: "Messaging & integrations", testing: "Testing & quality", security: "Security", observability: "Observability & ops", performance: "Performance & caching", accessibility: "Accessibility & i18n", automation: "Automation & AI", reporting: "Data, BI & reporting", validation: "Validation & forms", cloud: "Cloud & infrastructure", design: "Design & motion", methods: "Methods & tooling" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "I care about how things look and how they feel to use, not just whether they work.",

@@ -7,8 +7,10 @@ export const de: Strings = {
     statement: ["Zehn Jahre Software, die ", "funktioniert", " und gut aussieht. Web, Mobile, Daten und alles dazwischen."],
     location: "João Pessoa, Brasilien",
   },
-  nav: { work: "Arbeiten", about: "Über mich", experience: "Erfahrung", contact: "Kontakt", menu: "Menü", close: "Schließen", motion: "Animationen", on: "an", off: "aus", language: "Sprache" },
-  labels: { about: "Über mich", services: "Was ich mache", work: "Ausgewählte Arbeiten", experience: "Erfahrung", stack: "Stack", contact: "Kontakt", words: "Stimmen", certs: "Zertifikate", orgs: "Wo ich gearbeitet habe" },
+  nav: { work: "Arbeiten", about: "Über mich", experience: "Erfahrung", contact: "Kontakt", menu: "Menü", close: "Schließen", motion: "Animationen", on: "an", off: "aus", language: "Sprache", theme: "Farbe" },
+  themes: { violet: "Violett", red: "Rot", orange: "Orange", amber: "Bernstein", green: "Grün", teal: "Türkis", blue: "Blau", pink: "Rosa", ink: "Tinte" },
+  labels: { about: "Über mich", services: "Was ich mache", work: "Ausgewählte Arbeiten", experience: "Erfahrung", stack: "Stack", contact: "Kontakt", words: "Stimmen", certs: "Zertifikate", orgs: "Wo ich gearbeitet habe", toolbox: "Der komplette Werkzeugkasten" },
+  toolbox: { languages: "Sprachen", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Daten & Speicher", messaging: "Messaging & Integrationen", testing: "Testing & Qualität", security: "Sicherheit", observability: "Observability & Betrieb", performance: "Performance & Caching", accessibility: "Barrierefreiheit & i18n", automation: "Automatisierung & KI", reporting: "Daten, BI & Reporting", validation: "Validierung & Formulare", cloud: "Cloud & Infrastruktur", design: "Design & Motion", methods: "Methoden & Tooling" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Daten", "データ", "Automatisierung", "自動化"],
   about: {
     quote: "Mir ist wichtig, wie Dinge aussehen und wie sie sich anfühlen, nicht nur, ob sie funktionieren.",

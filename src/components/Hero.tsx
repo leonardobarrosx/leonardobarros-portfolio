@@ -80,7 +80,8 @@ export function Hero({ ready }: { ready: boolean }) {
   const badgeText = `${shared.name} • ${t.meta.badge} • `;
 
   return (
-    <section className="hero wrap" id="top" ref={root}>
+    <section className="hero" id="top" ref={root}>
+      <div className="hero__inner">
       <div className="hero__meta mono">
         <span>{t.meta.volume}</span>
         <Landmarks />
@@ -110,6 +111,7 @@ export function Hero({ ready }: { ready: boolean }) {
       <div className="hero__foot mono">
         <span className="hero__scroll"><i /> Scroll</span>
         <span>{t.meta.tagline}</span>
+      </div>
       </div>
     </section>
   );

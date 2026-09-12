@@ -7,8 +7,10 @@ export const ko: Strings = {
     statement: ["10년 동안 ", "제대로 작동하고", " 보기에도 좋은 소프트웨어를 만들어 왔습니다. 웹, 모바일, 데이터, 그리고 그 사이를 잇는 것들."],
     location: "주앙페소아, 브라질",
   },
-  nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어" },
-  labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", orgs: "일했던 곳" },
+  nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마" },
+  themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹" },
+  labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", orgs: "일했던 곳", toolbox: "전체 툴박스" },
+  toolbox: { languages: "언어", frontend: "프론트엔드", mobile: "모바일", backend: "백엔드 & API", data: "데이터 & 스토리지", messaging: "메시징 & 연동", testing: "테스트 & 품질", security: "보안", observability: "관측성 & 운영", performance: "성능 & 캐싱", accessibility: "접근성 & i18n", automation: "자동화 & AI", reporting: "데이터·BI·리포팅", validation: "검증 & 폼", cloud: "클라우드 & 인프라", design: "디자인 & 모션", methods: "방법론 & 도구" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "잘 작동하는지만이 아니라, 어떻게 보이고 어떻게 느껴지는지를 중요하게 생각합니다.",
