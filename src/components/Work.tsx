@@ -84,17 +84,6 @@ export function Work() {
     setOpenId(next.id);
   }, [index, t.works]);
 
-  // Arrow keys move between case studies while one is open.
-  useEffect(() => {
-    if (index < 0) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") step(1);
-      if (e.key === "ArrowLeft") step(-1);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [index, step]);
-
   // Grid skews with scroll velocity, posters drift at different speeds.
   useLayoutEffect(() => {
     if (!root.current || !motion.enabled) return;
