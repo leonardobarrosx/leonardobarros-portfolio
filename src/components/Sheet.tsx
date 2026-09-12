@@ -46,7 +46,7 @@ export function Sheet({ open, onClose, label, children, className = "" }: { open
   return (
     <>
       <div className="sheet-backdrop" ref={backdrop} onClick={onClose} aria-hidden="true" />
-      <aside className={`sheet ${className}`} ref={panel} role="dialog" aria-modal="true" aria-hidden={!open} aria-label={label}>
+      <aside className={`sheet ${className}`} ref={panel} data-lenis-prevent role="dialog" aria-modal="true" aria-hidden={!open} aria-label={label}>
         {children}
       </aside>
     </>
