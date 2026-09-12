@@ -15,6 +15,7 @@ interface Props {
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const paperRgb = () => getComputedStyle(document.documentElement).getPropertyValue("--paper-rgb").trim() || "239, 233, 223";
 
 /**
  * Full-screen case study: the poster grows into a cover that stays pinned on the left while the
@@ -30,6 +31,8 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const { t } = usePrefs();
 
   const root = useRef<HTMLDivElement>(null);
+  const dim = useRef<HTMLDivElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
   const hero = useRef<HTMLDivElement>(null);
   const slot = useRef<HTMLDivElement>(null);
   const main = useRef<HTMLDivElement>(null);
@@ -56,20 +59,21 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
     if (work) { closing.current = false; setShown(work); return; }
     if (!shown || closing.current) return;
     closing.current = true;
-    const el = root.current, h = hero.current;
+    const el = root.current, h = hero.current, pn = panel.current;
     const poster = document.querySelector<HTMLElement>(`[data-work="${shown.id}"]`);
     const done = () => { setShown(null); poster?.focus({ preventScroll: true }); };
-    if (!motion.enabled || !el || !h) { done(); return; }
+    if (!motion.enabled || !el || !h || !pn) { done(); return; }
     const tl = gsap.timeline({ onComplete: done });
     const target = poster?.getBoundingClientRect();
     if (target && target.bottom > -200 && target.top < window.innerHeight + 200) {
-      // the cover shrinks back into its poster while the spread fades away
+      // the cover shrinks back into its poster while the panel and the dim fade away around it
       const from = h.getBoundingClientRect();
       gsap.set(h, { position: "fixed", top: from.top, left: from.left, width: from.width, height: from.height, zIndex: 3, margin: 0 });
       tl.to(".case__heroin", { opacity: 0, duration: 0.2 }, 0)
         .to([main.current, ".case__bar", ".case__cta"], { opacity: 0, duration: 0.3 }, 0)
         .to(h, { top: target.top, left: target.left, width: target.width, height: target.height, duration: 0.7, ease: "power4.inOut" }, 0.05)
-        .to(el, { backgroundColor: "rgba(0,0,0,0)", duration: 0.45, ease: "power2.in" }, 0.25)
+        .to(pn, { backgroundColor: `rgba(${paperRgb()}, 0)`, duration: 0.4, ease: "power2.in" }, 0.2)
+        .to(dim.current, { opacity: 0, duration: 0.45 }, 0.3)
         .to(h, { opacity: 0, duration: 0.18 }, 0.64);
     } else {
       tl.to(el, { opacity: 0, duration: 0.4, ease: "power2.in" });
@@ -98,27 +102,27 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
   // The cover's deco and kanji drift with the spread's scroll.
   useEffect(() => {
-    const el = root.current, h = hero.current;
-    if (!shown || !el || !h || !motion.enabled) return;
-    const onScroll = () => h.style.setProperty("--p", Math.min(1, el.scrollTop / 900).toFixed(3));
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+    const pn = panel.current, h = hero.current;
+    if (!shown || !pn || !h || !motion.enabled) return;
+    const onScroll = () => h.style.setProperty("--p", Math.min(1, pn.scrollTop / 900).toFixed(3));
+    pn.addEventListener("scroll", onScroll, { passive: true });
+    return () => pn.removeEventListener("scroll", onScroll);
   }, [shown]);
 
   // Open / switch animation.
   useLayoutEffect(() => {
-    const el = root.current, h = hero.current, s = slot.current, m = main.current;
-    if (!shown || !el || !h || !s || !m) return;
+    const el = root.current, pn = panel.current, h = hero.current, s = slot.current, m = main.current;
+    if (!shown || !el || !pn || !h || !s || !m) return;
     const switching = lastId.current !== null && lastId.current !== shown.id;
     lastId.current = shown.id;
-    el.scrollTop = 0;
+    pn.scrollTop = 0;
     h.style.setProperty("--p", "0");
     closeBtn.current?.focus({ preventScroll: true });
-    if (!motion.enabled) { gsap.set([el, m, h, ".case__bar", ".case__cta", ".case__heroin"], { clearProps: "all" }); return; }
+    if (!motion.enabled) { gsap.set([el, pn, dim.current, m, h, ".case__bar", ".case__cta", ".case__heroin"], { clearProps: "all" }); return; }
 
     const ctx = gsap.context(() => {
       // a reopen can interrupt the exit: start from clean inline styles
-      gsap.set([el, m, h, ".case__bar", ".case__cta", ".case__heroin", ".case__hero .poster__deco", ".case__jp"], { clearProps: "all" });
+      gsap.set([el, pn, dim.current, m, h, ".case__bar", ".case__cta", ".case__heroin", ".case__hero .poster__deco", ".case__jp"], { clearProps: "all" });
       const split = new SplitText(h.querySelectorAll(".case__title .line"), { type: "chars", charsClass: "char" });
       const d = dir.current;
       const tl = gsap.timeline();
@@ -128,7 +132,11 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           .fromTo([".case__hero .poster__deco", ".case__jp", ".case__heroin"], { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.05, clearProps: "opacity" }, 0.05);
       } else {
         at = 0.5;
-        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.35, clearProps: "opacity" }, 0)
+        // the dim and the panel fade in around the growing cover (no opacity on the panel itself:
+        // the cover lives inside it and must stay solid)
+        tl.fromTo(dim.current, { opacity: 0 }, { opacity: 1, duration: 0.45, clearProps: "opacity" }, 0)
+          .fromTo(pn, { backgroundColor: `rgba(${paperRgb()}, 0)` }, { backgroundColor: `rgba(${paperRgb()}, 1)`, duration: 0.45, clearProps: "backgroundColor" }, 0.05)
+          .fromTo(".case__bar", { opacity: 0 }, { opacity: 1, duration: 0.5, clearProps: "opacity" }, 0.35)
           .fromTo(".case__heroin", { opacity: 0 }, { opacity: 1, duration: 0.3, clearProps: "opacity" }, 0.55)
           .fromTo(".case__cta", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, clearProps: "all" }, 1);
         const to = s.getBoundingClientRect();
@@ -158,6 +166,9 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
   return (
     <div className="case" ref={root} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
+      {/* the page shows through around the panel; clicking it closes, like the ✕ */}
+      <div className="case__dim" ref={dim} onClick={onClose} data-cursor="close" aria-hidden="true" />
+      <div className="case__panel" ref={panel}>
       <div className="case__bar mono">
         <span ref={bar} data-text={`${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`}>{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
         <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
@@ -224,6 +235,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
