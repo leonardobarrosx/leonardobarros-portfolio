@@ -51,9 +51,9 @@ export function Ask({ ready }: { ready: boolean }) {
 
   const picked = () => {
     setThanks(true);
-    if (motion.enabled && question.current) decode(question.current, t.ask.thanks, 1);
+    if (motion.enabled && question.current) decode(question.current, t.ask.thanks, 1.2);
     else if (question.current) question.current.textContent = t.ask.thanks;
-    window.setTimeout(leave, 2200);
+    window.setTimeout(leave, 3200);
   };
 
   if (!show) return null;

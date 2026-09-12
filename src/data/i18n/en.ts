@@ -9,7 +9,7 @@ export const en: Strings = {
   },
   nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language", theme: "Theme" },
   themes: { violet: "Violet", red: "Red", orange: "Orange", amber: "Amber", green: "Green", teal: "Teal", blue: "Blue", pink: "Pink", ink: "Ink" },
-  ask: { kicker: "A quick one", question: "What's your favourite colour?", hint: "You can change it any time from the dot in the menu.", thanks: "Good choice. The site is yours now.", skip: "Skip" },
+  ask: { kicker: "A quick one", question: "What's your favourite colour?", hint: "You can change it any time from the dot in the menu.", thanks: "Good choice. Enjoy the portfolio, welcome!", skip: "Skip" },
   labels: { about: "About", services: "What I do", work: "Selected work", experience: "Experience", stack: "Stack", contact: "Contact", words: "Kind words", certs: "Certifications", orgs: "Where I've worked", toolbox: "The full toolbox" },
   toolbox: { languages: "Languages", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Data & storage", messaging: "Messaging & integrations", testing: "Testing & quality", security: "Security", observability: "Observability & ops", performance: "Performance & caching", accessibility: "Accessibility & i18n", automation: "Automation & AI", reporting: "Data, BI & reporting", validation: "Validation & forms", cloud: "Cloud & infrastructure", design: "Design & motion", methods: "Methods & tooling" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
