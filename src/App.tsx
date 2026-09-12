@@ -5,6 +5,7 @@ import { Preloader } from "./components/Preloader";
 import { Cursor } from "./components/Cursor";
 import { Nav } from "./components/Nav";
 import { Ask } from "./components/Ask";
+import { Scrollbar } from "./components/Scrollbar";
 import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
 import { About } from "./components/About";
@@ -26,6 +27,7 @@ function Site() {
       <Preloader onDone={onDone} />
       <Cursor />
       <Nav ready={ready} />
+      <Scrollbar />
       <Ask ready={ready} />
       {/* Remount all sections when language or motion changes so GSAP splits/triggers rebuild cleanly. */}
       <main key={`${lang}-${motionOn}`}>

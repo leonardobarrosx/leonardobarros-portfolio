@@ -10,7 +10,8 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 - Motion toggle (persisted) that also honours `prefers-reduced-motion`
 - Nine colour themes (red by default, then orange, amber, green, teal, blue, violet, pink, ink) from the swatch menu in the nav; persisted and applied before first paint. First-time visitors get asked their favourite colour by a small card once they start scrolling; hovering a swatch previews the theme, picking one keeps it
 - Intro plays once per session (`sessionStorage`)
-- Case studies open as a full-screen spread that grows out of the poster, with prev/next and deep links (`#work/<id>`)
+- Case studies open in a panel that grows out of the poster (cover pinned left, spread scrolling right), with prev/next, click-outside to close and deep links (`#work/<id>`)
+- Custom scrollbars (hairline track, accent thumb, draggable) for the page and the panels on pointer devices
 - Custom cursor, scroll progress, smooth anchors, full-screen mobile menu
 
 ## Run locally

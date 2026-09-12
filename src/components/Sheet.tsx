@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { gsap, lenisRef } from "../lib/gsap";
 import { motion } from "../state/prefs";
+import { Scrollbar } from "./Scrollbar";
 
 /** Right-hand slide-in panel with backdrop. Children are rendered by the caller; keep them mounted while closing. */
 export function Sheet({ open, onClose, label, children, className = "" }: { open: boolean; onClose: () => void; label?: string; children: ReactNode; className?: string }) {
@@ -49,6 +50,7 @@ export function Sheet({ open, onClose, label, children, className = "" }: { open
       <aside className={`sheet ${className}`} ref={panel} data-lenis-prevent role="dialog" aria-modal="true" aria-hidden={!open} aria-label={label}>
         {children}
       </aside>
+      {open && <Scrollbar target={panel} className="sb--sheet" />}
     </>
   );
 }

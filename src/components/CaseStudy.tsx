@@ -3,6 +3,7 @@ import { gsap, lenisRef, SplitText } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { decode } from "../lib/decode";
 import type { Work as WorkItem } from "../data/content";
+import { Scrollbar } from "./Scrollbar";
 
 interface Props {
   works: WorkItem[];
@@ -237,6 +238,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
         </div>
       </div>
       </div>
+      <Scrollbar target={panel} className="sb--case" />
     </div>
   );
 }
