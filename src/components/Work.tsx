@@ -4,11 +4,10 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { useCharWave } from "../hooks/useCharWave";
 import { Label } from "./Label";
-import { Sheet, useSticky } from "./Sheet";
-import { decode } from "../lib/decode";
+import { CaseStudy } from "./CaseStudy";
 import type { Work as WorkItem } from "../data/content";
 
-function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
+function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLElement | null) => void }) {
   const el = useRef<HTMLButtonElement>(null);
   const wave = useCharWave(".poster__title");
 
@@ -35,8 +34,9 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
       onPointerEnter={wave}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      onClick={() => onOpen(w.id)}
+      onClick={() => onOpen(w.id, el.current)}
       data-reveal="clip"
+      data-work={w.id}
       data-cursor="view"
       aria-haspopup="dialog"
     >
@@ -55,6 +55,7 @@ export function Work() {
   const root = useRef<HTMLElement>(null);
   const grid = useRef<HTMLDivElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [origin, setOrigin] = useState<DOMRect | null>(null);
   useReveal(root);
 
   // Deep link: #work/<id> opens the case study; the URL follows the panel.
@@ -68,21 +69,20 @@ export function Work() {
     return () => window.removeEventListener("hashchange", fromHash);
   }, [t]);
 
-  const open = useCallback((id: string) => { history.replaceState(null, "", `#work/${id}`); setOpenId(id); }, []);
+  const open = useCallback((id: string, from?: HTMLElement | null) => {
+    setOrigin(from ? from.getBoundingClientRect() : null);
+    history.replaceState(null, "", `#work/${id}`);
+    setOpenId(id);
+  }, []);
   const close = useCallback(() => { history.replaceState(null, "", "#work"); setOpenId(null); }, []);
 
   const index = t.works.findIndex((w) => w.id === openId);
   const step = useCallback((dir: 1 | -1) => {
     if (index < 0) return;
     const next = t.works[(index + dir + t.works.length) % t.works.length];
-    const body = document.querySelector<HTMLElement>(".sheet--case .sheet__body");
-    if (motion.enabled && body) {
-      gsap.to(body, { opacity: 0, x: dir * -16, duration: 0.2, ease: "power2.in", onComplete: () => {
-        open(next.id);
-        gsap.fromTo(body, { opacity: 0, x: dir * 16 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out", clearProps: "all" });
-      } });
-    } else open(next.id);
-  }, [index, t.works, open]);
+    history.replaceState(null, "", `#work/${next.id}`);
+    setOpenId(next.id);
+  }, [index, t.works]);
 
   // Arrow keys move between case studies while one is open.
   useEffect(() => {
@@ -111,15 +111,6 @@ export function Work() {
     return () => ctx.revert();
   }, [t]);
 
-  const current = index >= 0 ? t.works[index] : null;
-  const w = useSticky(current);
-  const topLine = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    if (current && topLine.current && motion.enabled) decode(topLine.current, topLine.current.dataset.text || "", 0.9);
-  }, [current]);
-  const shownIndex = w ? t.works.findIndex((x) => x.id === w.id) : 0;
-  const pad = (n: number) => String(n).padStart(2, "0");
-
   return (
     <section className="section" id="work" ref={root}>
       <div className="wrap">
@@ -128,54 +119,7 @@ export function Work() {
           {t.works.map((item) => <Poster w={item} key={item.id} onOpen={open} />)}
         </div>
       </div>
-      <Sheet open={!!current} onClose={close} label={w?.title.join(" ")} className="sheet--case">
-        {w && (
-          <>
-            <div className="sheet__top mono">
-              <span ref={topLine} data-text={`${pad(shownIndex + 1)} / ${pad(t.works.length)} · ${w.kind} · ${w.year}`}>{pad(shownIndex + 1)} / {pad(t.works.length)} · {w.kind} · {w.year}</span>
-              <button className="sheet__close mono" onClick={close}>{t.sheet.close} ✕</button>
-            </div>
-            <div className="sheet__body case">
-              <div className={`case__cover poster poster--${w.variant}`} aria-hidden="true">
-                <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
-                <h3 className="poster__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
-                <span className="poster__jp jp vertical">{w.jp}</span>
-                <span className="poster__deco" />
-              </div>
-              <div className="case__meta mono">
-                <span><b>{t.sheet.year}</b> {w.year}</span>
-                <span><b>{t.sheet.type}</b> {w.kind}</span>
-                <span><b>{t.sheet.role}</b> {w.role.join(" · ")}</span>
-              </div>
-              <div className="case__block">
-                <h4 className="mono muted">{t.sheet.overview}</h4>
-                <p className="sheet__long">{w.long}</p>
-              </div>
-              <div className="case__block">
-                <h4 className="mono muted">{t.sheet.did}</h4>
-                <ul className="sheet__bullets">{w.highlights.map((h) => <li key={h}>{h}</li>)}</ul>
-              </div>
-              <div className="case__block">
-                <h4 className="mono muted">{t.sheet.deliverables}</h4>
-                <ul className="chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul>
-              </div>
-              <div className="case__block">
-                <h4 className="mono muted">{t.sheet.stack}</h4>
-                <ul className="chips chips--stack">{w.stackList.map((d) => <li key={d}>{d}</li>)}</ul>
-              </div>
-            </div>
-            <div className="sheet__foot sheet__foot--case">
-              <div className="case__nav">
-                <button className="case__navbtn mono" onClick={() => step(-1)} aria-label={t.sheet.prev}>← {t.sheet.prev}</button>
-                <button className="case__navbtn mono" onClick={() => step(1)} aria-label={t.sheet.next}>{t.sheet.next} →</button>
-              </div>
-              {w.href
-                ? <a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer">{t.sheet.open} ↗</a>
-                : <span className="mono muted">{t.sheet.private}</span>}
-            </div>
-          </>
-        )}
-      </Sheet>
+      <CaseStudy works={t.works} index={index} origin={origin} onClose={close} onStep={step} />
     </section>
   );
 }
