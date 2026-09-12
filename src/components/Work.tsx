@@ -3,6 +3,7 @@ import { gsap, lenisRef } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
+import { Sheet, useSticky } from "./Sheet";
 import type { Work as WorkItem } from "../data/content";
 
 function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
@@ -39,81 +40,6 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string) => void }) {
   );
 }
 
-function CaseSheet({ work, onClose }: { work: WorkItem | null; onClose: () => void }) {
-  const { t } = usePrefs();
-  const panel = useRef<HTMLDivElement>(null);
-  const backdrop = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState<WorkItem | null>(null);
-
-  // Keep the last work rendered while sliding out.
-  useEffect(() => { if (work) setShown(work); }, [work]);
-
-  // CSS keeps the panel off-screen before hydration; hand the transform over to GSAP once.
-  useLayoutEffect(() => {
-    if (panel.current) gsap.set(panel.current, { x: 0, xPercent: 100 });
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!panel.current || !backdrop.current) return;
-    const open = !!work;
-    document.body.classList.toggle("is-locked", open);
-    lenisRef.current?.[open ? "stop" : "start"]();
-    if (!motion.enabled) {
-      gsap.set(panel.current, { xPercent: open ? 0 : 100 });
-      gsap.set(backdrop.current, { opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none" });
-      return;
-    }
-    if (open) {
-      gsap.timeline()
-        .to(backdrop.current, { opacity: 1, pointerEvents: "auto", duration: 0.4 }, 0)
-        .to(panel.current, { xPercent: 0, duration: 0.8, ease: "power4.inOut" }, 0)
-        .from(".sheet__body > *", { y: 24, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 }, 0.35);
-    } else {
-      gsap.timeline()
-        .to(panel.current, { xPercent: 100, duration: 0.6, ease: "power4.inOut" }, 0)
-        .to(backdrop.current, { opacity: 0, pointerEvents: "none", duration: 0.4 }, 0.1);
-    }
-  }, [work]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  const w = shown;
-  return (
-    <>
-      <div className="sheet-backdrop" ref={backdrop} onClick={onClose} aria-hidden="true" />
-      <aside className="sheet" ref={panel} role="dialog" aria-modal="true" aria-hidden={!work} aria-label={w?.title.join(" ")}>
-        {w && (
-          <>
-            <div className="sheet__top mono">
-              <span>{w.kind} · {w.year}</span>
-              <button className="sheet__close mono" onClick={onClose}>{t.sheet.close} ✕</button>
-            </div>
-            <div className="sheet__body">
-              <span className="sheet__jp jp">{w.jp}</span>
-              <h3 className="sheet__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
-              <p className="sheet__long">{w.long}</p>
-              <dl className="sheet__facts mono">
-                <b>{t.sheet.year}</b><span>{w.year}</span>
-                <b>{t.sheet.type}</b><span>{w.kind}</span>
-                <b>{t.sheet.stack}</b><span>{w.stack}</span>
-              </dl>
-            </div>
-            <div className="sheet__foot">
-              {w.href
-                ? <a className="btn" href={w.href} target="_blank" rel="noreferrer">{t.sheet.open} ↗</a>
-                : <span className="mono muted">{t.sheet.private}</span>}
-            </div>
-          </>
-        )}
-      </aside>
-    </>
-  );
-}
-
 export function Work() {
   const { t } = usePrefs();
   const root = useRef<HTMLElement>(null);
@@ -121,7 +47,7 @@ export function Work() {
   const [openId, setOpenId] = useState<string | null>(null);
   useReveal(root);
 
-  // Deep link: #work/<id> opens the sheet; keeps the URL in sync.
+  // Deep link: #work/<id> opens the sheet; the URL follows the panel.
   useEffect(() => {
     const fromHash = () => {
       const m = location.hash.match(/^#work\/([a-z0-9-]+)$/);
@@ -151,15 +77,42 @@ export function Work() {
     return () => ctx.revert();
   }, [t]);
 
+  const current = t.works.find((w) => w.id === openId) ?? null;
+  const w = useSticky(current);
+
   return (
     <section className="section" id="work" ref={root}>
       <div className="wrap">
         <Label n="03" text={t.labels.work} jp="作品" />
         <div className="work__grid" ref={grid}>
-          {t.works.map((w) => <Poster w={w} key={w.id} onOpen={open} />)}
+          {t.works.map((item) => <Poster w={item} key={item.id} onOpen={open} />)}
         </div>
       </div>
-      <CaseSheet work={t.works.find((w) => w.id === openId) ?? null} onClose={close} />
+      <Sheet open={!!current} onClose={close} label={w?.title.join(" ")}>
+        {w && (
+          <>
+            <div className="sheet__top mono">
+              <span>{w.kind} · {w.year}</span>
+              <button className="sheet__close mono" onClick={close}>{t.sheet.close} ✕</button>
+            </div>
+            <div className="sheet__body">
+              <span className="sheet__jp jp">{w.jp}</span>
+              <h3 className="sheet__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
+              <p className="sheet__long">{w.long}</p>
+              <dl className="sheet__facts mono">
+                <b>{t.sheet.year}</b><span>{w.year}</span>
+                <b>{t.sheet.type}</b><span>{w.kind}</span>
+                <b>{t.sheet.stack}</b><span>{w.stack}</span>
+              </dl>
+            </div>
+            <div className="sheet__foot">
+              {w.href
+                ? <a className="btn" href={w.href} target="_blank" rel="noreferrer">{t.sheet.open} ↗</a>
+                : <span className="mono muted">{t.sheet.private}</span>}
+            </div>
+          </>
+        )}
+      </Sheet>
     </section>
   );
 }

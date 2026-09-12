@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap, SplitText } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
-import street from "../assets/photo-street.jpg";
 
 const KATA = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ";
 
@@ -30,7 +29,6 @@ export function Hero({ ready }: { ready: boolean }) {
     const el = root.current;
     if (!motion.enabled) {
       gsap.set(el.querySelector(".hero__sun"), { scale: 1 });
-      gsap.set(el.querySelector(".hero__photo"), { clipPath: "inset(0 0 0% 0)" });
       return;
     }
     const ctx = gsap.context(() => {
@@ -40,8 +38,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
       gsap.timeline({ defaults: { ease: "power4.out" } })
         .from(chars, { yPercent: 110, rotate: 3, duration: 1.3, stagger: 0.03 }, 0)
-        .fromTo(".hero__photo", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 1.4, ease: "power4.inOut" }, 0.1)
-        .to(".hero__sun", { scale: 1, duration: 1.5, ease: "expo.out" }, 0.4)
+        .to(".hero__sun", { scale: 1, duration: 1.5, ease: "expo.out" }, 0.2)
         .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.6)
         .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.5)
         .add(scramble(role, t.meta.role, 1.1), 0.7)
@@ -51,8 +48,7 @@ export function Hero({ ready }: { ready: boolean }) {
       const st = { trigger: el, start: "top top", end: "bottom top", scrub: true };
       gsap.to(".hero__title", { yPercent: 14, ease: "none", scrollTrigger: st });
       gsap.to(".hero__sun", { yPercent: -24, ease: "none", scrollTrigger: st });
-      gsap.to(".hero__photo", { yPercent: -10, ease: "none", scrollTrigger: st });
-      gsap.to(".hero__statement", { y: 40, opacity: 0.2, ease: "none", scrollTrigger: st });
+      gsap.to(".hero__statement, .hero__role", { y: 28, ease: "none", scrollTrigger: st });
     }, el);
     return () => ctx.revert();
   }, [ready, t]);
@@ -73,7 +69,6 @@ export function Hero({ ready }: { ready: boolean }) {
           <span className="line">{shared.first}</span>
           <span className="line">{shared.last}</span>
         </h1>
-        <figure className="hero__photo" aria-hidden="true"><img src={street} alt="" width="900" height="1124" /><span className="mono">{shared.coords}</span></figure>
         <div className="hero__sun" aria-hidden="true" />
         <div className="hero__role mono">
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
