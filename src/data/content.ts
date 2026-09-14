@@ -21,6 +21,7 @@ export const LANGS: { code: Lang; name: string; html: string }[] = [
 
 export const shared = {
   name: "Leonardo Barros",
+  url: "https://leonardobarrosx.github.io/leonardobarros-portfolio/",
   first: "Leonardo",
   last: "Barros",
   nameJp: "レオナルド・バロス",
@@ -31,6 +32,7 @@ export const shared = {
   email: "xleonardobarros@gmail.com",
   linkedin: "https://www.linkedin.com/in/leonardobarrosx",
   github: "https://github.com/leonardobarrosx",
+  cv: { en: "cv/Leonardo-Barros-CV-EN.pdf", pt: "cv/Leonardo-Barros-CV-PT.pdf" },
   stack: ["React", "TypeScript", "Flutter", "Node.js", "Python", "Go", "C#", "Laravel", "Angular", "Vue", "Django", "Express", "PostgreSQL", "Oracle", "MongoDB", "Redis", "Firebase", "Supabase", "Tailwind", "n8n", "Docker", "Nginx", "GitHub Actions", "Jest", "Cypress", "Figma", "Illustrator", "GSAP"],
 };
 
@@ -100,6 +102,7 @@ export type Work = (typeof worksBase)[WorkId] & Strings["works"][WorkId];
 export type Experience = (typeof xpBase)[XpId] & Strings["experience"][XpId];
 
 export interface Content {
+  seo: Strings["seo"];
   meta: Strings["meta"] & { roleJp: string; tagline: string; volume: string };
   nav: Strings["nav"];
   themes: Strings["themes"];
@@ -123,6 +126,7 @@ export interface Content {
 
 function assemble(s: Strings): Content {
   return {
+    seo: s.seo,
     meta: { ...s.meta, roleJp: shared.roleJp, tagline: shared.tagline, volume: shared.volume },
     nav: s.nav,
     themes: s.themes,

@@ -8,7 +8,7 @@ import { shared } from "../data/content";
 import { Landmarks } from "./Landmarks";
 
 export function Contact() {
-  const { t } = usePrefs();
+  const { t, lang } = usePrefs();
   const root = useRef<HTMLElement>(null);
   const btn = useRef<HTMLAnchorElement>(null);
   const [copied, setCopied] = useState(false);
@@ -54,6 +54,11 @@ export function Contact() {
               <button onClick={copy}>{copied ? t.contact.copied + " ✓" : t.contact.copy}</button>
               <a href={shared.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
               <a href={shared.github} target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+            <div className="contact__cv mono">
+              <span className="muted">{t.contact.cv} · {t.contact.cvNote}</span>
+              <a className={lang === "pt" ? "is-active" : ""} href={`${import.meta.env.BASE_URL}${shared.cv.pt}`} download>PT ↓</a>
+              <a className={lang !== "pt" ? "is-active" : ""} href={`${import.meta.env.BASE_URL}${shared.cv.en}`} download>EN ↓</a>
             </div>
           </div>
         </div>

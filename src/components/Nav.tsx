@@ -18,6 +18,7 @@ export function Nav({ ready }: { ready: boolean }) {
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
+  const cvHref = `${import.meta.env.BASE_URL}${lang === "pt" ? shared.cv.pt : shared.cv.en}`;
   const bar = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const progress = useRef<HTMLDivElement>(null);
@@ -90,7 +91,7 @@ export function Nav({ ready }: { ready: boolean }) {
     if (el) decode(el, el.dataset.text || el.textContent || "", 0.7);
   };
   const links = SECTIONS.map((id) => (
-    <a key={id} href={`#${id}`} onClick={(e) => go(e, id)} onPointerEnter={hoverScramble} className={active === id ? "is-active" : ""}><span data-text={t.nav[id]}>{t.nav[id]}</span></a>
+    <a key={id} href={`#${id}`} onClick={(e) => go(e, id)} onPointerEnter={hoverScramble} className={active === id ? "is-active" : ""} aria-label={t.nav[id]} aria-current={active === id ? "true" : undefined}><span data-text={t.nav[id]} aria-hidden="true">{t.nav[id]}</span></a>
   ));
 
   return (
@@ -106,6 +107,9 @@ export function Nav({ ready }: { ready: boolean }) {
             <ThemeMenu />
             <div className="pill seg">
               <button onClick={toggleMotion} aria-pressed={motionOn} title={t.nav.motion}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
+            </div>
+            <div className="pill seg nav__cv">
+              <a href={cvHref} download title={t.contact.cv}>{t.nav.cv} ↓</a>
             </div>
             <div className="pill seg nav__burger">
               <button onClick={() => setOpen(true)} aria-expanded={open}>{t.nav.menu}</button>
@@ -127,6 +131,7 @@ export function Nav({ ready }: { ready: boolean }) {
         <div className="menu__foot mono">
           <LangMenu inline />
           <ThemeMenu inline />
+          <a className="menu__cv" href={cvHref} download>{t.contact.cv} ↓</a>
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>
         </div>

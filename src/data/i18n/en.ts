@@ -7,7 +7,8 @@ export const en: Strings = {
     statement: ["Ten years building software that ", "works", " and looks the part. Web, mobile, data and the glue in between."],
     location: "João Pessoa, Brazil",
   },
-  nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language", theme: "Theme" },
+  seo: { title: "Leonardo Barros — Full-Stack & Mobile Developer", description: "Full-Stack & Mobile Developer and UI/UX designer in João Pessoa, Brazil. Ten years building web, mobile and data products with React, Flutter, TypeScript, Node.js, Python, Go and C#." },
+  nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language", theme: "Theme", skip: "Skip to content", cv: "CV" },
   themes: { violet: "Violet", red: "Red", orange: "Orange", amber: "Amber", green: "Green", teal: "Teal", blue: "Blue", pink: "Pink", ink: "Ink" },
   ask: { kicker: "A quick one", question: "What's your favourite colour?", hint: "You can change it any time from the dot in the menu.", thanks: "Good choice. Enjoy the portfolio, welcome!", skip: "Skip" },
   labels: { about: "About", services: "What I do", work: "Selected work", experience: "Experience", stack: "Stack", contact: "Contact", words: "Kind words", certs: "Certifications", orgs: "Where I've worked", toolbox: "The full toolbox" },
@@ -74,5 +75,5 @@ export const en: Strings = {
     { name: "Hardware/Software Technician", issuer: "Connect Courses", meta: "Jun 2016" },
   ],
   credentials: ["English C2 (EF SET 72/100)", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["Let's", "talk."], note: "Open to full-time roles in development, data or IT operations, remote or hybrid. Freelance too. Portuguese native, English C2. Based in João Pessoa, Brazil, UTC−3.", copy: "Copy email", copied: "Copied", top: "Back to top" },
+  contact: { title: ["Let's", "talk."], note: "Open to full-time roles in development, data or IT operations, remote or hybrid. Freelance too. Portuguese native, English C2. Based in João Pessoa, Brazil, UTC−3.", copy: "Copy email", copied: "Copied", top: "Back to top", cv: "Download CV", cvNote: "PDF, updated 2026" },
 };

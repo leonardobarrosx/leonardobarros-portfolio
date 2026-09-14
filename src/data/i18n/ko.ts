@@ -7,7 +7,8 @@ export const ko: Strings = {
     statement: ["10년 동안 ", "제대로 작동하고", " 보기에도 좋은 소프트웨어를 만들어 왔습니다. 웹, 모바일, 데이터, 그리고 그 사이를 잇는 것들."],
     location: "주앙페소아, 브라질",
   },
-  nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마" },
+  seo: { title: "레오나르도 바로스 — 풀스택 & 모바일 개발자", description: "브라질 주앙페소아의 풀스택 & 모바일 개발자이자 UI/UX 디자이너. React, Flutter, TypeScript, Node.js, Python, Go, C#로 10년간 웹·모바일·데이터 제품을 만들어 왔습니다." },
+  nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마", skip: "본문으로 건너뛰기", cv: "CV" },
   themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹" },
   ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 포트폴리오를 둘러보세요, 환영합니다!", skip: "건너뛰기" },
   labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", orgs: "일했던 곳", toolbox: "전체 툴박스" },
@@ -74,5 +75,5 @@ export const ko: Strings = {
     { name: "하드웨어/소프트웨어 기술자", issuer: "Connect Cursos", meta: "2016년 6월" },
   ],
   credentials: ["영어 C2 (EF SET 72/100)", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["이야기", "해요"], note: "개발, 데이터, IT 운영 분야의 정규직에 열려 있습니다. 원격 또는 하이브리드. 프리랜스도 환영. 포르투갈어 모국어, 영어 C2. 브라질 주앙페소아 거주, UTC−3.", copy: "이메일 복사", copied: "복사됨", top: "맨 위로" },
+  contact: { title: ["이야기", "해요"], note: "개발, 데이터, IT 운영 분야의 정규직에 열려 있습니다. 원격 또는 하이브리드. 프리랜스도 환영. 포르투갈어 모국어, 영어 C2. 브라질 주앙페소아 거주, UTC−3.", copy: "이메일 복사", copied: "복사됨", top: "맨 위로", cv: "이력서 다운로드", cvNote: "PDF, 2026년 업데이트" },
 };

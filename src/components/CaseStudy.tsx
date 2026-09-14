@@ -4,6 +4,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { decode } from "../lib/decode";
 import type { Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface Props {
   works: WorkItem[];
@@ -43,6 +44,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const dir = useRef<1 | -1>(1);
   const busy = useRef(false);
   const closing = useRef(false);
+  useFocusTrap(root, !!shown);
 
   // Step with a direction-aware exit first, then let the parent swap the project.
   const step = useCallback((d: 1 | -1) => {
@@ -171,7 +173,8 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
       <div className="case__dim" ref={dim} onClick={onClose} data-cursor="close" aria-hidden="true" />
       <div className="case__panel" ref={panel}>
       <div className="case__bar mono">
-        <span ref={bar} data-text={`${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`}>{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
+        <span ref={bar} data-text={`${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`} aria-hidden="true">{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
+        <span className="sr-only">{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
         <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
         <span className="case__bar-right">
           <span className="case__keys" aria-hidden="true"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>

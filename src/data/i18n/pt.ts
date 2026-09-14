@@ -7,7 +7,8 @@ export const pt: Strings = {
     statement: ["Dez anos construindo software que ", "funciona", " e tem cara de produto. Web, mobile, dados e a cola entre eles."],
     location: "João Pessoa, Brasil",
   },
-  nav: { work: "Trabalhos", about: "Sobre", experience: "Experiência", contact: "Contato", menu: "Menu", close: "Fechar", motion: "Animações", on: "on", off: "off", language: "Idioma", theme: "Tema" },
+  seo: { title: "Leonardo Barros — Desenvolvedor Full-Stack & Mobile", description: "Desenvolvedor Full-Stack & Mobile e designer de UI/UX em João Pessoa. Dez anos construindo produtos web, mobile e de dados com React, Flutter, TypeScript, Node.js, Python, Go e C#." },
+  nav: { work: "Trabalhos", about: "Sobre", experience: "Experiência", contact: "Contato", menu: "Menu", close: "Fechar", motion: "Animações", on: "on", off: "off", language: "Idioma", theme: "Tema", skip: "Pular para o conteúdo", cv: "CV" },
   themes: { violet: "Violeta", red: "Vermelho", orange: "Laranja", amber: "Âmbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
   ask: { kicker: "Uma pergunta rápida", question: "Qual é a sua cor preferida?", hint: "Dá pra mudar depois na bolinha do menu.", thanks: "Boa escolha. Agora pode ver o portfólio, seja bem-vindo!", skip: "Pular" },
   labels: { about: "Sobre", services: "O que eu faço", work: "Trabalhos selecionados", experience: "Experiência", stack: "Stack", contact: "Contato", words: "Depoimentos", certs: "Certificações", orgs: "Por onde passei", toolbox: "A caixa de ferramentas completa" },
@@ -74,5 +75,5 @@ export const pt: Strings = {
     { name: "Técnico em Hardware/Software", issuer: "Connect Cursos", meta: "jun 2016" },
   ],
   credentials: ["Inglês C2 (EF SET 72/100)", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["Vamos", "falar."], note: "Aberto a vagas full-time em desenvolvimento, dados ou operações de TI, remoto ou híbrido. Freelance também. Português nativo, inglês C2. Baseado em João Pessoa, Brasil, UTC−3.", copy: "Copiar e-mail", copied: "Copiado", top: "Voltar ao topo" },
+  contact: { title: ["Vamos", "falar."], note: "Aberto a vagas full-time em desenvolvimento, dados ou operações de TI, remoto ou híbrido. Freelance também. Português nativo, inglês C2. Baseado em João Pessoa, Brasil, UTC−3.", copy: "Copiar e-mail", copied: "Copiado", top: "Voltar ao topo", cv: "Baixar currículo", cvNote: "PDF, atualizado em 2026" },
 };

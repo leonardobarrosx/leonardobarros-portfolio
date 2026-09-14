@@ -7,7 +7,8 @@ export const ja: Strings = {
     statement: ["10年間、", "ちゃんと動いて", "見た目も良いソフトウェアを作ってきました。Web、モバイル、データ、そしてそれらをつなぐもの。"],
     location: "ジョアン・ペソア、ブラジル",
   },
-  nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語", theme: "テーマ" },
+  seo: { title: "レオナルド・バロス — フルスタック＆モバイル開発者", description: "ブラジル・ジョアンペソア在住のフルスタック＆モバイル開発者、UI/UXデザイナー。React、Flutter、TypeScript、Node.js、Python、Go、C#でウェブ・モバイル・データ製品を10年間開発。" },
+  nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語", theme: "テーマ", skip: "本文へスキップ", cv: "CV" },
   themes: { violet: "紫", red: "赤", orange: "橙", amber: "琥珀", green: "緑", teal: "青緑", blue: "青", pink: "桃", ink: "墨" },
   ask: { kicker: "ひとつだけ質問", question: "好きな色はどれですか？", hint: "メニューの丸からいつでも変更できます。", thanks: "いい選択です。ポートフォリオをどうぞ、ようこそ！", skip: "スキップ" },
   labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", orgs: "これまでの所属", toolbox: "ツールボックスのすべて" },
@@ -74,5 +75,5 @@ export const ja: Strings = {
     { name: "ハードウェア／ソフトウェア技術者", issuer: "Connect Cursos", meta: "2016年6月" },
   ],
   credentials: ["英語 C2（EF SET 72/100）", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["話しま", "しょう"], note: "開発、データ、IT運用のフルタイム職を募集中。リモートまたはハイブリッド。フリーランスも歓迎。ポルトガル語母語、英語C2。ブラジル・ジョアン・ペソア在住、UTC−3。", copy: "メールをコピー", copied: "コピーしました", top: "トップへ戻る" },
+  contact: { title: ["話しま", "しょう"], note: "開発、データ、IT運用のフルタイム職を募集中。リモートまたはハイブリッド。フリーランスも歓迎。ポルトガル語母語、英語C2。ブラジル・ジョアン・ペソア在住、UTC−3。", copy: "メールをコピー", copied: "コピーしました", top: "トップへ戻る", cv: "履歴書をダウンロード", cvNote: "PDF・2026年更新" },
 };
