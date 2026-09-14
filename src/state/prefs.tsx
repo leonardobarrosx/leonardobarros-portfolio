@@ -23,6 +23,9 @@ export const motion = { enabled: !systemReduced && read(LS_MOTION) !== "off" };
 
 const CODES = LANGS.map((l) => l.code);
 function initialLang(): Lang {
+  // `?lang=pt` wins (shared links, hreflang), then the saved choice, then the browser
+  const fromUrl = new URLSearchParams(location.search).get("lang") as Lang | null;
+  if (fromUrl && CODES.includes(fromUrl)) { write(LS_LANG, fromUrl); return fromUrl; }
   const saved = read(LS_LANG) as Lang | null;
   if (saved && CODES.includes(saved)) return saved;
   const nav = (navigator.language || "en").toLowerCase().slice(0, 2) as Lang;
@@ -63,7 +66,11 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
   const [motionOn, setMotionOn] = useState(motion.enabled);
   const [theme, setThemeState] = useState<ThemeId>(initialTheme);
 
-  useEffect(() => { document.documentElement.lang = LANGS.find((l) => l.code === lang)?.html ?? "en"; }, [lang]);
+  useEffect(() => {
+    document.documentElement.lang = LANGS.find((l) => l.code === lang)?.html ?? "en";
+    document.title = content[lang].seo.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", content[lang].seo.description);
+  }, [lang]);
   // The bootstrap in <head> already set data-theme; this keeps the meta colour and listeners in sync.
   useEffect(() => { applyTheme(theme); }, [theme]);
 

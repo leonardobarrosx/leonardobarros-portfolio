@@ -2,11 +2,13 @@ import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { gsap, lenisRef } from "../lib/gsap";
 import { motion } from "../state/prefs";
 import { Scrollbar } from "./Scrollbar";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 /** Right-hand slide-in panel with backdrop. Children are rendered by the caller; keep them mounted while closing. */
 export function Sheet({ open, onClose, label, children, className = "" }: { open: boolean; onClose: () => void; label?: string; children: ReactNode; className?: string }) {
   const panel = useRef<HTMLElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
+  useFocusTrap(panel, open);
 
   // CSS parks the panel off-screen before hydration; hand the transform to GSAP once (percent, not px).
   useLayoutEffect(() => {

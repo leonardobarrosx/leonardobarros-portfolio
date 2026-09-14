@@ -12,6 +12,9 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 - Intro plays once per session (`sessionStorage`)
 - Case studies open in a panel that grows out of the poster (cover pinned left, spread scrolling right), with prev/next, click-outside to close and deep links (`#work/<id>`)
 - Custom scrollbars (hairline track, accent thumb, draggable) for the page and the panels on pointer devices
+- Share-ready: Open Graph / Twitter card with a rendered `og.png`, canonical + `hreflang` for the seven languages (`?lang=xx` deep links), JSON-LD Person, sitemap, robots, web manifest and PNG icons; title and description follow the active language
+- CV download (EN/PT) in the nav, the mobile menu and the contact section
+- Accessibility: skip link, focus trapped inside dialogs and handed back on close, decorative decoding text hidden from assistive tech
 - Custom cursor, scroll progress, smooth anchors, full-screen mobile menu
 
 ## Run locally

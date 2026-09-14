@@ -17,20 +17,21 @@ import { Stack } from "./components/Stack";
 import { Contact } from "./components/Contact";
 
 function Site() {
-  const { lang, motionOn } = usePrefs();
+  const { lang, motionOn, t } = usePrefs();
   const [ready, setReady] = useState(false);
   const onDone = useCallback(() => setReady(true), []);
   useLenis(ready && motionOn);
 
   return (
     <>
+      <a className="skip" href="#main">{t.nav.skip}</a>
       <Preloader onDone={onDone} />
       <Cursor />
       <Nav ready={ready} />
       <Scrollbar />
       <Ask ready={ready} />
       {/* Remount all sections when language or motion changes so GSAP splits/triggers rebuild cleanly. */}
-      <main key={`${lang}-${motionOn}`}>
+      <main key={`${lang}-${motionOn}`} id="main" tabIndex={-1}>
         <Hero ready={ready} />
         <Marquee />
         <About />

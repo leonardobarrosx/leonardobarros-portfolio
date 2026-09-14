@@ -565,6 +565,20 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 .themes .swatch.is-active i { box-shadow: 0 0 0 2px var(--plum-900), 0 0 0 3.5px var(--sw-2); }
 .menu .swatches { grid-template-columns: repeat(9, 26px); }
 
+/* ---------- accessibility helpers ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: fixed; top: 10px; left: 10px; z-index: 200; padding: 10px 14px; background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 999px; transform: translateY(-200%); opacity: 0; transition: transform 0.25s var(--ease-out), opacity 0.25s; }
+.skip:focus-visible { transform: none; opacity: 1; outline-offset: 2px; }
+main:focus { outline: none; }
+
+/* ---------- CV links ---------- */
+.nav__cv a { white-space: nowrap; }
+.menu__cv { color: var(--paper); border-bottom: 1px solid var(--line-dark); padding-bottom: 2px; }
+.contact__cv { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: var(--s2); }
+.contact__cv a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+.contact__cv a:hover, .contact__cv a.is-active { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+@media (max-width: 900px) { .nav__cv { display: none; } }
+
 /* ---------- scrollbars: the site draws its own on pointer devices ---------- */
 @media (hover: hover) {
   html, .case__panel, .sheet { scrollbar-width: none; }

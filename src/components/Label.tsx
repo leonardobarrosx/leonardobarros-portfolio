@@ -15,7 +15,8 @@ export function Label({ n, text, jp }: { n: string; text: string; jp?: string })
   }, [n, text]);
   return (
     <div className="label">
-      <span className="mono label__text" ref={el}>{n} / {text}</span>
+      <span className="mono label__text" ref={el} aria-hidden="true">{n} / {text}</span>
+      <span className="sr-only">{n} / {text}</span>
       {jp && <span className="label__jp jp">{jp}</span>}
       <span className="label__rule" aria-hidden="true" />
     </div>

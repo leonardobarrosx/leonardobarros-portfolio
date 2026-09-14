@@ -7,7 +7,8 @@ export const es: Strings = {
     statement: ["Diez años construyendo software que ", "funciona", " y se ve como debe. Web, móvil, datos y el pegamento entre ellos."],
     location: "João Pessoa, Brasil",
   },
-  nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", contact: "Contacto", menu: "Menú", close: "Cerrar", motion: "Animaciones", on: "on", off: "off", language: "Idioma", theme: "Tema" },
+  seo: { title: "Leonardo Barros — Desarrollador Full-Stack & Mobile", description: "Desarrollador Full-Stack & Mobile y diseñador UI/UX en João Pessoa, Brasil. Diez años creando productos web, móviles y de datos con React, Flutter, TypeScript, Node.js, Python, Go y C#." },
+  nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", contact: "Contacto", menu: "Menú", close: "Cerrar", motion: "Animaciones", on: "on", off: "off", language: "Idioma", theme: "Tema", skip: "Saltar al contenido", cv: "CV" },
   themes: { violet: "Violeta", red: "Rojo", orange: "Naranja", amber: "Ámbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
   ask: { kicker: "Una pregunta rápida", question: "¿Cuál es tu color favorito?", hint: "Puedes cambiarlo cuando quieras desde el punto del menú.", thanks: "Buena elección. Ahora sí, disfruta el portafolio, ¡bienvenido!", skip: "Saltar" },
   labels: { about: "Sobre mí", services: "Qué hago", work: "Trabajos seleccionados", experience: "Experiencia", stack: "Stack", contact: "Contacto", words: "Lo que dicen", certs: "Certificaciones", orgs: "Dónde he trabajado", toolbox: "La caja de herramientas completa" },
@@ -74,5 +75,5 @@ export const es: Strings = {
     { name: "Técnico en Hardware/Software", issuer: "Connect Cursos", meta: "jun 2016" },
   ],
   credentials: ["Inglés C2 (EF SET 72/100)", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["Vamos a", "hablar."], note: "Abierto a puestos de tiempo completo en desarrollo, datos u operaciones de TI, remoto o híbrido. Freelance también. Portugués nativo, inglés C2. Radicado en João Pessoa, Brasil, UTC−3.", copy: "Copiar email", copied: "Copiado", top: "Volver arriba" },
+  contact: { title: ["Vamos a", "hablar."], note: "Abierto a puestos de tiempo completo en desarrollo, datos u operaciones de TI, remoto o híbrido. Freelance también. Portugués nativo, inglés C2. Radicado en João Pessoa, Brasil, UTC−3.", copy: "Copiar email", copied: "Copiado", top: "Volver arriba", cv: "Descargar CV", cvNote: "PDF, actualizado en 2026" },
 };

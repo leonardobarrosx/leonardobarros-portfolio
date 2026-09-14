@@ -7,7 +7,8 @@ export const zh: Strings = {
     statement: ["十年来，我一直在打造", "既好用", "又好看的软件。Web、移动端、数据，以及把它们连在一起的一切。"],
     location: "若昂佩索阿，巴西",
   },
-  nav: { work: "作品", about: "关于", experience: "经历", contact: "联系", menu: "菜单", close: "关闭", motion: "动效", on: "开", off: "关", language: "语言", theme: "主题" },
+  seo: { title: "Leonardo Barros — 全栈与移动开发者", description: "巴西若昂佩索阿的全栈与移动开发者、UI/UX 设计师。十年来使用 React、Flutter、TypeScript、Node.js、Python、Go 和 C# 构建网页、移动和数据产品。" },
+  nav: { work: "作品", about: "关于", experience: "经历", contact: "联系", menu: "菜单", close: "关闭", motion: "动效", on: "开", off: "关", language: "语言", theme: "主题", skip: "跳到正文", cv: "CV" },
   themes: { violet: "紫", red: "红", orange: "橙", amber: "琥珀", green: "绿", teal: "青", blue: "蓝", pink: "粉", ink: "墨" },
   ask: { kicker: "一个小问题", question: "你最喜欢哪种颜色？", hint: "随时可以通过菜单里的圆点更改。", thanks: "选得好。请随意浏览作品集，欢迎！", skip: "跳过" },
   labels: { about: "关于我", services: "我做什么", work: "精选作品", experience: "工作经历", stack: "技术栈", contact: "联系", words: "评价", certs: "证书", orgs: "我工作过的地方", toolbox: "完整工具箱" },
@@ -74,5 +75,5 @@ export const zh: Strings = {
     { name: "硬件/软件技术员", issuer: "Connect Cursos", meta: "2016年6月" },
   ],
   credentials: ["英语 C2（EF SET 72/100）", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["聊一", "聊吧"], note: "欢迎开发、数据或 IT 运维方向的全职机会，远程或混合办公均可，也接自由职业。葡萄牙语母语，英语 C2。常驻巴西若昂佩索阿，UTC−3。", copy: "复制邮箱", copied: "已复制", top: "回到顶部" },
+  contact: { title: ["聊一", "聊吧"], note: "欢迎开发、数据或 IT 运维方向的全职机会，远程或混合办公均可，也接自由职业。葡萄牙语母语，英语 C2。常驻巴西若昂佩索阿，UTC−3。", copy: "复制邮箱", copied: "已复制", top: "回到顶部", cv: "下载简历", cvNote: "PDF，2026 年更新" },
 };

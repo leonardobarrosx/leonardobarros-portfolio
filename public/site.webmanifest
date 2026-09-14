@@ -1,0 +1,22 @@
+{
+  "name": "Leonardo Barros",
+  "short_name": "LB",
+  "description": "Full-Stack & Mobile Developer and UI/UX designer in João Pessoa, Brazil.",
+  "start_url": "/leonardobarros-portfolio/",
+  "scope": "/leonardobarros-portfolio/",
+  "display": "standalone",
+  "background_color": "#efe9df",
+  "theme_color": "#efe9df",
+  "icons": [
+    {
+      "src": "favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -7,7 +7,8 @@ export const de: Strings = {
     statement: ["Zehn Jahre Software, die ", "funktioniert", " und gut aussieht. Web, Mobile, Daten und alles dazwischen."],
     location: "João Pessoa, Brasilien",
   },
-  nav: { work: "Arbeiten", about: "Über mich", experience: "Erfahrung", contact: "Kontakt", menu: "Menü", close: "Schließen", motion: "Animationen", on: "an", off: "aus", language: "Sprache", theme: "Farbe" },
+  seo: { title: "Leonardo Barros — Full-Stack- & Mobile-Entwickler", description: "Full-Stack- & Mobile-Entwickler und UI/UX-Designer aus João Pessoa, Brasilien. Zehn Jahre Web-, Mobile- und Datenprodukte mit React, Flutter, TypeScript, Node.js, Python, Go und C#." },
+  nav: { work: "Arbeiten", about: "Über mich", experience: "Erfahrung", contact: "Kontakt", menu: "Menü", close: "Schließen", motion: "Animationen", on: "an", off: "aus", language: "Sprache", theme: "Farbe", skip: "Zum Inhalt springen", cv: "CV" },
   themes: { violet: "Violett", red: "Rot", orange: "Orange", amber: "Bernstein", green: "Grün", teal: "Türkis", blue: "Blau", pink: "Rosa", ink: "Tinte" },
   ask: { kicker: "Eine kurze Frage", question: "Was ist deine Lieblingsfarbe?", hint: "Du kannst sie jederzeit über den Punkt im Menü ändern.", thanks: "Gute Wahl. Viel Spaß mit dem Portfolio, willkommen!", skip: "Überspringen" },
   labels: { about: "Über mich", services: "Was ich mache", work: "Ausgewählte Arbeiten", experience: "Erfahrung", stack: "Stack", contact: "Kontakt", words: "Stimmen", certs: "Zertifikate", orgs: "Wo ich gearbeitet habe", toolbox: "Der komplette Werkzeugkasten" },
@@ -74,5 +75,5 @@ export const de: Strings = {
     { name: "Hardware-/Software-Techniker", issuer: "Connect Cursos", meta: "Jun 2016" },
   ],
   credentials: ["Englisch C2 (EF SET 72/100)", "Cisco Cyber Threat Management", "Google Play Store Listing"],
-  contact: { title: ["Lass uns", "reden."], note: "Offen für Vollzeitstellen in Entwicklung, Daten oder IT-Betrieb, remote oder hybrid. Auch freiberuflich. Portugiesisch Muttersprache, Englisch C2. Ansässig in João Pessoa, Brasilien, UTC−3.", copy: "E-Mail kopieren", copied: "Kopiert", top: "Nach oben" },
+  contact: { title: ["Lass uns", "reden."], note: "Offen für Vollzeitstellen in Entwicklung, Daten oder IT-Betrieb, remote oder hybrid. Auch freiberuflich. Portugiesisch Muttersprache, Englisch C2. Ansässig in João Pessoa, Brasilien, UTC−3.", copy: "E-Mail kopieren", copied: "Kopiert", top: "Nach oben", cv: "Lebenslauf herunterladen", cvNote: "PDF, Stand 2026" },
 };

@@ -32,7 +32,8 @@ export interface CertText { name: string; issuer: string; meta: string }
 /** Everything that changes with the language. */
 export interface Strings {
   meta: { role: string; badge: string; statement: [string, string, string]; location: string };
-  nav: { work: string; about: string; experience: string; contact: string; menu: string; close: string; motion: string; on: string; off: string; language: string; theme: string };
+  seo: { title: string; description: string };
+  nav: { work: string; about: string; experience: string; contact: string; menu: string; close: string; motion: string; on: string; off: string; language: string; theme: string; skip: string; cv: string };
   themes: Record<ThemeId, string>;
   ask: { kicker: string; question: string; hint: string; thanks: string; skip: string };
   labels: { about: string; services: string; work: string; experience: string; stack: string; contact: string; words: string; certs: string; orgs: string; toolbox: string };
@@ -47,5 +48,5 @@ export interface Strings {
   testimonials: { name: string; role: string; quote: string; photo: "claudio" | "roger" }[];
   certs: [CertText, CertText, CertText, CertText, CertText, CertText];
   credentials: string[];
-  contact: { title: [string, string]; note: string; copy: string; copied: string; top: string };
+  contact: { title: [string, string]; note: string; copy: string; copied: string; top: string; cv: string; cvNote: string };
 }

@@ -21,5 +21,5 @@ export function Landmarks({ interval = 4800, className = "" }: { interval?: numb
     }, interval);
     return () => { window.clearInterval(id); tween?.kill(); };
   }, [interval]);
-  return <span className={`landmark ${className}`} ref={el} />;
+  return <span className={`landmark ${className}`} ref={el} aria-hidden="true" />;
 }
