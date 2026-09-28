@@ -575,13 +575,15 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 
 /* ---------- infantry mark ---------- */
 .army { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line); }
-.inf { width: 62px; height: 62px; flex: none; overflow: visible; }
+.inf { width: 76px; height: 76px; flex: none; overflow: visible; }
 .inf__ring { fill: none; stroke: var(--line); stroke-width: 1; }
 .inf__body, .inf__barrel, .inf__muzzle { fill: var(--ink); transition: fill 0.45s var(--ease-out); }
 .inf__detail { fill: var(--accent-text); transition: fill 0.45s var(--ease-out); }
 .inf__rifles { transform-origin: 32px 32px; transition: transform 0.6s var(--ease-out); }
-.army:hover .inf__rifles { transform: rotate(180deg); }
-.army:hover .inf__body, .army:hover .inf__barrel, .army:hover .inf__muzzle { fill: var(--accent-text); }
+.inf__grenade { transform-origin: 32px 32px; transition: transform 0.6s var(--ease-out); }
+.army:hover .inf__rifles { transform: rotate(-8deg); }
+.army:hover .inf__grenade { transform: scale(1.12); }
+.army:hover .inf__body { fill: var(--accent-text); }
 .army:hover .inf__detail { fill: var(--ink); }
 .army__text { display: grid; gap: 2px; color: var(--mute); font-size: 10px; line-height: 1.5; }
 .army__text span:first-child { color: var(--ink); }

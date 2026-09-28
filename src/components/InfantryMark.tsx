@@ -1,23 +1,23 @@
 /**
- * Brazilian Army infantry mark: the crossed rifles, drawn as flat geometry in the site's own
- * language rather than a scanned insignia, so it carries the active theme like everything else.
- * One rifle is built pointing up and then mirrored, which keeps the cross symmetrical.
+ * Brazilian Army infantry mark: two crossed rifles with the grenade above the crossing, following the
+ * shape of the branch insignia but drawn here as flat geometry in the site's own language, so it
+ * carries the active theme and the dark scheme instead of sitting on the page as a foreign sticker.
+ * The rifle is built pointing right and then mirrored, which keeps the cross symmetrical.
  */
-function Rifle({ deg }: { deg: number }) {
+function Rifle({ flip }: { flip?: boolean }) {
+  const t = `rotate(${flip ? 26 : -26} 32 37)${flip ? " translate(64 0) scale(-1 1)" : ""}`;
   return (
-    <g transform={`rotate(${deg} 32 32)`}>
-      {/* barrel, from the muzzle down to the receiver */}
-      <rect className="inf__body" x="30.6" y="11" width="2.8" height="22" rx="0.6" />
-      {/* front sight and muzzle */}
-      <rect className="inf__detail" x="29.2" y="12.4" width="5.6" height="2.2" rx="0.6" />
-      {/* receiver */}
-      <rect className="inf__body" x="28.8" y="31" width="6.4" height="12" rx="1" />
-      {/* magazine, angled forward */}
-      <path className="inf__detail" d="M28.6 35.6 L23.4 39.4 L25.6 45.6 L30.4 42.6 Z" />
-      {/* grip and butt stock */}
-      <path className="inf__body" d="M29 42.4 L35.2 42.4 L36.6 53.4 L31.4 55 L28.4 50.6 Z" />
-      {/* butt plate */}
-      <rect className="inf__detail" x="30.4" y="52.6" width="6.6" height="2.4" rx="0.8" transform="rotate(-8 33.7 53.8)" />
+    <g transform={t}>
+      {/* butt: flared heel into the small of the stock */}
+      <path className="inf__body" d="M2.6 41.2 3.4 34.4 13 34 13.6 39.8 Z" />
+      <path className="inf__body" d="M12.8 34.6 H23.4 l0.4 4.6 H13.4 Z" />
+      {/* lock plate and trigger guard */}
+      <rect className="inf__detail" x="21.4" y="33.8" width="5.2" height="5.4" rx="1" />
+      <path className="inf__body" d="M26.2 35 H31 v3.4 h-4.8 Z" />
+      {/* barrel to the muzzle */}
+      <rect className="inf__body" x="30" y="35.2" width="29" height="2.2" rx="1.1" />
+      <rect className="inf__detail" x="46.6" y="34.2" width="1.8" height="4.2" rx="0.6" />
+      <rect className="inf__body" x="58" y="34.4" width="4" height="3.8" rx="1.2" />
     </g>
   );
 }
@@ -27,8 +27,14 @@ export function InfantryMark({ title }: { title: string }) {
     <svg className="inf" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label={title}>
       <circle className="inf__ring" cx="32" cy="32" r="30.5" />
       <g className="inf__rifles">
-        <Rifle deg={-34} />
-        <Rifle deg={34} />
+        <Rifle />
+        <Rifle flip />
+      </g>
+      {/* the grenade sits above the crossing */}
+      <g className="inf__grenade">
+        <circle className="inf__body" cx="32" cy="21.4" r="5" />
+        <path className="inf__body" d="M30.2 16.4 h3.6 l0.6 -2.4 -1.6 -0.7 -0.8 1.5 -1 -1.9 -1.7 1 Z" />
+        <circle className="inf__detail" cx="32" cy="21.4" r="2" />
       </g>
     </svg>
   );
