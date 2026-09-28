@@ -21,7 +21,7 @@ export const pt: Strings = {
       "Entrei nisso tudo pelos games. Aprendi inglês traduzindo patch notes pra um blog, depois aprendi a programar fazendo ferramentas pros jogos que jogava e, no fim, meu próprio RPG online. O lado de design e ilustração vem do mesmo lugar. Passei 2017 no Exército Brasileiro: sou Aspirante a Oficial R/2 da arma de Infantaria, formado no NPOR do 15º BI Mtz com a turma Treme-Terra.",
       "Em paralelo eu toco a Velaris Tecnologia, minha própria empresa, onde nasceu o Meu Chamado: uma plataforma de helpdesk multi-tenant para o TI que atende 56 unidades de saúde. ARGUS (gestão para óticas) e VESTA (operação de restaurantes) saíram da mesma bancada, junto com um conjunto crescente de ferramentas internas e automações.",
     ],
-    army: { title: "Oficial da reserva, Exército Brasileiro", lines: ["Aspirante a Oficial R/2 · Infantaria", "NPOR · 15º BI Mtz · 2017", "Turma Treme-Terra"] },
+    army: { title: "Oficial da reserva, Exército Brasileiro", lines: ["Aspirante a Oficial R/2 · Infantaria", "NPOR · 15º BI Mtz · 2017", "Turma Treme-Terra"], credit: "Distintivo:" },
     facts: [["Base", "João Pessoa, PB"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Status", "Aberto a propostas"]],
     valuesTitle: "O que eu levo comigo",
     values: [

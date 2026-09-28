@@ -49,6 +49,10 @@ export function About() {
               <InfantryMark title={t.about.army.title} />
               <div className="army__text mono">
                 {t.about.army.lines.map((l, i) => <span key={i}>{l}</span>)}
+                <span className="army__credit">
+                  {t.about.army.credit}{" "}
+                  <a href="https://commons.wikimedia.org/wiki/File:Distintivo_da_Arma_de_Infantaria_-_Ex%C3%A9rcito_Brasileiro.svg" target="_blank" rel="noreferrer">Diego Biavati, CC BY-SA 4.0</a>
+                </span>
               </div>
             </figcaption>
           </figure>

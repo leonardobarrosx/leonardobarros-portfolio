@@ -21,7 +21,7 @@ export const de: Strings = {
       "Zu all dem kam ich über Videospiele. Als Kind lernte ich Englisch, indem ich Patch Notes für einen Blog übersetzte, dann brachte ich mir das Programmieren bei, indem ich Tools für meine Spiele baute und schließlich mein eigenes Online-RPG. Design und Illustration kommen aus derselben Ecke. 2017 war ich bei der Brasilianischen Armee: Ich bin Reserveoffizier, Aspirante a Oficial R/2, Waffengattung Infanterie, ausgebildet am NPOR des 15. Motorisierten Infanteriebataillons mit dem Jahrgang Treme-Terra.",
       "Parallel führe ich Velaris Tecnologia, meine eigene Firma, in der Meu Chamado entstanden ist: eine mandantenfähige Helpdesk-Plattform für ein IT-Team, das 56 Gesundheitsstationen betreut. ARGUS (Optikerverwaltung) und VESTA (Restaurantbetrieb) kommen von derselben Werkbank, dazu eine wachsende Reihe interner Werkzeuge und Automatisierungen.",
     ],
-    army: { title: "Reserveoffizier, Brasilianische Armee", lines: ["Aspirante a Oficial R/2 · Infanterie", "NPOR · 15. Motorisiertes Infanteriebataillon · 2017", "Jahrgang Treme-Terra"] },
+    army: { title: "Reserveoffizier, Brasilianische Armee", lines: ["Aspirante a Oficial R/2 · Infanterie", "NPOR · 15. Motorisiertes Infanteriebataillon · 2017", "Jahrgang Treme-Terra"], credit: "Abzeichen:" },
     facts: [["Standort", "João Pessoa, BR"], ["Seit", "2016"], ["Sprachen", "PT Muttersprache · EN C2"], ["Status", "Offen für Angebote"]],
     valuesTitle: "Was ich mitbringe",
     values: [

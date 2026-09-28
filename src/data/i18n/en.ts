@@ -21,7 +21,7 @@ export const en: Strings = {
       "I got into all of this through games. I learned English as a kid translating patch notes for a blog, then taught myself to program by building tools for the games I played and, eventually, my own online RPG. The design and illustration side comes from the same place. I also spent 2017 in the Brazilian Army: I am a reserve officer, Aspirante a Oficial R/2, infantry branch, trained at the NPOR of the 15th Motorized Infantry Battalion with the Treme-Terra class.",
       "In parallel I run Velaris Tecnologia, my own company, where Meu Chamado was built: a multi-tenant helpdesk platform for an IT team that supports 56 health units. ARGUS (optical management) and VESTA (restaurant operations) come from the same bench, along with a growing set of internal tools and automations.",
     ],
-    army: { title: "Reserve officer, Brazilian Army", lines: ["Aspirante a Oficial R/2 · Infantry", "NPOR · 15th Motorized Infantry Battalion · 2017", "Class Treme-Terra"] },
+    army: { title: "Reserve officer, Brazilian Army", lines: ["Aspirante a Oficial R/2 · Infantry", "NPOR · 15th Motorized Infantry Battalion · 2017", "Class Treme-Terra"], credit: "Insignia:" },
     facts: [["Based", "João Pessoa, BR"], ["Since", "2016"], ["Languages", "PT native · EN C2"], ["Status", "Open to work"]],
     valuesTitle: "What I bring",
     values: [

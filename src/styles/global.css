@@ -574,20 +574,18 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 .menu .swatches { grid-template-columns: repeat(9, 26px); }
 
 /* ---------- infantry mark ---------- */
-.army { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line); }
-.inf { width: 76px; height: 76px; flex: none; overflow: visible; }
-.inf__ring { fill: none; stroke: var(--line); stroke-width: 1; }
-.inf__body, .inf__barrel, .inf__muzzle { fill: var(--ink); transition: fill 0.45s var(--ease-out); }
-.inf__detail { fill: var(--accent-text); transition: fill 0.45s var(--ease-out); }
-.inf__rifles { transform-origin: 32px 32px; transition: transform 0.6s var(--ease-out); }
-.inf__grenade { transform-origin: 32px 32px; transition: transform 0.6s var(--ease-out); }
-.army:hover .inf__rifles { transform: rotate(-8deg); }
-.army:hover .inf__grenade { transform: scale(1.12); }
-.army:hover .inf__body { fill: var(--accent-text); }
-.army:hover .inf__detail { fill: var(--ink); }
+/* Insignia geometry by Diego Biavati (Wikimedia Commons, CC BY-SA 4.0), recoloured with the theme. */
+.army { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--s2); margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line); }
+.inf { width: 118px; height: auto; flex: none; overflow: visible; }
+.inf__p { fill: var(--accent); transition: fill 0.45s var(--ease-out); }
+.inf__o { stroke: var(--ink); stroke-width: 1.9; stroke-miterlimit: 4; transition: stroke 0.45s var(--ease-out); }
+.army:hover .inf__p { fill: var(--ink); }
+.army:hover .inf__o { stroke: var(--accent); }
 .army__text { display: grid; gap: 2px; color: var(--mute); font-size: 10px; line-height: 1.5; }
 .army__text span:first-child { color: var(--ink); }
-@media (max-width: 900px) { .army { grid-column: 1 / -1; max-width: 420px; } }
+.army__credit { color: var(--mute); opacity: 0.75; font-size: 9px; }
+.army__credit a { border-bottom: 1px solid var(--line); }
+.army__credit a:hover { color: var(--accent-text); }
 
 /* ---------- education ---------- */
 .edu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin: 0 0 var(--s5); padding: 0; list-style: none; }

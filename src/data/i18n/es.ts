@@ -21,7 +21,7 @@ export const es: Strings = {
       "Llegué a todo esto por los videojuegos. Aprendí inglés de niño traduciendo patch notes para un blog, luego aprendí a programar haciendo herramientas para los juegos que jugaba y, al final, mi propio RPG online. El lado de diseño e ilustración viene del mismo lugar. También pasé 2017 en el Ejército Brasileño: soy oficial de la reserva, Aspirante a Oficial R/2, del arma de Infantería, formado en el NPOR del 15.º Batallón de Infantería Motorizada con la promoción Treme-Terra.",
       "En paralelo llevo Velaris Tecnologia, mi propia empresa, donde nació Meu Chamado: una plataforma de helpdesk multi-tenant para el TI que atiende 56 unidades de salud. ARGUS (gestión de ópticas) y VESTA (operación de restaurantes) salieron del mismo banco de trabajo, junto con un conjunto creciente de herramientas internas y automatizaciones.",
     ],
-    army: { title: "Oficial de la reserva, Ejército Brasileño", lines: ["Aspirante a Oficial R/2 · Infantería", "NPOR · 15.º Batallón de Infantería Motorizada · 2017", "Promoción Treme-Terra"] },
+    army: { title: "Oficial de la reserva, Ejército Brasileño", lines: ["Aspirante a Oficial R/2 · Infantería", "NPOR · 15.º Batallón de Infantería Motorizada · 2017", "Promoción Treme-Terra"], credit: "Distintivo:" },
     facts: [["Base", "João Pessoa, BR"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Estado", "Abierto a propuestas"]],
     valuesTitle: "Lo que aporto",
     values: [
