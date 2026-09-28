@@ -403,8 +403,7 @@ h1, h2, h3, p, figure { margin: 0; }
 .orgs__list { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) clamp(24px, 3.5vw, 56px); }
 .orgs__list li { display: flex; align-items: center; height: 28px; opacity: 0.72; transition: opacity 0.3s; }
 .orgs__list li:hover { opacity: 1; }
-.orgs__list img { height: 100%; width: auto; max-width: 140px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); transition: filter 0.3s; }
-.orgs__list li:hover img { filter: none; }
+.orgs__list img { height: 100%; width: auto; max-width: 150px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
 .orgs__list .display { font-size: 26px; line-height: 1; color: var(--on-dark); }
 
 /* ---------- testimonials ---------- */

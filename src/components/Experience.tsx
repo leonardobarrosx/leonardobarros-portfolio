@@ -9,12 +9,13 @@ import dental from "../assets/logos/dental.png";
 import polybalas from "../assets/logos/polybalas.png";
 import ipec from "../assets/logos/ipec.png";
 import cgibr from "../assets/logos/cgibr.png";
+import aec from "../assets/logos/aec.svg";
 import bemais from "../assets/logos/bemais.png";
 
 const LOGOS = { dental, polybalas, ipec, bemais } as const;
 
 const ORGS = [
-  { name: "AeC", src: null },
+  { name: "AeC", src: aec },
   { name: "Dental Center", src: dental },
   { name: "Polybalas", src: polybalas },
   { name: "Ipec", src: ipec },
