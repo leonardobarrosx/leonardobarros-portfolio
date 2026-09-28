@@ -14,6 +14,7 @@ const SOURCES = [
   { type: "image/webp", srcSet: `${photoWebpSm} 640w, ${photoWebp} 1000w` },
 ];
 import { DistortImage } from "./DistortImage";
+import { InfantryMark } from "./InfantryMark";
 import { BrazilFlag } from "./BrazilFlag";
 
 export function About() {
@@ -39,9 +40,17 @@ export function About() {
         <Label n="01" text={t.labels.about} jp="紹介" />
         <div className="grid about">
           <figure className="about__figure" data-reveal="clip">
-            <DistortImage src={photo} sources={SOURCES} sizes="(max-width: 900px) 92vw, 40vw" alt="Leonardo Barros" width={1000} height={1249} />
-            <span className="tag mono">LB — 026</span>
-            <span className="jp vertical" aria-hidden="true">レオナルド</span>
+            <div className="about__photo">
+              <DistortImage src={photo} sources={SOURCES} sizes="(max-width: 900px) 92vw, 40vw" alt="Leonardo Barros" width={1000} height={1249} />
+              <span className="tag mono">LB — 026</span>
+              <span className="jp vertical" aria-hidden="true">レオナルド</span>
+            </div>
+            <figcaption className="army">
+              <InfantryMark title={t.about.army.title} />
+              <div className="army__text mono">
+                {t.about.army.lines.map((l, i) => <span key={i}>{l}</span>)}
+              </div>
+            </figcaption>
           </figure>
 
           <div className="about__main">

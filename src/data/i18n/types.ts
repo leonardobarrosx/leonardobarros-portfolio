@@ -39,7 +39,8 @@ export interface Strings {
   labels: { about: string; services: string; work: string; experience: string; stack: string; contact: string; words: string; certs: string; orgs: string; toolbox: string; education: string };
   toolbox: Record<ToolGroupId, string>;
   marquee: string[];
-  about: { quote: string; paragraphs: string[]; facts: [string, string][]; valuesTitle: string; values: { title: string; text: string }[]; offTitle: string; off: string };
+  about: {
+    army: { title: string; lines: string[] }; quote: string; paragraphs: string[]; facts: [string, string][]; valuesTitle: string; values: { title: string; text: string }[]; offTitle: string; off: string };
   services: { title: string; text: string }[];
   works: Record<WorkId, WorkText>;
   sheet: { year: string; type: string; stack: string; open: string; private: string; close: string; role: string; overview: string; did: string; deliverables: string; prev: string; next: string; more: string; copy: string };

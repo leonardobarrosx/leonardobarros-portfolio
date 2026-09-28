@@ -18,9 +18,10 @@ export const es: Strings = {
     quote: "Me importa cómo se ven las cosas y cómo se sienten al usarlas, no solo si funcionan.",
     paragraphs: [
       "Diez años en tecnología, casi siempre con más de un sombrero. Desarrollador full-stack y mobile freelance desde 2016, analista de TI en una distribuidora mayorista y en una red de clínicas dentales, y hoy analista de planificación e inteligencia de datos en AeC, donde automatizo y valido los reportes de una gran operación de contact center.",
-      "Llegué a todo esto por los videojuegos. Aprendí inglés de niño traduciendo patch notes para un blog, luego aprendí a programar haciendo herramientas para los juegos que jugaba y, al final, mi propio RPG online. El lado de diseño e ilustración viene del mismo lugar.",
+      "Llegué a todo esto por los videojuegos. Aprendí inglés de niño traduciendo patch notes para un blog, luego aprendí a programar haciendo herramientas para los juegos que jugaba y, al final, mi propio RPG online. El lado de diseño e ilustración viene del mismo lugar. También pasé 2017 en el Ejército Brasileño: soy oficial de la reserva, Aspirante a Oficial R/2, del arma de Infantería, formado en el NPOR del 15.º Batallón de Infantería Motorizada con la promoción Treme-Terra.",
       "En paralelo llevo Velaris Tecnologia, mi propia empresa, donde nació Meu Chamado: una plataforma de helpdesk multi-tenant para el TI que atiende 56 unidades de salud. ARGUS (gestión de ópticas) y VESTA (operación de restaurantes) salieron del mismo banco de trabajo, junto con un conjunto creciente de herramientas internas y automatizaciones.",
     ],
+    army: { title: "Oficial de la reserva, Ejército Brasileño", lines: ["Aspirante a Oficial R/2 · Infantería", "NPOR · 15.º Batallón de Infantería Motorizada · 2017", "Promoción Treme-Terra"] },
     facts: [["Base", "João Pessoa, BR"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Estado", "Abierto a propuestas"]],
     valuesTitle: "Lo que aporto",
     values: [
