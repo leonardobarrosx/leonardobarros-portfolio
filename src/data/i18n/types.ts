@@ -3,7 +3,7 @@ import type { ToolGroupId } from "../toolbox";
 
 export type Lang = "en" | "pt" | "es" | "de" | "ja" | "ko" | "zh";
 export type Variant = "red" | "paper" | "coffee" | "ink";
-export type WorkId = "zero" | "argus" | "itam" | "vesta" | "metis" | "sidearm" | "vault" | "codebarx" | "soluna";
+export type WorkId = "meuchamado" | "velaris" | "argus" | "itam" | "vesta" | "metis" | "sidearm" | "vault" | "codebarx" | "soluna";
 export type XpId = "aec" | "dental" | "polybalas" | "ipec" | "unicesumar" | "sesds" | "army" | "freelance" | "bemais";
 
 /** Translated strings for one project. Language-neutral fields live in `worksBase`. */

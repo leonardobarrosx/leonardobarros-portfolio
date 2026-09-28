@@ -55,17 +55,18 @@ export function toDMS(lat: number, lng: number): string {
 /* ---------- language-neutral bases ---------- */
 
 const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; tall?: boolean }> = {
-  zero: { id: "zero-state", title: ["Zero", "State"], jp: "零", year: "2025–", stack: "React · TypeScript · Flutter · Go · Supabase", stackList: ["React", "TypeScript", "Flutter", "Go", "Node.js", "PostgreSQL", "Supabase", "Tailwind", "Figma"], variant: "ink", tall: true },
+  meuchamado: { id: "meu-chamado", title: ["Meu", "Chamado"], jp: "支援", year: "2026 —", stack: "React · TypeScript · Go · PostgreSQL · Docker", stackList: ["React", "Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "JWT", "Docker", "Playwright", "GitHub Actions", "Render", "Vercel"], variant: "ink", tall: true, href: "https://meuchamado.vercel.app" },
+  velaris: { id: "velaris", title: ["Velaris"], jp: "帆", year: "2026 —", stack: "B2B · Custom software · Own products", stackList: ["Product strategy", "Brand", "React", "TypeScript", "Go", "Flutter", "Figma"], variant: "coffee", href: "https://www.instagram.com/velaristecnologia/" },
   argus: { id: "argus", title: ["Argus"], jp: "眼", year: "2026", stack: "Vite · TypeScript · Go · PostgreSQL · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
   itam: { id: "itam", title: ["ITAM"], jp: "資産", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red", tall: true },
   vesta: { id: "vesta", title: ["Vesta"], jp: "食", year: "2026", stack: "TypeScript · Go · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
-  metis: { id: "metis", title: ["Metis"], jp: "運用", year: "2025", stack: "Flutter · Go · Firebase", stackList: ["Flutter", "Dart", "Go", "Firebase"], variant: "red" },
+  metis: { id: "metis", title: ["Metis"], jp: "家具", year: "2026 —", stack: "Concept · Flutter · Go · Firebase", stackList: ["Figma", "Flutter", "Dart", "Go", "Firebase"], variant: "red" },
   sidearm: { id: "sidearm", title: ["Side", "arm"], jp: "照準", year: "2025", stack: "Open source", stackList: ["Open source", "GitHub"], variant: "coffee", href: "https://github.com/leonardobarrosx/sidearm" },
   vault: { id: "vault", title: ["Manhwa", "Vault"], jp: "書庫", year: "2026", stack: "Go · React", stackList: ["Go", "React", "TypeScript"], variant: "paper" },
   codebarx: { id: "codebarx", title: ["Code", "BarX"], jp: "符号", year: "2025", stack: "Python", stackList: ["Python"], variant: "ink" },
   soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2020", stack: "VB6 · MMORPG engine", stackList: ["VB6", "Pixel art", "Animation"], variant: "coffee" },
 };
-const WORK_ORDER: WorkId[] = ["zero", "argus", "itam", "vesta", "metis", "sidearm", "vault", "codebarx", "soluna"];
+const WORK_ORDER: WorkId[] = ["meuchamado", "velaris", "argus", "itam", "vesta", "metis", "sidearm", "vault", "codebarx", "soluna"];
 
 const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "dental" | "polybalas" | "ipec" | "bemais" }> = {
   aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br" },

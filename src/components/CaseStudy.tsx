@@ -17,6 +17,7 @@ interface Props {
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 const paperRgb = () => getComputedStyle(document.documentElement).getPropertyValue("--paper-rgb").trim() || "239, 233, 223";
 
 /**
@@ -208,7 +209,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           </div>
           <div className="case__cta">
             {w.href
-              ? <a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a>
+              ? <><a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a><span className="mono muted case__host">{host(w.href)}</span></>
               : <span className="mono muted">{t.sheet.private}</span>}
           </div>
         </aside>

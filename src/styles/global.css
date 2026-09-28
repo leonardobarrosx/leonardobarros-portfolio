@@ -456,7 +456,8 @@ h1, h2, h3, p, figure { margin: 0; }
 .case__title .char { display: inline-block; }
 .case__roles { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--s2) 0 0; padding: 0; list-style: none; font-size: 10px; }
 .case__roles li { padding: 5px 9px; border: 1px solid currentColor; border-radius: 999px; opacity: 0.9; }
-.case__cta { min-height: 24px; }
+.case__cta { min-height: 24px; display: grid; gap: 8px; justify-items: start; }
+.case__host { word-break: break-all; }
 .case__main { grid-column: 6 / 13; display: grid; }
 .case__facts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2) var(--gap); margin: 0 0 var(--s3); }
 .case__facts div { --w: 1; }
