@@ -4,6 +4,15 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import photo from "../assets/photo-cafe.jpg";
+import photoAvif from "../assets/photo-cafe-1000.avif";
+import photoAvifSm from "../assets/photo-cafe-640.avif";
+import photoWebp from "../assets/photo-cafe-1000.webp";
+import photoWebpSm from "../assets/photo-cafe-640.webp";
+
+const SOURCES = [
+  { type: "image/avif", srcSet: `${photoAvifSm} 640w, ${photoAvif} 1000w` },
+  { type: "image/webp", srcSet: `${photoWebpSm} 640w, ${photoWebp} 1000w` },
+];
 import { DistortImage } from "./DistortImage";
 import { BrazilFlag } from "./BrazilFlag";
 
@@ -30,7 +39,7 @@ export function About() {
         <Label n="01" text={t.labels.about} jp="紹介" />
         <div className="grid about">
           <figure className="about__figure" data-reveal="clip">
-            <DistortImage src={photo} alt="Leonardo Barros" width={1000} height={1249} />
+            <DistortImage src={photo} sources={SOURCES} sizes="(max-width: 900px) 92vw, 40vw" alt="Leonardo Barros" width={1000} height={1249} />
             <span className="tag mono">LB — 026</span>
             <span className="jp vertical" aria-hidden="true">レオナルド</span>
           </figure>

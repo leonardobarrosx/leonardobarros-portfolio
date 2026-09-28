@@ -31,7 +31,9 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
  * Image with a pointer-driven WebGL ripple. Falls back to the plain <img> when WebGL is unavailable or motion is off.
  * The <img> is always rendered underneath so layout and the first paint never depend on the canvas.
  */
-export function DistortImage({ src, alt, width, height, className }: { src: string; alt: string; width: number; height: number; className?: string }) {
+interface Source { type: string; srcSet: string }
+
+export function DistortImage({ src, alt, width, height, className, sources, sizes }: { src: string; alt: string; width: number; height: number; className?: string; sources?: Source[]; sizes?: string }) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
 
@@ -61,7 +63,8 @@ export function DistortImage({ src, alt, width, height, className }: { src: stri
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    let ready = false, raf = 0, strength = 0, target = 0, t0 = performance.now();
+    let ready = false, raf = 0, strength = 0, target = 0;
+    const t0 = performance.now();
     const mouse = { x: 0.5, y: 0.5 };
 
     const resize = () => {
@@ -121,7 +124,10 @@ export function DistortImage({ src, alt, width, height, className }: { src: stri
 
   return (
     <div className={`distort ${className ?? ""}`} ref={wrap}>
-      <img src={src} alt={alt} width={width} height={height} loading="lazy" />
+      <picture>
+        {sources?.map((s) => <source key={s.type} type={s.type} srcSet={s.srcSet} sizes={sizes} />)}
+        <img src={src} alt={alt} width={width} height={height} sizes={sizes} loading="lazy" decoding="async" />
+      </picture>
       <canvas ref={canvas} aria-hidden="true" />
     </div>
   );

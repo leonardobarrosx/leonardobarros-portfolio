@@ -39,6 +39,16 @@ export function Stack() {
             </div>
           ))}
         </dl>
+        <h3 className="mono stack__certs-title" data-reveal>{t.labelsExtra.education}</h3>
+        <ul className="edu">
+          {t.education.map((e, i) => (
+            <li key={e.degree} data-reveal data-delay={Math.min(i, 3) * 0.05}>
+              <b>{e.degree}</b>
+              <span>{e.school}</span>
+              <span className="mono muted">{e.period} · {e.status}</span>
+            </li>
+          ))}
+        </ul>
         <h3 className="mono stack__certs-title" data-reveal>{t.labelsExtra.certs}</h3>
         <ul className="certs">
           {t.certs.map((c, i) => (

@@ -18,6 +18,7 @@ import { Contact } from "./components/Contact";
 
 function Site() {
   const { lang, motionOn, t } = usePrefs();
+  const ready2 = t.meta.role; // copy for the active language is in
   const [ready, setReady] = useState(false);
   const onDone = useCallback(() => setReady(true), []);
   useLenis(ready && motionOn);
@@ -31,7 +32,7 @@ function Site() {
       <Scrollbar />
       <Ask ready={ready} />
       {/* Remount all sections when language or motion changes so GSAP splits/triggers rebuild cleanly. */}
-      <main key={`${lang}-${motionOn}`} id="main" tabIndex={-1}>
+      <main key={`${lang}-${motionOn}-${ready2}`} id="main" tabIndex={-1}>
         <Hero ready={ready} />
         <Marquee />
         <About />

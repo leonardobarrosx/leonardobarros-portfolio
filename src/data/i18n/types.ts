@@ -33,20 +33,21 @@ export interface CertText { name: string; issuer: string; meta: string }
 export interface Strings {
   meta: { role: string; badge: string; statement: [string, string, string]; location: string };
   seo: { title: string; description: string };
-  nav: { work: string; about: string; experience: string; contact: string; menu: string; close: string; motion: string; on: string; off: string; language: string; theme: string; skip: string; cv: string };
+  nav: { work: string; about: string; experience: string; contact: string; menu: string; close: string; motion: string; on: string; off: string; language: string; theme: string; skip: string; cv: string; available: string; appearance: string };
   themes: Record<ThemeId, string>;
   ask: { kicker: string; question: string; hint: string; thanks: string; skip: string };
-  labels: { about: string; services: string; work: string; experience: string; stack: string; contact: string; words: string; certs: string; orgs: string; toolbox: string };
+  labels: { about: string; services: string; work: string; experience: string; stack: string; contact: string; words: string; certs: string; orgs: string; toolbox: string; education: string };
   toolbox: Record<ToolGroupId, string>;
   marquee: string[];
   about: { quote: string; paragraphs: string[]; facts: [string, string][]; valuesTitle: string; values: { title: string; text: string }[]; offTitle: string; off: string };
   services: { title: string; text: string }[];
   works: Record<WorkId, WorkText>;
-  sheet: { year: string; type: string; stack: string; open: string; private: string; close: string; role: string; overview: string; did: string; deliverables: string; prev: string; next: string };
+  sheet: { year: string; type: string; stack: string; open: string; private: string; close: string; role: string; overview: string; did: string; deliverables: string; prev: string; next: string; more: string; copy: string };
   xp: { visit: string; period: string; location: string; type: string; open: string };
   experience: Record<XpId, XpText>;
   testimonials: { name: string; role: string; quote: string; photo: "claudio" | "roger" }[];
   certs: [CertText, CertText, CertText, CertText, CertText, CertText];
+  education: { degree: string; school: string; period: string; status: string }[];
   credentials: string[];
   contact: { title: [string, string]; note: string; copy: string; copied: string; top: string; cv: string; cvNote: string };
 }

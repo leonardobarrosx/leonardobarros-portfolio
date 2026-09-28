@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { gsap } from "../lib/gsap";
-import { content, LANGS, type Lang } from "../data/content";
-import { applyTheme, DEFAULT_THEME, isThemeId, LS_THEME, type ThemeId } from "../data/themes";
+import { contentFor, loadContent, LANGS, type Lang } from "../data/content";
+import { loadFontsFor } from "../lib/fonts";
+import { applyTheme, DEFAULT_THEME, isThemeId, LS_SCHEME, LS_THEME, systemScheme, type Scheme, type ThemeId } from "../data/themes";
+import type { Content } from "../data/content";
 
 /* Persisted preferences: language, motion and colour theme. Read once, written on change. */
 const LS_LANG = "lb:lang";
@@ -32,6 +34,11 @@ function initialLang(): Lang {
   return CODES.includes(nav) ? nav : "en";
 }
 
+function initialScheme(): Scheme {
+  const saved = read(LS_SCHEME);
+  return saved === "dark" || saved === "light" ? saved : systemScheme();
+}
+
 function initialTheme(): ThemeId {
   const saved = read(LS_THEME);
   return isThemeId(saved) ? saved : DEFAULT_THEME;
@@ -44,9 +51,11 @@ interface Prefs {
   toggleMotion: () => void;
   theme: ThemeId;
   setTheme: (id: ThemeId) => void;
+  scheme: Scheme;
+  toggleScheme: () => void;
   /** Try a theme on without saving it (hover); `null` restores the chosen one. */
   previewTheme: (id: ThemeId | null) => void;
-  t: (typeof content)["en"];
+  t: Content;
 }
 
 const Ctx = createContext<Prefs | null>(null);
@@ -63,20 +72,39 @@ function ease() {
 
 export function PrefsProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
+  // English is bundled; another saved language arrives a moment later, behind the preloader.
+  const [t, setT] = useState<Content>(() => contentFor(initialLang()) ?? contentFor("en")!);
   const [motionOn, setMotionOn] = useState(motion.enabled);
   const [theme, setThemeState] = useState<ThemeId>(initialTheme);
+  const [scheme, setSchemeState] = useState<Scheme>(initialScheme);
 
   useEffect(() => {
-    document.documentElement.lang = LANGS.find((l) => l.code === lang)?.html ?? "en";
-    document.title = content[lang].seo.title;
-    document.querySelector('meta[name="description"]')?.setAttribute("content", content[lang].seo.description);
+    let alive = true;
+    loadFontsFor(lang);
+    loadContent(lang).then((c) => {
+      if (!alive) return;
+      setT(c);
+      document.documentElement.lang = LANGS.find((l) => l.code === lang)?.html ?? "en";
+      document.title = c.seo.title;
+      document.querySelector('meta[name="description"]')?.setAttribute("content", c.seo.description);
+    });
+    return () => { alive = false; };
   }, [lang]);
   // The bootstrap in <head> already set data-theme; this keeps the meta colour and listeners in sync.
-  useEffect(() => { applyTheme(theme); }, [theme]);
+  useEffect(() => { applyTheme(theme, scheme); }, [theme, scheme]);
+  // Follow the system while the visitor has not chosen a side.
+  useEffect(() => {
+    if (read(LS_SCHEME)) return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => setSchemeState(mq.matches ? "dark" : "light");
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const setLang = useCallback((l: Lang) => {
     if (l === lang) return;
     write(LS_LANG, l);
+    void loadContent(l); // start fetching while the crossfade runs
     const main = document.querySelector("main");
     if (!motion.enabled || !main) { setLangState(l); return; }
     // Crossfade the page content around the remount.
@@ -102,12 +130,21 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
 
   const previewTheme = useCallback((id: ThemeId | null) => {
     ease();
-    applyTheme(id ?? theme);
-  }, [theme]);
+    applyTheme(id ?? theme, scheme);
+  }, [theme, scheme]);
+
+  const toggleScheme = useCallback(() => {
+    setSchemeState((s) => {
+      const next: Scheme = s === "dark" ? "light" : "dark";
+      write(LS_SCHEME, next);
+      ease();
+      return next;
+    });
+  }, []);
 
   const value = useMemo<Prefs>(
-    () => ({ lang, setLang, motionOn, toggleMotion, theme, setTheme, previewTheme, t: content[lang] }),
-    [lang, setLang, motionOn, toggleMotion, theme, setTheme, previewTheme],
+    () => ({ lang, setLang, motionOn, toggleMotion, theme, setTheme, scheme, toggleScheme, previewTheme, t }),
+    [lang, setLang, motionOn, toggleMotion, theme, setTheme, scheme, toggleScheme, previewTheme, t],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

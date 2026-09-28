@@ -1,11 +1,5 @@
 import type { Lang, Variant, WorkId, XpId, Strings } from "./i18n/types";
 import { en } from "./i18n/en";
-import { pt } from "./i18n/pt";
-import { es } from "./i18n/es";
-import { de } from "./i18n/de";
-import { ja } from "./i18n/ja";
-import { ko } from "./i18n/ko";
-import { zh } from "./i18n/zh";
 
 export type { Lang, Variant };
 
@@ -75,14 +69,14 @@ const WORK_ORDER: WorkId[] = ["zero", "argus", "itam", "vesta", "metis", "sidear
 
 const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "dental" | "polybalas" | "ipec" | "bemais" }> = {
   aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br" },
-  dental: { id: "dental", years: "2025 — 26", site: "https://www.dentalcenter.com.br", logo: "dental" },
-  polybalas: { id: "polybalas", years: "2023 — 25", site: "https://polybalas.com.br", logo: "polybalas" },
-  ipec: { id: "ipec", years: "2023", site: "https://www.ipec-inteligencia.com", logo: "ipec" },
+  dental: { id: "dental", years: "2025 — 26", site: "https://institucional.planodentalcenter.com.br", logo: "dental" },
+  polybalas: { id: "polybalas", years: "2023 — 25", site: "https://www.polybalas.com.br", logo: "polybalas" },
+  ipec: { id: "ipec", years: "2023", site: "https://cetic.br", logo: "ipec" },
   unicesumar: { id: "unicesumar", years: "2022", site: "https://www.unicesumar.edu.br" },
   sesds: { id: "sesds", years: "2019 — 21", site: "https://paraiba.pb.gov.br" },
   army: { id: "army", years: "2017", site: "https://www.eb.mil.br" },
   freelance: { id: "freelance", years: "2016 —" },
-  bemais: { id: "bemais", years: "2015 — 17", site: "https://bemais.com.br", logo: "bemais" },
+  bemais: { id: "bemais", years: "2015 — 17", site: "https://www.bemaissupermercados.com.br", logo: "bemais" },
 };
 const XP_ORDER: XpId[] = ["aec", "dental", "polybalas", "ipec", "unicesumar", "sesds", "army", "freelance", "bemais"];
 
@@ -116,10 +110,11 @@ export interface Content {
   xp: Strings["xp"];
   experience: Experience[];
   orgsTitle: string;
-  labelsExtra: { words: string; certs: string; toolbox: string };
+  labelsExtra: { words: string; certs: string; toolbox: string; education: string };
   toolbox: Strings["toolbox"];
   testimonials: Strings["testimonials"];
   certs: { icon: "efset" | "cisco" | "google" | "connect"; id?: string; name: string; issuer: string; meta: string }[];
+  education: Strings["education"];
   credentials: string[];
   contact: Strings["contact"] & { jp: string };
 }
@@ -140,16 +135,41 @@ function assemble(s: Strings): Content {
     xp: s.xp,
     experience: XP_ORDER.map((id) => ({ ...xpBase[id], ...s.experience[id] })),
     orgsTitle: s.labels.orgs,
-    labelsExtra: { words: s.labels.words, certs: s.labels.certs, toolbox: s.labels.toolbox },
+    labelsExtra: { words: s.labels.words, certs: s.labels.certs, toolbox: s.labels.toolbox, education: s.labels.education },
     toolbox: s.toolbox,
     testimonials: s.testimonials,
     certs: certBase.map((c, i) => ({ ...c, ...s.certs[i] })),
+    education: s.education,
     credentials: s.credentials,
     contact: { ...s.contact, jp: "話しましょう" },
   };
 }
 
-const strings: Record<Lang, Strings> = { en, pt, es, de, ja, ko, zh };
-export const content: Record<Lang, Content> = Object.fromEntries(
-  (Object.keys(strings) as Lang[]).map((l) => [l, assemble(strings[l])]),
-) as Record<Lang, Content>;
+/* English ships with the page; the other six are fetched the first time they are selected, which
+   keeps roughly 120 kB of copy out of the initial bundle. */
+const LOADERS: Record<Exclude<Lang, "en">, () => Promise<{ [k: string]: Strings }>> = {
+  pt: () => import("./i18n/pt"),
+  es: () => import("./i18n/es"),
+  de: () => import("./i18n/de"),
+  ja: () => import("./i18n/ja"),
+  ko: () => import("./i18n/ko"),
+  zh: () => import("./i18n/zh"),
+};
+
+const cache: Partial<Record<Lang, Content>> = { en: assemble(en) };
+
+export function contentFor(lang: Lang): Content | null {
+  return cache[lang] ?? null;
+}
+
+export async function loadContent(lang: Lang): Promise<Content> {
+  const hit = cache[lang];
+  if (hit) return hit;
+  const mod = await LOADERS[lang as Exclude<Lang, "en">]();
+  const built = assemble(mod[lang] as Strings);
+  cache[lang] = built;
+  return built;
+}
+
+/** Synchronous access for code that runs after the active language is loaded. */
+export const content = cache as Record<Lang, Content>;

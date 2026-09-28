@@ -11,6 +11,8 @@ export type ThemeId = "violet" | "red" | "orange" | "amber" | "green" | "teal" |
 export interface Theme {
   id: ThemeId;
   tokens: Record<string, string>;
+  /** Same palette, dark ground. Applied by the toggle or by prefers-color-scheme. */
+  dark: Record<string, string>;
 }
 
 function rgb(hex: string) {
@@ -23,16 +25,32 @@ function make(id: ThemeId, c: {
   paper: string; paper2: string; ink: string; ink2: string;
   d900: string; d800: string; d700: string; soft: string; mute: string; deco?: string;
 }): Theme {
+  const deco = c.deco ?? c.accent;
   return {
     id,
+    dark: {
+      "--paper": c.d900, "--paper-2": c.d800, "--paper-rgb": rgb(c.d900),
+      "--ink": c.paper, "--ink-2": c.soft, "--ink-rgb": rgb(c.paper),
+      "--accent": c.accent, "--accent-deep": c.deep, "--accent-light": c.light, "--accent-text": c.light,
+      "--accent-rgb": rgb(c.accent), "--accent-light-rgb": rgb(c.light), "--split": c.split,
+      "--plum-900": c.d900, "--plum-800": c.d800, "--plum-700": c.d700,
+      "--lilac": c.soft, "--mute": c.soft, "--deco": deco === c.accent ? c.accent : c.soft,
+      "--surface-dark": c.d700, "--on-dark": c.paper,
+      "--surface-ink": c.d800, "--on-ink": c.light, "--on-accent": c.paper,
+      "--line": `rgba(${rgb(c.paper)}, 0.16)`, "--line-dark": `rgba(${rgb(c.paper)}, 0.16)`,
+      "color-scheme": "dark",
+    },
     tokens: {
       "--paper": c.paper, "--paper-2": c.paper2, "--paper-rgb": rgb(c.paper),
       "--ink": c.ink, "--ink-2": c.ink2, "--ink-rgb": rgb(c.ink),
       "--accent": c.accent, "--accent-deep": c.deep, "--accent-light": c.light, "--accent-text": c.text ?? c.accent,
       "--accent-rgb": rgb(c.accent), "--accent-light-rgb": rgb(c.light), "--split": c.split,
       "--plum-900": c.d900, "--plum-800": c.d800, "--plum-700": c.d700,
-      "--lilac": c.soft, "--mute": c.mute, "--deco": c.deco ?? c.accent,
+      "--lilac": c.soft, "--mute": c.mute, "--deco": deco,
+      "--surface-dark": c.d900, "--on-dark": c.paper,
+      "--surface-ink": c.ink, "--on-ink": c.light, "--on-accent": c.paper,
       "--line": `rgba(${rgb(c.ink)}, 0.14)`, "--line-dark": `rgba(${rgb(c.paper)}, 0.18)`,
+      "color-scheme": "light",
     },
   };
 }
@@ -55,33 +73,53 @@ export const THEMES: Theme[] = [
 export const THEME_IDS = THEMES.map((t) => t.id);
 export const DEFAULT_THEME: ThemeId = "red";
 export const LS_THEME = "lb:theme";
+export const LS_SCHEME = "lb:scheme";
+
+export type Scheme = "light" | "dark";
+
+export function systemScheme(): Scheme {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
 
 export function isThemeId(v: unknown): v is ThemeId {
   return typeof v === "string" && (THEME_IDS as string[]).includes(v);
 }
 
-/** CSS for every theme, injected into index.html at build time. */
+const decl = (o: Record<string, string>) => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(";");
+
+/** CSS for every theme in both schemes, injected into index.html at build time. */
 export function themeCss(): string {
-  return THEMES.map((t) => `html[data-theme="${t.id}"]{${Object.entries(t.tokens).map(([k, v]) => `${k}:${v}`).join(";")}}`).join("\n");
+  const light = THEMES.map((t) => `html[data-theme="${t.id}"]{${decl(t.tokens)}}`).join("\n");
+  const dark = THEMES.map((t) => `html[data-theme="${t.id}"][data-scheme="dark"]{${decl(t.dark)}}`).join("\n");
+  const auto = THEMES.map((t) => `html[data-theme="${t.id}"]:not([data-scheme="light"]){${decl(t.dark)}}`).join("\n");
+  return `${light}\n${dark}\n@media (prefers-color-scheme: dark){\n${auto}\n}`;
 }
 
-/** Inline bootstrap: restores the saved theme before the first paint. */
+/** Inline bootstrap: restores the saved theme and scheme before the first paint. */
 export function themeBootstrap(): string {
-  const papers = Object.fromEntries(THEMES.map((t) => [t.id, t.tokens["--paper"]]));
-  return `(function(){try{var t=localStorage.getItem("${LS_THEME}"),p=${JSON.stringify(papers)};if(t&&p[t]){document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",p[t]);}}catch(e){}})();`;
+  const papers = Object.fromEntries(THEMES.map((t) => [t.id, [t.tokens["--paper"], t.dark["--paper"]]]));
+  return `(function(){try{var d=document.documentElement,p=${JSON.stringify(papers)};` +
+    `var t=localStorage.getItem("${LS_THEME}");if(t&&p[t])d.dataset.theme=t;else t="${DEFAULT_THEME}";` +
+    `var s=localStorage.getItem("${LS_SCHEME}");if(s==="dark"||s==="light")d.dataset.scheme=s;` +
+    `var dark=s==="dark"||(s!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);` +
+    `var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",p[t][dark?1:0]);` +
+    `}catch(e){}})();`;
 }
 
 /** The favicon in the theme's colours (same drawing as public/favicon.svg). */
-function favicon(t: Theme) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="${t.tokens["--paper"]}"/><circle cx="40" cy="26" r="16" fill="${t.tokens["--accent"]}"/><text x="6" y="56" font-family="Impact, Anton, sans-serif" font-size="30" fill="${t.tokens["--ink"]}">LB</text></svg>`;
+function favicon(t: Theme, scheme: Scheme = "light") {
+  const p = scheme === "dark" ? t.dark : t.tokens;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="${p["--paper"]}"/><circle cx="40" cy="26" r="16" fill="${p["--accent"]}"/><text x="6" y="56" font-family="Impact, Anton, sans-serif" font-size="30" fill="${p["--ink"]}">LB</text></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
-export function applyTheme(id: ThemeId) {
+export function applyTheme(id: ThemeId, scheme: Scheme) {
   const t = THEMES.find((x) => x.id === id) ?? THEMES[0];
   const root = document.documentElement;
   root.dataset.theme = t.id;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", t.tokens["--paper"]);
-  document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.setAttribute("href", favicon(t));
+  root.dataset.scheme = scheme;
+  const palette = scheme === "dark" ? t.dark : t.tokens;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", palette["--paper"]);
+  document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.setAttribute("href", favicon(t, scheme));
   window.dispatchEvent(new CustomEvent("lb:theme", { detail: t }));
 }

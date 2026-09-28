@@ -44,7 +44,17 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const dir = useRef<1 | -1>(1);
   const busy = useRef(false);
   const closing = useRef(false);
+  const [copied, setCopied] = useState(false);
   useFocusTrap(root, !!shown);
+
+  const copyLink = useCallback(() => {
+    if (!shown) return;
+    const url = `${location.origin}${location.pathname}#work/${shown.id}`;
+    navigator.clipboard?.writeText(url).then(() => {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    }).catch(() => { /* clipboard blocked */ });
+  }, [shown]);
 
   // Step with a direction-aware exit first, then let the parent swap the project.
   const step = useCallback((d: 1 | -1) => {
@@ -178,6 +188,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
         <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
         <span className="case__bar-right">
           <span className="case__keys" aria-hidden="true"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>
+          <button type="button" className="case__copy" onClick={copyLink} data-cursor="link">{copied ? `${t.contact.copied} ✓` : t.sheet.copy}</button>
           <button type="button" className="case__close" onClick={onClose} ref={closeBtn} data-cursor="link">{t.sheet.close} ✕</button>
         </span>
       </div>

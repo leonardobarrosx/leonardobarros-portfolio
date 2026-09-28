@@ -13,7 +13,7 @@ function localTime() {
 const SECTIONS = ["work", "about", "experience", "contact"] as const;
 
 export function Nav({ ready }: { ready: boolean }) {
-  const { t, lang, motionOn, toggleMotion } = usePrefs();
+  const { t, lang, motionOn, toggleMotion, scheme, toggleScheme } = usePrefs();
   const [time, setTime] = useState(localTime());
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -99,12 +99,20 @@ export function Nav({ ready }: { ready: boolean }) {
       <div className="progress" ref={progress} aria-hidden="true" />
       <header className={`nav ${dark ? "nav--dark" : ""}`}>
         <div className="nav__bar wrap" ref={bar} style={{ opacity: 0 }}>
-          <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Top"><i />LB</a>
+          <div className="nav__left">
+            <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Top"><i />LB</a>
+            <span className="nav__status mono"><i aria-hidden="true" />{t.nav.available}</span>
+          </div>
           <nav className="pill nav__links" aria-label="Sections">{links}</nav>
           <div className="nav__right">
             <span className="mono nav__clock">JPA {time}</span>
             <LangMenu />
             <ThemeMenu />
+            <div className="pill seg">
+              <button className="nav__scheme" onClick={toggleScheme} title={t.nav.appearance} aria-label={t.nav.appearance} aria-pressed={scheme === "dark"}>
+                <span aria-hidden="true">{scheme === "dark" ? "☾" : "☀"}</span>
+              </button>
+            </div>
             <div className="pill seg">
               <button onClick={toggleMotion} aria-pressed={motionOn} title={t.nav.motion}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
             </div>
@@ -131,6 +139,7 @@ export function Nav({ ready }: { ready: boolean }) {
         <div className="menu__foot mono">
           <LangMenu inline />
           <ThemeMenu inline />
+          <button className="menu__scheme mono" onClick={toggleScheme}>{t.nav.appearance}: {scheme === "dark" ? "☾" : "☀"}</button>
           <a className="menu__cv" href={cvHref} download>{t.contact.cv} ↓</a>
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>

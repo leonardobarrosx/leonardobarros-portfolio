@@ -5,7 +5,10 @@ import { shared } from "../data/content";
 import { decode } from "../lib/decode";
 import { Landmarks } from "./Landmarks";
 import { useProximity } from "../hooks/useProximity";
-import { LiquidSun } from "./LiquidSun";
+import { lazy, Suspense } from "react";
+
+// WebGL disc: pulled in after the first paint, it is decoration.
+const LiquidSun = lazy(() => import("./LiquidSun").then((m) => ({ default: m.LiquidSun })));
 
 export function Hero({ ready }: { ready: boolean }) {
   const { t } = usePrefs();
@@ -94,7 +97,7 @@ export function Hero({ ready }: { ready: boolean }) {
           <span className="line">{shared.first}</span>
           <span className="line">{shared.last}</span>
         </h1>
-        <LiquidSun area={root} />
+        <Suspense fallback={<div className="hero__sun" aria-hidden="true" />}><LiquidSun area={root} /></Suspense>
         <div className="hero__role mono">
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
         </div>

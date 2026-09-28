@@ -12,6 +12,9 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 - Intro plays once per session (`sessionStorage`)
 - Case studies open in a panel that grows out of the poster (cover pinned left, spread scrolling right), with prev/next, click-outside to close and deep links (`#work/<id>`)
 - Custom scrollbars (hairline track, accent thumb, draggable) for the page and the panels on pointer devices
+- Dark and light schemes for all nine themes: follows `prefers-color-scheme`, with a toggle in the nav that is remembered
+- Education block, an "open to work" badge in the nav, a 404 page, print styles and a copy-link button on each case study
+- Privacy-friendly analytics hook (Cloudflare Web Analytics, no cookies): set `VITE_ANALYTICS_TOKEN` to switch it on
 - Share-ready: Open Graph / Twitter card with a rendered `og.png`, canonical + `hreflang` for the seven languages (`?lang=xx` deep links), JSON-LD Person, sitemap, robots, web manifest and PNG icons; title and description follow the active language
 - CV download (EN/PT) in the nav, the mobile menu and the contact section
 - Accessibility: skip link, focus trapped inside dialogs and handed back on close, decorative decoding text hidden from assistive tech
@@ -30,7 +33,7 @@ npm run dev
 
 - `src/data/i18n/<lang>.ts` — all copy per language; `src/data/content.ts` merges it with the language-neutral bases (project ids, years, stacks, logos, links). Edit these to update the site.
 - `src/state/prefs.tsx` — language, motion and theme preferences.
-- `src/data/themes.ts` — the colour themes as CSS tokens (the per-theme CSS and the no-flash bootstrap are generated from it in `vite.config.ts`).
+- `src/data/themes.ts` — the colour themes as CSS tokens, light and dark (the per-theme CSS and the no-flash bootstrap are generated from it in `vite.config.ts`).
 - `src/data/toolbox.ts` — the grouped skills list in the Stack section (group titles live in the i18n files).
 - `src/components/` — one component per section.
 - `src/styles/global.css` — design tokens, grid and all styles.

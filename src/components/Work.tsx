@@ -4,8 +4,11 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { useCharWave } from "../hooks/useCharWave";
 import { Label } from "./Label";
-import { CaseStudy } from "./CaseStudy";
-import type { Work as WorkItem } from "../data/content";
+import { lazy, Suspense } from "react";
+
+// The case study is a whole screen of markup and animation: it only loads when a poster is opened.
+const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
+import { shared, type Work as WorkItem } from "../data/content";
 
 function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLElement | null) => void }) {
   const el = useRef<HTMLButtonElement>(null);
@@ -56,6 +59,7 @@ export function Work() {
   const grid = useRef<HTMLDivElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState<DOMRect | null>(null);
+  const opened = useRef(false);
   useReveal(root);
 
   // Deep link: #work/<id> opens the case study; the URL follows the panel.
@@ -77,6 +81,7 @@ export function Work() {
   const close = useCallback(() => { history.replaceState(null, "", "#work"); setOpenId(null); }, []);
 
   const index = t.works.findIndex((w) => w.id === openId);
+  if (index >= 0) opened.current = true; // once opened, keep it mounted so the close animation can play
   const step = useCallback((dir: 1 | -1) => {
     if (index < 0) return;
     const next = t.works[(index + dir + t.works.length) % t.works.length];
@@ -107,8 +112,13 @@ export function Work() {
         <div className="work__grid" ref={grid}>
           {t.works.map((item) => <Poster w={item} key={item.id} onOpen={open} />)}
         </div>
+        <a className="work__more mono" href={shared.github} target="_blank" rel="noreferrer" data-reveal data-cursor="link">
+          {t.sheet.more} <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <CaseStudy works={t.works} index={index} origin={origin} onClose={close} onStep={step} />
+      <Suspense fallback={null}>
+        {(index >= 0 || opened.current) && <CaseStudy works={t.works} index={index} origin={origin} onClose={close} onStep={step} />}
+      </Suspense>
     </section>
   );
 }

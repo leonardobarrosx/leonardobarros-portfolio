@@ -64,5 +64,5 @@ export function useProximity(root: RefObject<HTMLElement | null>, selector: stri
       el.removeEventListener("pointerleave", leave);
       window.removeEventListener("resize", measure);
     };
-  }, [root, selector, enabled, radius]);
+  }, [root, selector, enabled, radius, opts.split]);
 }
