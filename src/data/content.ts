@@ -68,14 +68,14 @@ const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year:
 };
 const WORK_ORDER: WorkId[] = ["meuchamado", "velaris", "argus", "itam", "vesta", "metis", "sidearm", "vault", "codebarx", "soluna"];
 
-const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "dental" | "polybalas" | "ipec" | "bemais" }> = {
+const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "dental" | "polybalas" | "ipec" | "bemais" | "unicesumar" | "govpb" | "exercito" }> = {
   aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br" },
   dental: { id: "dental", years: "2025 — 26", site: "https://institucional.planodentalcenter.com.br", logo: "dental" },
   polybalas: { id: "polybalas", years: "2023 — 25", site: "https://www.polybalas.com.br", logo: "polybalas" },
   ipec: { id: "ipec", years: "2023", site: "https://cetic.br", logo: "ipec" },
-  unicesumar: { id: "unicesumar", years: "2022", site: "https://www.unicesumar.edu.br" },
-  sesds: { id: "sesds", years: "2019 — 21", site: "https://paraiba.pb.gov.br" },
-  army: { id: "army", years: "2017", site: "https://www.eb.mil.br" },
+  unicesumar: { id: "unicesumar", years: "2022", site: "https://www.unicesumar.edu.br", logo: "unicesumar" },
+  sesds: { id: "sesds", years: "2019 — 21", site: "https://paraiba.pb.gov.br", logo: "govpb" },
+  army: { id: "army", years: "2017", site: "https://www.eb.mil.br", logo: "exercito" },
   freelance: { id: "freelance", years: "2016 —" },
   bemais: { id: "bemais", years: "2015 — 17", site: "https://www.bemaissupermercados.com.br", logo: "bemais" },
 };

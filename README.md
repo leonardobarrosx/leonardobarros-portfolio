@@ -58,3 +58,9 @@ by hand. For Pages you would also need `VITE_BASE=/leonardobarros-portfolio/` at
 The infantry insignia in the About section is the vector drawing by
 [Diego Biavati](https://commons.wikimedia.org/wiki/File:Distintivo_da_Arma_de_Infantaria_-_Ex%C3%A9rcito_Brasileiro.svg)
 on Wikimedia Commons, used under CC BY-SA 4.0 and recoloured with the site's tokens.
+
+The coat of arms of the Brazilian Army in the organisation strip comes from
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_the_Brazilian_Army.svg)
+and is in the public domain. The other marks in that strip belong to the organisations themselves and
+appear only to say where I worked or studied; each one was redrawn as white on transparency so the
+whole strip reads as one piece.
