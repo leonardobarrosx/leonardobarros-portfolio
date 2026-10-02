@@ -242,6 +242,10 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 /* ---------- about ---------- */
 .about { align-items: start; }
 .about__figure { grid-column: 1 / 6; position: sticky; top: calc(var(--nav-h) + var(--s3)); align-self: start; }
+/* The photo is scrubbed from scale 1.12 down to 1, and a scaled box paints wider than it lays out:
+   on a phone that put the document a pixel past the viewport. clip, not hidden, so the sticky
+   figure inside goes on sticking. */
+#about { overflow-x: clip; }
 .about__figure .distort { position: relative; overflow: hidden; aspect-ratio: 4 / 5; transform-origin: center; will-change: transform; filter: grayscale(1) contrast(1.05); }
 .about__figure img { width: 100%; height: 100%; object-fit: cover; }
 .distort canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.25s; }
