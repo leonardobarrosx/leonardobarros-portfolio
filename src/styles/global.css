@@ -146,6 +146,14 @@ h1, h2, h3, p, figure { margin: 0; }
 .cursor.is-close .cursor__ring { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: var(--paper); border-color: var(--paper); }
 .cursor.is-close .cursor__ring span { opacity: 1; color: var(--ink); font-size: 14px; letter-spacing: 0; }
 .cursor.is-close .cursor__dot { opacity: 0; }
+/* a bar over text and a grab handle over the scrollbar: what the system cursor used to say */
+.cursor.is-text .cursor__ring { width: 2px; height: 26px; margin: -13px 0 0 -1px; border-radius: 1px; background: var(--accent); border-color: transparent; }
+.cursor.is-text .cursor__dot { opacity: 0; }
+.cursor.is-grab .cursor__ring { width: 26px; height: 26px; margin: -13px 0 0 -13px; background: rgba(var(--accent-rgb), 0.16); }
+
+/* The system cursor is hidden only while the custom one is actually running (the class is added by
+   the component, and dropped when the window loses focus), so the page is never left without one. */
+html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !important; }
 @media (hover: none) { .cursor { display: none; } }
 
 /* ---------- nav ---------- */
