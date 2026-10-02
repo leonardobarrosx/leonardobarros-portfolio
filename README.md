@@ -28,7 +28,19 @@ npm install
 npm run dev
 ```
 
-`npm run build` outputs to `dist/`, `npm run lint` runs ESLint. The site is deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`, once Pages is enabled with "GitHub Actions" as the source.
+`npm run build` outputs to `dist/`, `npm run lint` runs ESLint.
+
+## Deploy
+
+The site is served from Vercel at the domain root. `vercel.json` carries the build command, the
+output directory and the cache headers; import the repository in Vercel and it picks everything up.
+
+One setting matters: `VITE_SITE_URL`. The canonical link, the `hreflang` set, the social cards, the
+JSON-LD, `robots.txt` and `sitemap.xml` are all generated at build time from it in `vite.config.ts`,
+so point it at the final domain in the Vercel project settings and everything follows.
+
+`.github/workflows/deploy.yml` is still there as a GitHub Pages fallback but only runs when started
+by hand. For Pages you would also need `VITE_BASE=/leonardobarros-portfolio/` at build time.
 
 ## Structure
 
