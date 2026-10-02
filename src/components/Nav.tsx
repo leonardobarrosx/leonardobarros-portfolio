@@ -139,8 +139,11 @@ export function Nav({ ready }: { ready: boolean }) {
         <div className="menu__foot mono">
           <LangMenu inline />
           <ThemeMenu inline />
-          <button className="menu__scheme mono" onClick={toggleScheme}>{t.nav.appearance}: {scheme === "dark" ? "☾" : "☀"}</button>
-          <a className="menu__cv" href={cvHref} download>{t.contact.cv} ↓</a>
+          <div className="menu__row">
+            <button className="menu__scheme mono" onClick={toggleScheme}>{t.nav.appearance}: {scheme === "dark" ? "☾" : "☀"}</button>
+            <button className="menu__motion mono" onClick={toggleMotion} aria-pressed={motionOn}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
+            <a className="menu__cv" href={cvHref} download>{t.contact.cv} ↓</a>
+          </div>
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>
         </div>

@@ -177,6 +177,10 @@ h1, h2, h3, p, figure { margin: 0; }
   .pill.nav__burger { display: inline-flex; }
   .nav__bar { grid-template-columns: 1fr auto; }
 }
+/* a phone keeps the mark and the burger; everything else is in the menu */
+@media (max-width: 760px) {
+  .nav__right > .langmenu, .nav__right > .thememenu, .nav__right > .seg:not(.nav__burger) { display: none; }
+}
 
 /* mobile / full menu */
 .menu { position: fixed; inset: 0; z-index: 85; background: var(--surface-dark); color: var(--on-dark); --accent-text: var(--accent-light); display: grid; grid-template-rows: auto 1fr auto; padding: var(--s3) var(--gutter); transform: translateY(-100%); }
@@ -702,7 +706,8 @@ body.is-locked .sb:not(.sb--case):not(.sb--sheet) { opacity: 0; pointer-events: 
 
 /* ---------- dark scheme ---------- */
 .nav__scheme { font-size: 13px; line-height: 1; padding: 7px 12px; }
-.menu__scheme { color: var(--on-dark); border-bottom: 1px solid var(--line-dark); padding-bottom: 2px; align-self: flex-start; }
+.menu__scheme, .menu__motion { color: var(--on-dark); border-bottom: 1px solid var(--line-dark); padding-bottom: 2px; align-self: flex-start; }
+.menu__row { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); align-items: center; }
 html[data-scheme="dark"] .about__figure .distort, html:not([data-scheme="light"]) .about__figure .distort { filter: grayscale(1) contrast(1.02) brightness(0.88); }
 html[data-scheme="dark"] .grain, html:not([data-scheme="light"]) .grain { opacity: 0.4; }
 html[data-scheme="dark"] .poster--paper .poster__deco, html:not([data-scheme="light"]) .poster--paper .poster__deco { mix-blend-mode: screen; opacity: 0.55; }
