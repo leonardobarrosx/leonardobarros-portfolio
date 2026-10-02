@@ -8,6 +8,7 @@ Editorial poster aesthetic on a 12-column grid: cool paper, violet ink, plum dar
 
 - Seven languages (EN, PT-BR, ES, DE, JA, KO, ZH) detected from the browser and persisted in `localStorage`
 - Motion toggle (persisted) that also honours `prefers-reduced-motion`
+- A click lands like a soft shot: a ring at the pointer, a chromatic split through the display type near it and a nudge on the small pieces around
 - Nine colour themes (red by default, then orange, amber, green, teal, blue, violet, pink, ink) from the swatch menu in the nav; persisted and applied before first paint. First-time visitors get asked their favourite colour by a small card once they start scrolling; hovering a swatch previews the theme, picking one keeps it
 - Intro plays once per session (`sessionStorage`)
 - Case studies open in a panel that grows out of the poster (cover pinned left, spread scrolling right), with prev/next, click-outside to close and deep links (`#work/<id>`)

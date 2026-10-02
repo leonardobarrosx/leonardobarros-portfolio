@@ -6,6 +6,7 @@ import { Cursor } from "./components/Cursor";
 import { Nav } from "./components/Nav";
 import { Ask } from "./components/Ask";
 import { Scrollbar } from "./components/Scrollbar";
+import { Shot } from "./components/Shot";
 import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
 import { About } from "./components/About";
@@ -28,6 +29,7 @@ function Site() {
       <a className="skip" href="#main">{t.nav.skip}</a>
       <Preloader onDone={onDone} />
       <Cursor />
+      <Shot />
       <Nav ready={ready} />
       <Scrollbar />
       <Ask ready={ready} />

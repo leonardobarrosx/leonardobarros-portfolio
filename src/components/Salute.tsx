@@ -27,6 +27,7 @@ export function useSalute() {
   }, [crowned, theme]);
 
   const onClick = useCallback(() => {
+    // after standing down the whole sequence is available again, from the double click
     if (!crowned || open) return;
     clicks.current += 1;
     if (clicks.current >= 3) {

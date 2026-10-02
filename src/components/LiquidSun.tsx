@@ -97,6 +97,20 @@ export function LiquidSun({ area }: { area: React.RefObject<HTMLElement | null> 
     gl.uniform3fv(uColor, color);
     gl.uniform3fv(uDeep, deep);
 
+    // a click anywhere near the disc sends a ripple through it
+    const shot = (e: Event) => {
+      const { x, y } = (e as CustomEvent<{ x: number; y: number }>).detail;
+      const r = host.getBoundingClientRect();
+      const nx = (x - r.left) / r.width, ny = 1 - (y - r.top) / r.height;
+      if (nx < -0.9 || nx > 1.9 || ny < -0.9 || ny > 1.9) return;
+      mouse.x = nx; mouse.y = ny;
+      strength = Math.max(strength, 1.9);
+      target = Math.max(target, 0.0001);
+      kick();
+      window.setTimeout(() => { target = 0; kick(); }, 120);
+    };
+    window.addEventListener("lb:shot", shot);
+
     const retint = () => {
       // tokens land on <html> synchronously; read them on the next frame so the swap is complete
       requestAnimationFrame(() => { [colorTo, deepTo] = readTheme(); tinting = true; kick(); });
@@ -134,6 +148,7 @@ export function LiquidSun({ area }: { area: React.RefObject<HTMLElement | null> 
       hero.removeEventListener("pointermove", move);
       hero.removeEventListener("pointerleave", leave);
       window.removeEventListener("lb:theme", retint);
+      window.removeEventListener("lb:shot", shot);
       host.classList.remove("is-gl");
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };

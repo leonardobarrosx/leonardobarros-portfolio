@@ -573,6 +573,11 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 .themes .swatch.is-active i { box-shadow: 0 0 0 2px var(--surface-dark), 0 0 0 3.5px var(--sw-2); }
 .menu .swatches { grid-template-columns: repeat(9, 26px); }
 
+/* ---------- the click lands like a shot ---------- */
+.shot { position: fixed; z-index: 95; width: 160px; height: 160px; margin: -80px 0 0 -80px; border-radius: 50%; border: 2px solid var(--accent); pointer-events: none; will-change: transform, opacity; }
+.shot::after { content: ""; position: absolute; inset: 34%; border-radius: 50%; background: var(--accent); opacity: 0.25; }
+@media (hover: none) { .shot { display: none; } }
+
 /* ---------- infantry mark ---------- */
 /* Insignia geometry by Diego Biavati (Wikimedia Commons, CC BY-SA 4.0), recoloured with the theme. */
 .army { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--s2); margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line); }
