@@ -14,6 +14,7 @@ export function useProximity(root: RefObject<HTMLElement | null>, selector: stri
     let rects: DOMRect[] = [];
     let raf = 0;
     let last: { x: number; y: number } | null = null;
+    let relax: gsap.core.Tween | null = null;
     let vel = { x: 0, y: 0 };
     let settle = 0;
 
@@ -34,16 +35,18 @@ export function useProximity(root: RefObject<HTMLElement | null>, selector: stri
         gsap.to(c, { y: -22 * e, skewX: -(dx / radius) * 14 * e, scaleY: 1 + 0.16 * e, scaleX: 1 - 0.05 * e, duration: 0.55, ease: "power3.out", overwrite: "auto" });
         if (opts.split) {
           // chromatic trail only on the letters under the pointer, sized by how fast it moves
-          c.style.setProperty("--ox", (gsap.utils.clamp(-12, 12, vel.x * 0.6) * e).toFixed(2));
-          c.style.setProperty("--oy", (gsap.utils.clamp(-12, 12, vel.y * 0.6) * e).toFixed(2));
+          c.style.setProperty("--px", (gsap.utils.clamp(-12, 12, vel.x * 0.6) * e).toFixed(2));
+          c.style.setProperty("--py", (gsap.utils.clamp(-12, 12, vel.y * 0.6) * e).toFixed(2));
         }
       });
     };
     const relaxSplit = () => {
       if (!opts.split) return;
-      chars.forEach((c) => gsap.to(c, { "--ox": 0, "--oy": 0, duration: 0.45, ease: "power3.out", overwrite: false }));
+      relax = gsap.to(chars, { "--px": 0, "--py": 0, duration: 0.45, ease: "power3.out" });
     };
     const move = (e: PointerEvent) => {
+      // the frame-by-frame writes below would otherwise race the relax tween still running
+      if (relax) { relax.kill(); relax = null; }
       last = { x: e.clientX, y: e.clientY };
       vel = { x: e.movementX, y: e.movementY };
       if (!raf) raf = requestAnimationFrame(apply);
@@ -58,6 +61,7 @@ export function useProximity(root: RefObject<HTMLElement | null>, selector: stri
     window.addEventListener("resize", measure);
     return () => {
       cancelAnimationFrame(raf);
+      relax?.kill();
       window.clearTimeout(settle);
       el.removeEventListener("pointerenter", enter);
       el.removeEventListener("pointermove", move);

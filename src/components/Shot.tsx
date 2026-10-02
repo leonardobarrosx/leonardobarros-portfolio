@@ -7,10 +7,11 @@ const REACH = 320;
 
 /**
  * A click lands like a soft shot: a muzzle ring at the pointer, a chromatic split that runs through
- * the display type near it, and a nudge on the small pieces around. Letters are shocked through the
- * `--ox`/`--oy` variables the proximity effect already drives, never through transforms, because the
- * hero's letters are already carrying the scroll and the pointer tweens and two owners of one
- * transform is how animation starts stuttering.
+ * the display type near it, and a nudge on the small pieces around. Letters are shocked through
+ * `--sx`/`--sy`, never through transforms, because the hero's letters are already carrying the
+ * scroll and the pointer tweens and two owners of one transform is how animation starts
+ * stuttering. The pointer effect writes its own `--px`/`--py` and the shadow adds the two, so a
+ * click while the pointer is over the headline no longer fights it frame by frame.
  */
 export function Shot() {
   const { motionOn } = usePrefs();
@@ -53,8 +54,8 @@ export function Shot() {
         gsap.to(state, {
           v: 0, duration: 0.9, ease: "elastic.out(1, 0.45)",
           onUpdate: () => {
-            c.style.setProperty("--ox", (ux * state.v).toFixed(2));
-            c.style.setProperty("--oy", (uy * state.v).toFixed(2));
+            c.style.setProperty("--sx", (ux * state.v).toFixed(2));
+            c.style.setProperty("--sy", (uy * state.v).toFixed(2));
           },
         });
       });

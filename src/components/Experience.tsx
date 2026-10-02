@@ -3,6 +3,7 @@ import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import { Sheet, useSticky } from "./Sheet";
+import { Orgs, type Org } from "./Orgs";
 import { decode } from "../lib/decode";
 import { motion } from "../state/prefs";
 import dental from "../assets/logos/dental.png";
@@ -15,25 +16,27 @@ import unicesumar from "../assets/logos/unicesumar.png";
 import govpb from "../assets/logos/govpb.png";
 import exercito from "../assets/logos/exercito.png";
 
-const LOGOS = { dental, polybalas, ipec, bemais, unicesumar, govpb, exercito } as const;
+const LOGOS = { aec, dental, polybalas, ipec, bemais, unicesumar, govpb, exercito } as const;
 /** The two coats of arms are portrait: at the same height as a wordmark they read as a speck. */
 const TALL = new Set(["exercito"]);
 
-const ORGS: { name: string; src: string; tall?: boolean }[] = [
-  { name: "AeC", src: aec },
-  { name: "Dental Center", src: dental },
-  { name: "Polybalas", src: polybalas },
-  { name: "Ipec", src: ipec },
-  { name: "CGI.br", src: cgibr },
-  { name: "UniCesumar", src: unicesumar },
-  { name: "Governo da Paraíba", src: govpb },
-  { name: "Exército Brasileiro", src: exercito, tall: true },
-  { name: "BeMais", src: bemais },
+const ORGS: Org[] = [
+  { name: "AeC", src: aec, site: "https://www.aec.com.br" },
+  { name: "Dental Center", src: dental, site: "https://institucional.planodentalcenter.com.br" },
+  { name: "Polybalas", src: polybalas, site: "https://www.polybalas.com.br" },
+  { name: "Ipec", src: ipec, site: "https://www.ipec-inteligencia.com.br" },
+  { name: "CGI.br", src: cgibr, site: "https://cgi.br" },
+  { name: "UniCesumar", src: unicesumar, site: "https://www.unicesumar.edu.br" },
+  { name: "Governo da Paraíba", src: govpb, site: "https://paraiba.pb.gov.br" },
+  { name: "Exército Brasileiro", src: exercito, site: "https://www.eb.mil.br", tall: true },
+  { name: "BeMais", src: bemais, site: "https://www.bemaissupermercados.com.br" },
 ];
 
 /** Typographic mark for organisations without a logo file. */
 function Mark({ name }: { name: string }) {
-  const initials = name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+  const words = name.split(/\s+/);
+  // two words give an initial each; one word gives its first two letters, never a lone "F"
+  const initials = (words.length > 1 ? words.slice(0, 2).map((w) => w[0]).join("") : name.slice(0, 2)).toUpperCase();
   return <span className="sheet__mark display" aria-hidden="true">{initials}</span>;
 }
 
@@ -68,14 +71,7 @@ export function Experience() {
     <section className="section section--dark" id="experience" ref={root}>
       <div className="wrap">
         <Label n="04" text={t.labels.experience} jp="経歴" />
-        <div className="orgs" data-reveal>
-          <span className="mono muted">{t.orgsTitle}</span>
-          <ul className="orgs__list">
-            {ORGS.map((o) => (
-              <li key={o.name} title={o.name} className={o.tall ? "is-tall" : undefined}>{o.src ? <img src={o.src} alt={o.name} loading="lazy" /> : <span className="display">{o.name}</span>}</li>
-            ))}
-          </ul>
-        </div>
+        <Orgs title={t.orgsTitle} orgs={ORGS} visit={t.xp.visit} close={t.sheet.close} />
         <ul className="xp">
           {t.experience.map((e, i) => (
             <li key={e.id} data-reveal data-delay={Math.min(i, 4) * 0.05}>
@@ -101,9 +97,11 @@ export function Experience() {
             </div>
             <div className="sheet__body">
               <div className="sheet__org">
-                {x.logo
-                  ? <img className={`sheet__logo${TALL.has(x.logo) ? " sheet__logo--tall" : ""}`} src={LOGOS[x.logo]} alt="" />
-                  : <Mark name={x.org} />}
+                <span className="sheet__plate">
+                  {x.logo
+                    ? <img className={`sheet__logo${TALL.has(x.logo) ? " sheet__logo--tall" : ""}`} src={LOGOS[x.logo]} alt="" />
+                    : <Mark name={x.org} />}
+                </span>
                 <div>
                   <b>{x.org}</b>
                   {x.site && <a className="mono" href={x.site} target="_blank" rel="noreferrer">{host(x.site)} ↗</a>}

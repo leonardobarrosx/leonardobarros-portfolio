@@ -68,8 +68,8 @@ const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year:
 };
 const WORK_ORDER: WorkId[] = ["meuchamado", "velaris", "argus", "itam", "vesta", "metis", "sidearm", "vault", "codebarx", "soluna"];
 
-const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "dental" | "polybalas" | "ipec" | "bemais" | "unicesumar" | "govpb" | "exercito" }> = {
-  aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br" },
+const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "aec" | "dental" | "polybalas" | "ipec" | "bemais" | "unicesumar" | "govpb" | "exercito" }> = {
+  aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br", logo: "aec" },
   dental: { id: "dental", years: "2025 — 26", site: "https://institucional.planodentalcenter.com.br", logo: "dental" },
   polybalas: { id: "polybalas", years: "2023 — 25", site: "https://www.polybalas.com.br", logo: "polybalas" },
   ipec: { id: "ipec", years: "2023", site: "https://cetic.br", logo: "ipec" },

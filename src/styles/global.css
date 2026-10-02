@@ -213,7 +213,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .hero__title .line:nth-child(2) { padding-left: 0.28em; }
 .hero__title .char { display: inline-block; will-change: transform; }
 .hero__sun { position: absolute; right: clamp(48px, 7vw, 120px); top: 42%; width: clamp(140px, 22vw, 320px); aspect-ratio: 1; border-radius: 50%; background: var(--accent); transform: translateY(-50%) scale(0); z-index: 1; mix-blend-mode: multiply; }
-.hero__jp { position: absolute; right: 0; top: 0; z-index: 3; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.28em; will-change: transform; isolation: isolate; }
+.hero__jp { pointer-events: none; user-select: none; -webkit-user-select: none; position: absolute; right: 0; top: 0; z-index: 3; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.28em; will-change: transform; isolation: isolate; }
 .hero__role { grid-column: 1 / 7; margin-top: var(--s3); display: flex; gap: var(--s2); align-items: center; }
 .hero__role .scramble { min-width: 28ch; display: inline-block; }
 .hero__statement { grid-column: 1 / 7; margin-top: var(--s2); font-size: var(--t-lead); line-height: 1.45; max-width: 40ch; color: var(--ink-2); }
@@ -337,9 +337,11 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .sheet__org b { font-weight: 600; }
 .sheet__org a { color: var(--lilac); border-bottom: 1px solid transparent; transition: border-color 0.3s, color 0.3s; }
 .sheet__org a:hover { color: var(--paper); border-color: currentColor; }
-.sheet__logo { height: 28px; width: auto; max-width: 150px; object-fit: contain; }
-.sheet__logo--tall { height: 44px; }
-.sheet__mark { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-dark); border-radius: 8px; font-size: 18px; color: var(--paper); }
+.sheet__plate { flex: none; display: grid; place-items: center; min-width: 58px; height: 58px; padding: 0 12px; border: 1px solid var(--line-dark); border-radius: 12px; background: rgba(var(--paper-rgb), 0.05); }
+/* same white as the rail: the marks arrive in every colour and only one of them is the house one */
+.sheet__logo { max-height: 30px; max-width: 128px; width: auto; height: auto; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
+.sheet__logo--tall { max-height: 42px; }
+.sheet__mark { font-size: 20px; line-height: 1; color: var(--paper); }
 .sheet__title--role { font-size: clamp(30px, 4vw, 48px); line-height: 1; }
 .sheet__bullets { display: grid; gap: 10px; padding-left: 18px; list-style: disc; color: var(--lilac); font-size: var(--t-small); line-height: 1.55; }
 .sheet__bullets li::marker { color: var(--accent-text); }
@@ -411,14 +413,29 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 
 /* ---------- hero photo ---------- */
 
-/* ---------- orgs strip ---------- */
-.orgs { display: grid; gap: var(--s2); margin-bottom: clamp(32px, 4vw, 48px); }
-.orgs__list { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) clamp(24px, 3.5vw, 56px); }
-.orgs__list li { display: flex; align-items: center; height: 28px; opacity: 0.72; transition: opacity 0.3s; }
-.orgs__list li.is-tall { height: 40px; }
-.orgs__list li:hover { opacity: 1; }
-.orgs__list img { height: 100%; width: auto; max-width: 150px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
-.orgs__list .display { font-size: 26px; line-height: 1; color: var(--on-dark); }
+/* ---------- orgs rail ---------- */
+.orgs { --org-gap: clamp(30px, 4vw, 64px); display: grid; justify-items: start; gap: var(--s2); margin-bottom: clamp(32px, 4vw, 48px); }
+.orgs__rail { width: 100%; overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.orgs__rail.is-dragging { cursor: grabbing; }
+.orgs__track { display: flex; gap: var(--org-gap); width: max-content; will-change: transform; }
+.orgs__set { display: flex; align-items: center; gap: var(--org-gap); margin: 0; padding: 0; list-style: none; }
+.orgs__set--static { flex-wrap: wrap; row-gap: var(--s3); }
+.orgs__set li { display: flex; align-items: center; height: 30px; }
+.orgs__set li.is-tall { height: 42px; }
+.orgs__item { display: flex; align-items: center; height: 100%; opacity: 0.45; transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out); }
+.orgs__item img { height: 100%; width: auto; max-width: 150px; object-fit: contain; pointer-events: none; filter: grayscale(1) brightness(0) invert(1); }
+.orgs__item:hover, .orgs__item:focus-visible, .orgs__item.is-active { opacity: 1; transform: translateY(-2px); }
+.orgs__card { display: flex; align-items: center; gap: 14px; max-width: 100%; padding: 10px 10px 10px 16px; border: 1px solid var(--line-dark); border-radius: 16px; background: rgba(var(--paper-rgb), 0.05); }
+.orgs__card > img { flex: none; height: 26px; width: auto; max-width: 110px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
+.orgs__card-id { display: grid; gap: 2px; min-width: 0; }
+.orgs__card-id b { font-weight: 600; }
+.orgs__card-id a { color: var(--lilac); border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+.orgs__card-id a:hover, .orgs__card-id a:focus-visible { color: var(--paper); border-color: currentColor; }
+.orgs__card-x { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--line-dark); border-radius: 50%; font-size: 12px; transition: background 0.3s, color 0.3s; }
+.orgs__card-x:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+@media (max-width: 560px) { .orgs__card { flex-wrap: wrap; } }
 
 /* ---------- testimonials ---------- */
 .quotes { row-gap: var(--s5); margin-top: var(--s3); }
@@ -515,8 +532,14 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .hero__sun { will-change: transform; overflow: visible; }
 .hero__sun.is-gl { background: transparent; }
 .hero__sun canvas { position: absolute; inset: -2%; width: 104%; height: 104%; display: block; }
-.hero__title { will-change: transform; }
-.hero__title .char { --ox: 0; --oy: 0; }
+/* The headline's box spans the row and sits above the disc, so without this every hover and every
+   press over the disc landed on the h1: the cursor turned into a text bar and the click started a
+   selection that then fought the proximity tween. The glyphs are not meant to be picked up anyway. */
+.hero__title { will-change: transform; pointer-events: none; user-select: none; -webkit-user-select: none; }
+/* Two effects reach for the same letters: the pointer (--px/--py) and a click (--sx/--sy). They
+   each own their pair and the shadow adds them up, because one shared pair meant whichever wrote
+   last won and the letters stuttered. */
+.hero__title .char, .contact__title .char { --px: 0; --py: 0; --sx: 0; --sy: 0; --ox: calc(var(--px) + var(--sx)); --oy: calc(var(--py) + var(--sy)); }
 .hero__title .char {
   text-shadow:
     calc(var(--ox) * 1px) calc(var(--oy) * 1px) 0 var(--accent),

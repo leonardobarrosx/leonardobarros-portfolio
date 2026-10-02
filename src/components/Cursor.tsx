@@ -37,7 +37,7 @@ export function Cursor() {
       if (!t) return "";
       if (t.closest("[data-cursor='view']")) return "is-view";
       if (t.closest("[data-cursor='close']")) return "is-close";
-      if (t.closest(".sb")) return "is-grab";
+      if (t.closest(".sb, [data-cursor='grab']")) return "is-grab";
       if (t.closest("a, button, [data-cursor='link'], [role='button']")) return "is-link";
       // only call it text when the pointer is really over the glyphs, not the block around them
       const el = t.closest(TEXT);
