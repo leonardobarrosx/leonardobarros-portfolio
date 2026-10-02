@@ -18,9 +18,16 @@ export function Shot() {
   useEffect(() => {
     if (!motionOn || window.matchMedia("(hover: none)").matches) return;
 
+    let combo = 0, lastAt = 0;
+
     const onDown = (e: PointerEvent) => {
       if (e.button !== 0 || !e.isPrimary) return;
       const x = e.clientX, y = e.clientY;
+      // keep clicking and the shot builds: the streak decays once you stop
+      const now = performance.now();
+      combo = now - lastAt < 700 ? Math.min(combo + 1, 5) : 0;
+      lastAt = now;
+      const power = combo / 5;
 
       // the ring
       const ring = document.createElement("span");
@@ -29,8 +36,8 @@ export function Shot() {
       ring.style.top = `${y}px`;
       document.body.appendChild(ring);
       gsap.timeline({ onComplete: () => ring.remove() })
-        .fromTo(ring, { scale: 0.1, opacity: 0.9 }, { scale: 1, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .fromTo(ring.style, { borderWidth: "2px" }, { borderWidth: "0.5px", duration: 0.6, ease: "power2.out" }, 0);
+        .fromTo(ring, { scale: 0.06, opacity: 0.95 }, { scale: 1 + power * 0.7, opacity: 0, duration: 0.6 + power * 0.25, ease: "power3.out" })
+        .fromTo(ring.style, { borderWidth: `${2 + power * 2}px` }, { borderWidth: "0.5px", duration: 0.6, ease: "power2.out" }, 0);
 
       // display type: a chromatic kick that decays back to rest
       const chars = document.querySelectorAll<HTMLElement>(".hero__title .char, .contact__title .char");
@@ -41,7 +48,7 @@ export function Shot() {
         const d = Math.hypot(dx, dy);
         if (d > REACH) return;
         const k = (1 - d / REACH) ** 2;
-        const state = { v: 14 * k };
+        const state = { v: (14 + power * 10) * k };
         const ux = d > 0.001 ? dx / d : 0, uy = d > 0.001 ? dy / d : 0;
         gsap.to(state, {
           v: 0, duration: 0.9, ease: "elastic.out(1, 0.45)",
@@ -60,13 +67,13 @@ export function Shot() {
         const dx = r.left + r.width / 2 - x, dy = r.top + r.height / 2 - y;
         const d = Math.hypot(dx, dy);
         if (d > REACH) return;
-        const k = (1 - d / REACH) ** 2 * 18;
+        const k = (1 - d / REACH) ** 2 * (18 + power * 12);
         gsap.fromTo(b, { x: (dx / (d || 1)) * k, y: (dy / (d || 1)) * k },
           { x: 0, y: 0, duration: 1.1, ease: "elastic.out(1, 0.4)", overwrite: "auto", clearProps: "transform" });
       });
 
       // the hero disc takes the hit too
-      window.dispatchEvent(new CustomEvent("lb:shot", { detail: { x, y } }));
+      window.dispatchEvent(new CustomEvent("lb:shot", { detail: { x, y, power } }));
     };
 
     window.addEventListener("pointerdown", onDown);
