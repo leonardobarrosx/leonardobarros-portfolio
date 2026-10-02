@@ -22,7 +22,7 @@ export const zh: Strings = {
       "同时我经营自己的公司 Velaris Tecnologia，Meu Chamado 就诞生于此：一套为支撑 56 家卫生机构的 IT 团队打造的多租户服务台平台。ARGUS（眼镜店管理）和 VESTA（餐厅运营）出自同一张工作台，还有一批不断增加的内部工具和自动化。",
     ],
     army: { title: "巴西陆军预备役军官", lines: ["预备役军官 (R/2) · 步兵", "NPOR · 第15摩托化步兵营 · 2017", "TREME-TERRA 期"], credit: "徽章:" },
-    salute: { queen: "步兵，诸兵种之后。", title: "战地主题已开启", hint: "橄榄绿与金色，想开多久都行。", play: "播放军歌", pause: "暂停", exit: "解散" },
+    salute: { queen: "步兵，诸兵种之后。", title: "战地主题已开启", hint: "深蓝与橄榄绿，步兵科的颜色。", play: "播放军歌", pause: "暂停", exit: "解散" },
     facts: [["所在地", "若昂佩索阿，巴西"], ["起步", "2016年"], ["语言", "葡萄牙语 母语 · 英语 C2"], ["状态", "开放工作机会"]],
     valuesTitle: "我带来的",
     values: [

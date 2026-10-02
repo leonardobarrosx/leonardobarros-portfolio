@@ -22,7 +22,7 @@ export const ko: Strings = {
       "동시에 제 회사 Velaris Tecnologia를 운영합니다. 여기서 Meu Chamado가 나왔습니다. 보건소 56곳을 지원하는 IT 팀을 위한 멀티테넌트 헬프데스크 플랫폼입니다. ARGUS(안경원 관리)와 VESTA(레스토랑 운영)도 같은 작업대에서 나왔고, 내부 도구와 자동화도 계속 늘고 있습니다.",
     ],
     army: { title: "브라질 육군 예비역 장교", lines: ["예비역 소위 후보 (R/2) · 보병", "NPOR · 제15차량화보병대대 · 2017년", "TREME-TERRA 기수"], credit: "휘장:" },
-    salute: { queen: "보병은 모든 병과의 여왕입니다.", title: "야전 테마 켜짐", hint: "올리브색과 금색, 원하는 만큼.", play: "군가 재생", pause: "일시정지", exit: "해산" },
+    salute: { queen: "보병은 모든 병과의 여왕입니다.", title: "야전 테마 켜짐", hint: "아줄페헤치와 올리브색, 보병의 색.", play: "군가 재생", pause: "일시정지", exit: "해산" },
     facts: [["거점", "주앙페소아, BR"], ["시작", "2016년"], ["언어", "포르투갈어 모국어 · 영어 C2"], ["상태", "구직 중"]],
     valuesTitle: "제가 가져오는 것",
     values: [

@@ -22,7 +22,7 @@ export const pt: Strings = {
       "Em paralelo eu toco a Velaris Tecnologia, minha própria empresa, onde nasceu o Meu Chamado: uma plataforma de helpdesk multi-tenant para o TI que atende 56 unidades de saúde. ARGUS (gestão para óticas) e VESTA (operação de restaurantes) saíram da mesma bancada, junto com um conjunto crescente de ferramentas internas e automações.",
     ],
     army: { title: "Oficial da reserva, Exército Brasileiro", lines: ["Aspirante a Oficial R/2 · Infantaria", "NPOR · 15º BI Mtz · 2017", "Turma Treme-Terra"], credit: "Distintivo:" },
-    salute: { queen: "A Infantaria é, das Armas, a Rainha.", title: "Tema de campanha ligado", hint: "Verde-oliva e dourado, pelo tempo que quiser.", play: "Tocar a canção", pause: "Pausar", exit: "Debandar" },
+    salute: { queen: "A Infantaria é, das Armas, a Rainha.", title: "Tema de campanha ligado", hint: "Azul-ferrete e verde-oliva, as cores da arma.", play: "Tocar a canção", pause: "Pausar", exit: "Debandar" },
     facts: [["Base", "João Pessoa, PB"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Status", "Aberto a propostas"]],
     valuesTitle: "O que eu levo comigo",
     values: [

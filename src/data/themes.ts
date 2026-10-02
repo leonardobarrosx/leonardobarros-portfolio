@@ -71,7 +71,8 @@ export const THEMES: Theme[] = [
   make("violet", { accent: "#6f2ff2", deep: "#5620c9", light: "#b39cff", split: "#1fd1c8", paper: "#eeeaf3", paper2: "#e3ddeb", ink: "#16121c", ink2: "#2b2534", d900: "#1a1322", d800: "#251a30", d700: "#37283f", soft: "#c6bbd6", mute: "#6c6577" }),
   make("pink", { accent: "#e0298a", deep: "#b21c6b", light: "#ff9ad0", split: "#22c7c0", paper: "#f4ebf0", paper2: "#ecdfe7", ink: "#1a1016", ink2: "#2f2229", d900: "#20121a", d800: "#2d1a25", d700: "#432a37", soft: "#d6b8c8", mute: "#745f6a" }),
   // the hidden one: field green and gold, reached by saluting the infantry mark in About
-  make("campanha", { hidden: true, accent: "#c8a04a", deep: "#8f6f24", light: "#e8c87a", text: "#7d5f1c", split: "#6d7f52", paper: "#e9e5d6", paper2: "#ddd8c4", ink: "#1b1f16", ink2: "#2f3626", d900: "#161a12", d800: "#232a1b", d700: "#333c27", soft: "#c2c2a6", mute: "#6b7059" }),
+  // sand paper, olive darks, azul-ferrete accent: the infantry's own colour, with gold left for the crown
+  make("campanha", { hidden: true, accent: "#1d3a86", deep: "#13275e", light: "#93aee8", text: "#17306e", split: "#c8a04a", paper: "#e8e3d2", paper2: "#dcd6c0", ink: "#15170f", ink2: "#2b2f20", d900: "#141a12", d800: "#1e2719", d700: "#2c3724", soft: "#c3c7a9", mute: "#6d7158" }),
   // monochrome: type and painted elements share one ink; greys keep the posters apart
   make("ink", { accent: "#121212", deep: "#000000", light: "#d6d6d6", text: "#121212", split: "#8a8a8a", paper: "#f1f0ee", paper2: "#e3e1dd", ink: "#121212", ink2: "#2a2a2a", d900: "#171717", d800: "#4a4a4a", d700: "#333333", soft: "#bdbdbd", mute: "#666666", deco: "#4a4a4a" }),
 ];

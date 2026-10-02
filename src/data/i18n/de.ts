@@ -22,7 +22,7 @@ export const de: Strings = {
       "Parallel führe ich Velaris Tecnologia, meine eigene Firma, in der Meu Chamado entstanden ist: eine mandantenfähige Helpdesk-Plattform für ein IT-Team, das 56 Gesundheitsstationen betreut. ARGUS (Optikerverwaltung) und VESTA (Restaurantbetrieb) kommen von derselben Werkbank, dazu eine wachsende Reihe interner Werkzeuge und Automatisierungen.",
     ],
     army: { title: "Reserveoffizier, Brasilianische Armee", lines: ["Aspirante a Oficial R/2 · Infanterie", "NPOR · 15. Motorisiertes Infanteriebataillon · 2017", "Jahrgang Treme-Terra"], credit: "Abzeichen:" },
-    salute: { queen: "Die Infanterie ist, von allen Waffen, die Königin.", title: "Feldthema aktiv", hint: "Olivgrün und Gold, so lange du magst.", play: "Hymne abspielen", pause: "Pause", exit: "Wegtreten" },
+    salute: { queen: "Die Infanterie ist, von allen Waffen, die Königin.", title: "Feldthema aktiv", hint: "Azul-ferrete und Olivgrün, die Farben der Waffengattung.", play: "Hymne abspielen", pause: "Pause", exit: "Wegtreten" },
     facts: [["Standort", "João Pessoa, BR"], ["Seit", "2016"], ["Sprachen", "PT Muttersprache · EN C2"], ["Status", "Offen für Angebote"]],
     valuesTitle: "Was ich mitbringe",
     values: [

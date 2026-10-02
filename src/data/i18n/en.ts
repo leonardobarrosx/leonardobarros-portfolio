@@ -22,7 +22,7 @@ export const en: Strings = {
       "In parallel I run Velaris Tecnologia, my own company, where Meu Chamado was built: a multi-tenant helpdesk platform for an IT team that supports 56 health units. ARGUS (optical management) and VESTA (restaurant operations) come from the same bench, along with a growing set of internal tools and automations.",
     ],
     army: { title: "Reserve officer, Brazilian Army", lines: ["Aspirante a Oficial R/2 · Infantry", "NPOR · 15th Motorized Infantry Battalion · 2017", "Class Treme-Terra"], credit: "Insignia:" },
-    salute: { queen: "Infantry: of all the arms, the Queen.", title: "Campaign theme on", hint: "Field green and gold, for as long as you like.", play: "Play the anthem", pause: "Pause", exit: "Stand down" },
+    salute: { queen: "Infantry: of all the arms, the Queen.", title: "Campaign theme on", hint: "Azul-ferrete and olive, the infantry's own colours.", play: "Play the anthem", pause: "Pause", exit: "Stand down" },
     facts: [["Based", "João Pessoa, BR"], ["Since", "2016"], ["Languages", "PT native · EN C2"], ["Status", "Open to work"]],
     valuesTitle: "What I bring",
     values: [
