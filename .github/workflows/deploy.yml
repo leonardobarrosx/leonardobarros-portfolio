@@ -1,8 +1,8 @@
 name: Deploy to GitHub Pages
 
+# The site is served from Vercel. This workflow stays for a GitHub Pages fallback and only runs
+# when started by hand, so it does not fail on every push while Pages is disabled.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
