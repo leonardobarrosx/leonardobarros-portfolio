@@ -9,7 +9,7 @@ export const en: Strings = {
   },
   seo: { title: "Leonardo Barros — Full-Stack & Mobile Developer", description: "Full-Stack & Mobile Developer and UI/UX designer in João Pessoa, Brazil. Ten years building web, mobile and data products with React, Flutter, TypeScript, Node.js, Python, Go and C#." },
   nav: { work: "Work", about: "About", experience: "Experience", contact: "Contact", menu: "Menu", close: "Close", motion: "Motion", on: "on", off: "off", language: "Language", theme: "Theme", skip: "Skip to content", cv: "CV", available: "Open to work", appearance: "Appearance" },
-  themes: { violet: "Violet", red: "Red", orange: "Orange", amber: "Amber", green: "Green", teal: "Teal", blue: "Blue", pink: "Pink", ink: "Ink" },
+  themes: { violet: "Violet", red: "Red", orange: "Orange", amber: "Amber", green: "Green", teal: "Teal", blue: "Blue", pink: "Pink", ink: "Ink", campanha: "Campaign" },
   ask: { kicker: "A quick one", question: "What's your favourite colour?", hint: "You can change it any time from the dot in the menu.", thanks: "Good choice. Enjoy the portfolio, welcome!", skip: "Skip" },
   labels: { about: "About", services: "What I do", work: "Selected work", experience: "Experience", stack: "Stack", contact: "Contact", words: "Kind words", certs: "Certifications", education: "Education", orgs: "Where I've worked", toolbox: "The full toolbox" },
   toolbox: { languages: "Languages", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Data & storage", messaging: "Messaging & integrations", testing: "Testing & quality", security: "Security", observability: "Observability & ops", performance: "Performance & caching", accessibility: "Accessibility & i18n", automation: "Automation & AI", reporting: "Data, BI & reporting", validation: "Validation & forms", cloud: "Cloud & infrastructure", design: "Design & motion", methods: "Methods & tooling" },
@@ -22,6 +22,7 @@ export const en: Strings = {
       "In parallel I run Velaris Tecnologia, my own company, where Meu Chamado was built: a multi-tenant helpdesk platform for an IT team that supports 56 health units. ARGUS (optical management) and VESTA (restaurant operations) come from the same bench, along with a growing set of internal tools and automations.",
     ],
     army: { title: "Reserve officer, Brazilian Army", lines: ["Aspirante a Oficial R/2 · Infantry", "NPOR · 15th Motorized Infantry Battalion · 2017", "Class Treme-Terra"], credit: "Insignia:" },
+    salute: { queen: "Infantry: of all the arms, the Queen.", title: "Campaign theme on", hint: "Field green and gold, for as long as you like.", play: "Play the anthem", pause: "Pause", exit: "Stand down" },
     facts: [["Based", "João Pessoa, BR"], ["Since", "2016"], ["Languages", "PT native · EN C2"], ["Status", "Open to work"]],
     valuesTitle: "What I bring",
     values: [

@@ -9,7 +9,7 @@ export const es: Strings = {
   },
   seo: { title: "Leonardo Barros — Desarrollador Full-Stack & Mobile", description: "Desarrollador Full-Stack & Mobile y diseñador UI/UX en João Pessoa, Brasil. Diez años creando productos web, móviles y de datos con React, Flutter, TypeScript, Node.js, Python, Go y C#." },
   nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", contact: "Contacto", menu: "Menú", close: "Cerrar", motion: "Animaciones", on: "on", off: "off", language: "Idioma", theme: "Tema", skip: "Saltar al contenido", cv: "CV", available: "Disponible", appearance: "Apariencia" },
-  themes: { violet: "Violeta", red: "Rojo", orange: "Naranja", amber: "Ámbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
+  themes: { violet: "Violeta", red: "Rojo", orange: "Naranja", amber: "Ámbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta", campanha: "Campaña" },
   ask: { kicker: "Una pregunta rápida", question: "¿Cuál es tu color favorito?", hint: "Puedes cambiarlo cuando quieras desde el punto del menú.", thanks: "Buena elección. Ahora sí, disfruta el portafolio, ¡bienvenido!", skip: "Saltar" },
   labels: { about: "Sobre mí", services: "Qué hago", work: "Trabajos seleccionados", experience: "Experiencia", stack: "Stack", contact: "Contacto", words: "Lo que dicen", certs: "Certificaciones", education: "Formación", orgs: "Dónde he trabajado", toolbox: "La caja de herramientas completa" },
   toolbox: { languages: "Lenguajes", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Datos & almacenamiento", messaging: "Mensajería & integraciones", testing: "Testing & calidad", security: "Seguridad", observability: "Observabilidad & operaciones", performance: "Rendimiento & caché", accessibility: "Accesibilidad & i18n", automation: "Automatización & IA", reporting: "Datos, BI & reportes", validation: "Validación & formularios", cloud: "Cloud & infraestructura", design: "Diseño & motion", methods: "Métodos & herramientas" },
@@ -22,6 +22,7 @@ export const es: Strings = {
       "En paralelo llevo Velaris Tecnologia, mi propia empresa, donde nació Meu Chamado: una plataforma de helpdesk multi-tenant para el TI que atiende 56 unidades de salud. ARGUS (gestión de ópticas) y VESTA (operación de restaurantes) salieron del mismo banco de trabajo, junto con un conjunto creciente de herramientas internas y automatizaciones.",
     ],
     army: { title: "Oficial de la reserva, Ejército Brasileño", lines: ["Aspirante a Oficial R/2 · Infantería", "NPOR · 15.º Batallón de Infantería Motorizada · 2017", "Promoción Treme-Terra"], credit: "Distintivo:" },
+    salute: { queen: "La Infantería es, de las Armas, la Reina.", title: "Tema de campaña activado", hint: "Verde oliva y dorado, el tiempo que quieras.", play: "Reproducir el himno", pause: "Pausar", exit: "Romper filas" },
     facts: [["Base", "João Pessoa, BR"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Estado", "Abierto a propuestas"]],
     valuesTitle: "Lo que aporto",
     values: [

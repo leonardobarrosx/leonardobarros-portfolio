@@ -588,6 +588,27 @@ html.is-theming, html.is-theming *, html.is-theming *::before, html.is-theming *
 .army__credit { color: var(--mute); opacity: 0.75; font-size: 9px; }
 .army__credit a { border-bottom: 1px solid var(--line); }
 .army__credit a:hover { color: var(--accent-text); }
+.army { cursor: default; -webkit-user-select: none; user-select: none; }
+.army .inf { cursor: pointer; }
+
+/* the salute: the mark turns gold and takes the crown */
+.inf__crown { fill: #d8b24c; stroke: var(--ink); stroke-width: 1.9; opacity: 0; transform: translateY(14px) scale(0.86); transform-origin: 561px 250px; transition: opacity 0.45s var(--ease-out), transform 0.6s var(--ease-out); }
+.inf.is-crowned .inf__crown { opacity: 1; transform: none; }
+.inf.is-crowned .inf__p { fill: #d8b24c; }
+.inf.is-crowned .inf__o { stroke: #4a3a12; }
+.army:hover .inf.is-crowned .inf__p { fill: #e7c86a; }
+.army:hover .inf.is-crowned .inf__o { stroke: #4a3a12; }
+.army__queen { color: #a07c22; font-style: italic; font-family: var(--font-serif); font-size: 13px; letter-spacing: 0; text-transform: none; opacity: 0; transform: translateY(4px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+.army.is-saluted .army__queen { opacity: 1; transform: none; }
+
+/* the toast that appears when the campaign theme takes over */
+.salute { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 90; display: flex; align-items: center; gap: var(--s2); padding: 12px 16px; background: var(--surface-dark); color: var(--on-dark); border-radius: 999px; box-shadow: 0 18px 44px rgba(var(--ink-rgb), 0.3); max-width: calc(100% - 2 * var(--gutter)); }
+.salute__text { display: grid; gap: 2px; }
+.salute__text b { font-weight: 600; }
+.salute__text span { color: var(--lilac); font-size: 11px; }
+.salute button { padding: 7px 13px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--on-dark); white-space: nowrap; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+.salute button:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+@media (max-width: 560px) { .salute { left: 12px; right: 12px; transform: none; flex-direction: column; align-items: flex-start; border-radius: 16px; } }
 
 /* ---------- education ---------- */
 .edu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin: 0 0 var(--s5); padding: 0; list-style: none; }

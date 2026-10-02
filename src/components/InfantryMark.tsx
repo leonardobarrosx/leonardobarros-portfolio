@@ -6,10 +6,18 @@
  * The drawing is unchanged; the fixed green and black are replaced by the site's tokens so the mark
  * follows the active theme and the dark scheme. Credit is shown next to it in the About section.
  */
-export function InfantryMark({ title }: { title: string }) {
+export function InfantryMark({ title, crowned }: { title: string; crowned?: boolean }) {
   return (
-    <svg className="inf" viewBox="197.7 217.3 727.2 359.8" role="img" aria-label={title}>
+    <svg className={`inf ${crowned ? "is-crowned" : ""}`} viewBox="197.7 217.3 727.2 359.8" role="img" aria-label={title}>
       <title>{title}</title>
+      {/* the crown only shows when the mark has been saluted: infantry, queen of battle */}
+      <g className="inf__crown" aria-hidden="true">
+        <path d="M455 262 L470 212 L510 248 L561 196 L612 248 L652 212 L667 262 Z" />
+        <rect x="449" y="266" width="224" height="26" rx="6" />
+        <circle cx="470" cy="204" r="11" />
+        <circle cx="561" cy="186" r="13" />
+        <circle cx="652" cy="204" r="11" />
+      </g>
 
       <g
      transform="matrix(1.9419894,0,0,1.9419894,230.99531,-1001.017)">

@@ -9,7 +9,7 @@ export const zh: Strings = {
   },
   seo: { title: "Leonardo Barros — 全栈与移动开发者", description: "巴西若昂佩索阿的全栈与移动开发者、UI/UX 设计师。十年来使用 React、Flutter、TypeScript、Node.js、Python、Go 和 C# 构建网页、移动和数据产品。" },
   nav: { work: "作品", about: "关于", experience: "经历", contact: "联系", menu: "菜单", close: "关闭", motion: "动效", on: "开", off: "关", language: "语言", theme: "主题", skip: "跳到正文", cv: "CV", available: "正在求职", appearance: "外观" },
-  themes: { violet: "紫", red: "红", orange: "橙", amber: "琥珀", green: "绿", teal: "青", blue: "蓝", pink: "粉", ink: "墨" },
+  themes: { violet: "紫", red: "红", orange: "橙", amber: "琥珀", green: "绿", teal: "青", blue: "蓝", pink: "粉", ink: "墨", campanha: "战地" },
   ask: { kicker: "一个小问题", question: "你最喜欢哪种颜色？", hint: "随时可以通过菜单里的圆点更改。", thanks: "选得好。请随意浏览作品集，欢迎！", skip: "跳过" },
   labels: { about: "关于我", services: "我做什么", work: "精选作品", experience: "工作经历", stack: "技术栈", contact: "联系", words: "评价", certs: "证书", education: "教育", orgs: "我工作过的地方", toolbox: "完整工具箱" },
   toolbox: { languages: "语言", frontend: "前端", mobile: "移动端", backend: "后端与 API", data: "数据与存储", messaging: "消息与集成", testing: "测试与质量", security: "安全", observability: "可观测性与运维", performance: "性能与缓存", accessibility: "无障碍与国际化", automation: "自动化与 AI", reporting: "数据、BI 与报表", validation: "校验与表单", cloud: "云与基础设施", design: "设计与动效", methods: "方法与工具" },
@@ -22,6 +22,7 @@ export const zh: Strings = {
       "同时我经营自己的公司 Velaris Tecnologia，Meu Chamado 就诞生于此：一套为支撑 56 家卫生机构的 IT 团队打造的多租户服务台平台。ARGUS（眼镜店管理）和 VESTA（餐厅运营）出自同一张工作台，还有一批不断增加的内部工具和自动化。",
     ],
     army: { title: "巴西陆军预备役军官", lines: ["预备役军官 (R/2) · 步兵", "NPOR · 第15摩托化步兵营 · 2017", "TREME-TERRA 期"], credit: "徽章:" },
+    salute: { queen: "步兵，诸兵种之后。", title: "战地主题已开启", hint: "橄榄绿与金色，想开多久都行。", play: "播放军歌", pause: "暂停", exit: "解散" },
     facts: [["所在地", "若昂佩索阿，巴西"], ["起步", "2016年"], ["语言", "葡萄牙语 母语 · 英语 C2"], ["状态", "开放工作机会"]],
     valuesTitle: "我带来的",
     values: [

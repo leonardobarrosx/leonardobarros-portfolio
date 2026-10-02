@@ -9,7 +9,7 @@ export const ko: Strings = {
   },
   seo: { title: "레오나르도 바로스 — 풀스택 & 모바일 개발자", description: "브라질 주앙페소아의 풀스택 & 모바일 개발자이자 UI/UX 디자이너. React, Flutter, TypeScript, Node.js, Python, Go, C#로 10년간 웹·모바일·데이터 제품을 만들어 왔습니다." },
   nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마", skip: "본문으로 건너뛰기", cv: "CV", available: "구직 중", appearance: "화면" },
-  themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹" },
+  themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹", campanha: "야전" },
   ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 포트폴리오를 둘러보세요, 환영합니다!", skip: "건너뛰기" },
   labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", education: "학력", orgs: "일했던 곳", toolbox: "전체 툴박스" },
   toolbox: { languages: "언어", frontend: "프론트엔드", mobile: "모바일", backend: "백엔드 & API", data: "데이터 & 스토리지", messaging: "메시징 & 연동", testing: "테스트 & 품질", security: "보안", observability: "관측성 & 운영", performance: "성능 & 캐싱", accessibility: "접근성 & i18n", automation: "자동화 & AI", reporting: "데이터·BI·리포팅", validation: "검증 & 폼", cloud: "클라우드 & 인프라", design: "디자인 & 모션", methods: "방법론 & 도구" },
@@ -22,6 +22,7 @@ export const ko: Strings = {
       "동시에 제 회사 Velaris Tecnologia를 운영합니다. 여기서 Meu Chamado가 나왔습니다. 보건소 56곳을 지원하는 IT 팀을 위한 멀티테넌트 헬프데스크 플랫폼입니다. ARGUS(안경원 관리)와 VESTA(레스토랑 운영)도 같은 작업대에서 나왔고, 내부 도구와 자동화도 계속 늘고 있습니다.",
     ],
     army: { title: "브라질 육군 예비역 장교", lines: ["예비역 소위 후보 (R/2) · 보병", "NPOR · 제15차량화보병대대 · 2017년", "TREME-TERRA 기수"], credit: "휘장:" },
+    salute: { queen: "보병은 모든 병과의 여왕입니다.", title: "야전 테마 켜짐", hint: "올리브색과 금색, 원하는 만큼.", play: "군가 재생", pause: "일시정지", exit: "해산" },
     facts: [["거점", "주앙페소아, BR"], ["시작", "2016년"], ["언어", "포르투갈어 모국어 · 영어 C2"], ["상태", "구직 중"]],
     valuesTitle: "제가 가져오는 것",
     values: [

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { THEMES, type ThemeId } from "../data/themes";
+import { VISIBLE_THEMES, type ThemeId } from "../data/themes";
 import { usePrefs } from "../state/prefs";
 
 /** The nine hues as dots. Hovering tries a theme on, clicking keeps it. */
@@ -8,7 +8,7 @@ export function Swatches({ onPick, onHover, size }: { onPick?: (id: ThemeId) => 
   const hover = (id: ThemeId | null) => { previewTheme(id); onHover?.(id); };
   return (
     <div className={`swatches ${size === "lg" ? "swatches--lg" : ""}`} role="group" aria-label={t.nav.theme} onPointerLeave={() => hover(null)}>
-      {THEMES.map((th) => (
+      {VISIBLE_THEMES.map((th) => (
         <button
           key={th.id}
           type="button"

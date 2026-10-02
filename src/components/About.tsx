@@ -15,10 +15,12 @@ const SOURCES = [
 ];
 import { DistortImage } from "./DistortImage";
 import { InfantryMark } from "./InfantryMark";
+import { SaluteToast, useSalute } from "./Salute";
 import { BrazilFlag } from "./BrazilFlag";
 
 export function About() {
   const { t } = usePrefs();
+  const salute = useSalute();
   const root = useRef<HTMLElement>(null);
   useReveal(root);
 
@@ -45,10 +47,11 @@ export function About() {
               <span className="tag mono">LB — 026</span>
               <span className="jp vertical" aria-hidden="true">レオナルド</span>
             </div>
-            <figcaption className="army">
-              <InfantryMark title={t.about.army.title} />
+            <figcaption className={`army ${salute.crowned ? "is-saluted" : ""}`} {...salute.handlers}>
+              <InfantryMark title={t.about.army.title} crowned={salute.crowned} />
               <div className="army__text mono">
                 {t.about.army.lines.map((l, i) => <span key={i}>{l}</span>)}
+                <span className="army__queen">{t.about.salute.queen}</span>
                 <span className="army__credit">
                   {t.about.army.credit}{" "}
                   <a href="https://commons.wikimedia.org/wiki/File:Distintivo_da_Arma_de_Infantaria_-_Ex%C3%A9rcito_Brasileiro.svg" target="_blank" rel="noreferrer">Diego Biavati, CC BY-SA 4.0</a>
@@ -81,6 +84,7 @@ export function About() {
           </div>
         </div>
       </div>
+      {salute.open && <SaluteToast onDismiss={salute.dismiss} />}
     </section>
   );
 }

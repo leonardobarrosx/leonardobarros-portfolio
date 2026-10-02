@@ -9,7 +9,7 @@ export const ja: Strings = {
   },
   seo: { title: "レオナルド・バロス — フルスタック＆モバイル開発者", description: "ブラジル・ジョアンペソア在住のフルスタック＆モバイル開発者、UI/UXデザイナー。React、Flutter、TypeScript、Node.js、Python、Go、C#でウェブ・モバイル・データ製品を10年間開発。" },
   nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語", theme: "テーマ", skip: "本文へスキップ", cv: "CV", available: "求職中", appearance: "表示" },
-  themes: { violet: "紫", red: "赤", orange: "橙", amber: "琥珀", green: "緑", teal: "青緑", blue: "青", pink: "桃", ink: "墨" },
+  themes: { violet: "紫", red: "赤", orange: "橙", amber: "琥珀", green: "緑", teal: "青緑", blue: "青", pink: "桃", ink: "墨", campanha: "野戦" },
   ask: { kicker: "ひとつだけ質問", question: "好きな色はどれですか？", hint: "メニューの丸からいつでも変更できます。", thanks: "いい選択です。ポートフォリオをどうぞ、ようこそ！", skip: "スキップ" },
   labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", education: "学歴", orgs: "これまでの所属", toolbox: "ツールボックスのすべて" },
   toolbox: { languages: "言語", frontend: "フロントエンド", mobile: "モバイル", backend: "バックエンド & API", data: "データ & ストレージ", messaging: "メッセージング & 連携", testing: "テスト & 品質", security: "セキュリティ", observability: "可観測性 & 運用", performance: "パフォーマンス & キャッシュ", accessibility: "アクセシビリティ & i18n", automation: "自動化 & AI", reporting: "データ・BI・レポート", validation: "バリデーション & フォーム", cloud: "クラウド & インフラ", design: "デザイン & モーション", methods: "手法 & ツール" },
@@ -22,6 +22,7 @@ export const ja: Strings = {
       "並行して自分の会社 Velaris Tecnologia を運営しています。そこで生まれたのが Meu Chamado で、56の保健施設を支える IT チーム向けのマルチテナント・ヘルプデスク基盤です。ARGUS（眼鏡店の管理）と VESTA（飲食店の運営）も同じ作業台から生まれ、社内向けのツールや自動化も増え続けています。",
     ],
     army: { title: "ブラジル陸軍 予備役将校", lines: ["予備役少尉候補 (R/2) · 歩兵科", "NPOR · 第15自動車化歩兵大隊 · 2017年", "TREME-TERRA 期"], credit: "記章:" },
+    salute: { queen: "歩兵は、諸兵科の女王。", title: "野戦テーマ オン", hint: "オリーブと金、好きなだけどうぞ。", play: "歌を再生", pause: "一時停止", exit: "解散" },
     facts: [["拠点", "ジョアン・ペソア、BR"], ["活動開始", "2016年"], ["言語", "ポルトガル語 母語 · 英語 C2"], ["状況", "お仕事募集中"]],
     valuesTitle: "大切にしていること",
     values: [

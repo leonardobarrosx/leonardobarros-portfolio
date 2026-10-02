@@ -6,10 +6,12 @@
  * on paper (some hues need a darker tone there to stay readable); `deco` paints the decorative blocks
  * (ink poster stripes, the photo corner); it only differs from the accent in the monochrome theme.
  */
-export type ThemeId = "violet" | "red" | "orange" | "amber" | "green" | "teal" | "blue" | "pink" | "ink";
+export type ThemeId = "violet" | "red" | "orange" | "amber" | "green" | "teal" | "blue" | "pink" | "ink" | "campanha";
 
 export interface Theme {
   id: ThemeId;
+  /** Kept out of the swatch menu: reached only through the mark in About. */
+  hidden?: boolean;
   tokens: Record<string, string>;
   /** Same palette, dark ground. Applied by the toggle or by prefers-color-scheme. */
   dark: Record<string, string>;
@@ -21,6 +23,7 @@ function rgb(hex: string) {
 }
 
 function make(id: ThemeId, c: {
+  hidden?: boolean;
   accent: string; deep: string; light: string; text?: string; split: string;
   paper: string; paper2: string; ink: string; ink2: string;
   d900: string; d800: string; d700: string; soft: string; mute: string; deco?: string;
@@ -28,6 +31,7 @@ function make(id: ThemeId, c: {
   const deco = c.deco ?? c.accent;
   return {
     id,
+    hidden: c.hidden,
     dark: {
       "--paper": c.d900, "--paper-2": c.d800, "--paper-rgb": rgb(c.d900),
       "--ink": c.paper, "--ink-2": c.soft, "--ink-rgb": rgb(c.paper),
@@ -66,11 +70,15 @@ export const THEMES: Theme[] = [
   // cool paper, violet ink, plum darks
   make("violet", { accent: "#6f2ff2", deep: "#5620c9", light: "#b39cff", split: "#1fd1c8", paper: "#eeeaf3", paper2: "#e3ddeb", ink: "#16121c", ink2: "#2b2534", d900: "#1a1322", d800: "#251a30", d700: "#37283f", soft: "#c6bbd6", mute: "#6c6577" }),
   make("pink", { accent: "#e0298a", deep: "#b21c6b", light: "#ff9ad0", split: "#22c7c0", paper: "#f4ebf0", paper2: "#ecdfe7", ink: "#1a1016", ink2: "#2f2229", d900: "#20121a", d800: "#2d1a25", d700: "#432a37", soft: "#d6b8c8", mute: "#745f6a" }),
+  // the hidden one: field green and gold, reached by saluting the infantry mark in About
+  make("campanha", { hidden: true, accent: "#c8a04a", deep: "#8f6f24", light: "#e8c87a", text: "#7d5f1c", split: "#6d7f52", paper: "#e9e5d6", paper2: "#ddd8c4", ink: "#1b1f16", ink2: "#2f3626", d900: "#161a12", d800: "#232a1b", d700: "#333c27", soft: "#c2c2a6", mute: "#6b7059" }),
   // monochrome: type and painted elements share one ink; greys keep the posters apart
   make("ink", { accent: "#121212", deep: "#000000", light: "#d6d6d6", text: "#121212", split: "#8a8a8a", paper: "#f1f0ee", paper2: "#e3e1dd", ink: "#121212", ink2: "#2a2a2a", d900: "#171717", d800: "#4a4a4a", d700: "#333333", soft: "#bdbdbd", mute: "#666666", deco: "#4a4a4a" }),
 ];
 
 export const THEME_IDS = THEMES.map((t) => t.id);
+/** What the swatch menus offer; the campaign theme is not in here on purpose. */
+export const VISIBLE_THEMES = THEMES.filter((t) => !t.hidden);
 export const DEFAULT_THEME: ThemeId = "red";
 export const LS_THEME = "lb:theme";
 export const LS_SCHEME = "lb:scheme";

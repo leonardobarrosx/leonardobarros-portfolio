@@ -9,7 +9,7 @@ export const pt: Strings = {
   },
   seo: { title: "Leonardo Barros — Desenvolvedor Full-Stack & Mobile", description: "Desenvolvedor Full-Stack & Mobile e designer de UI/UX em João Pessoa. Dez anos construindo produtos web, mobile e de dados com React, Flutter, TypeScript, Node.js, Python, Go e C#." },
   nav: { work: "Trabalhos", about: "Sobre", experience: "Experiência", contact: "Contato", menu: "Menu", close: "Fechar", motion: "Animações", on: "on", off: "off", language: "Idioma", theme: "Tema", skip: "Pular para o conteúdo", cv: "CV", available: "Aberto a propostas", appearance: "Aparência" },
-  themes: { violet: "Violeta", red: "Vermelho", orange: "Laranja", amber: "Âmbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta" },
+  themes: { violet: "Violeta", red: "Vermelho", orange: "Laranja", amber: "Âmbar", green: "Verde", teal: "Turquesa", blue: "Azul", pink: "Rosa", ink: "Tinta", campanha: "Campanha" },
   ask: { kicker: "Uma pergunta rápida", question: "Qual é a sua cor preferida?", hint: "Dá pra mudar depois na bolinha do menu.", thanks: "Boa escolha. Agora pode ver o portfólio, seja bem-vindo!", skip: "Pular" },
   labels: { about: "Sobre", services: "O que eu faço", work: "Trabalhos selecionados", experience: "Experiência", stack: "Stack", contact: "Contato", words: "Depoimentos", certs: "Certificações", education: "Formação", orgs: "Por onde passei", toolbox: "A caixa de ferramentas completa" },
   toolbox: { languages: "Linguagens", frontend: "Front-end", mobile: "Mobile", backend: "Back-end & APIs", data: "Dados & armazenamento", messaging: "Mensageria & integrações", testing: "Testes & qualidade", security: "Segurança", observability: "Observabilidade & operações", performance: "Performance & cache", accessibility: "Acessibilidade & i18n", automation: "Automação & IA", reporting: "Dados, BI & relatórios", validation: "Validação & formulários", cloud: "Cloud & infraestrutura", design: "Design & motion", methods: "Métodos & ferramentas" },
@@ -22,6 +22,7 @@ export const pt: Strings = {
       "Em paralelo eu toco a Velaris Tecnologia, minha própria empresa, onde nasceu o Meu Chamado: uma plataforma de helpdesk multi-tenant para o TI que atende 56 unidades de saúde. ARGUS (gestão para óticas) e VESTA (operação de restaurantes) saíram da mesma bancada, junto com um conjunto crescente de ferramentas internas e automações.",
     ],
     army: { title: "Oficial da reserva, Exército Brasileiro", lines: ["Aspirante a Oficial R/2 · Infantaria", "NPOR · 15º BI Mtz · 2017", "Turma Treme-Terra"], credit: "Distintivo:" },
+    salute: { queen: "A Infantaria é, das Armas, a Rainha.", title: "Tema de campanha ligado", hint: "Verde-oliva e dourado, pelo tempo que quiser.", play: "Tocar a canção", pause: "Pausar", exit: "Debandar" },
     facts: [["Base", "João Pessoa, PB"], ["Desde", "2016"], ["Idiomas", "PT nativo · EN C2"], ["Status", "Aberto a propostas"]],
     valuesTitle: "O que eu levo comigo",
     values: [
