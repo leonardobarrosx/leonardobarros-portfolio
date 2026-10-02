@@ -338,6 +338,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .sheet__org a { color: var(--lilac); border-bottom: 1px solid transparent; transition: border-color 0.3s, color 0.3s; }
 .sheet__org a:hover { color: var(--paper); border-color: currentColor; }
 .sheet__logo { height: 28px; width: auto; max-width: 150px; object-fit: contain; }
+.sheet__logo--tall { height: 44px; }
 .sheet__mark { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-dark); border-radius: 8px; font-size: 18px; color: var(--paper); }
 .sheet__title--role { font-size: clamp(30px, 4vw, 48px); line-height: 1; }
 .sheet__bullets { display: grid; gap: 10px; padding-left: 18px; list-style: disc; color: var(--lilac); font-size: var(--t-small); line-height: 1.55; }
@@ -414,6 +415,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .orgs { display: grid; gap: var(--s2); margin-bottom: clamp(32px, 4vw, 48px); }
 .orgs__list { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) clamp(24px, 3.5vw, 56px); }
 .orgs__list li { display: flex; align-items: center; height: 28px; opacity: 0.72; transition: opacity 0.3s; }
+.orgs__list li.is-tall { height: 40px; }
 .orgs__list li:hover { opacity: 1; }
 .orgs__list img { height: 100%; width: auto; max-width: 150px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
 .orgs__list .display { font-size: 26px; line-height: 1; color: var(--on-dark); }

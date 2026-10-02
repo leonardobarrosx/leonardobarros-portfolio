@@ -11,15 +11,23 @@ import ipec from "../assets/logos/ipec.png";
 import cgibr from "../assets/logos/cgibr.png";
 import aec from "../assets/logos/aec.svg";
 import bemais from "../assets/logos/bemais.png";
+import unicesumar from "../assets/logos/unicesumar.png";
+import govpb from "../assets/logos/govpb.png";
+import exercito from "../assets/logos/exercito.png";
 
-const LOGOS = { dental, polybalas, ipec, bemais } as const;
+const LOGOS = { dental, polybalas, ipec, bemais, unicesumar, govpb, exercito } as const;
+/** The two coats of arms are portrait: at the same height as a wordmark they read as a speck. */
+const TALL = new Set(["exercito"]);
 
-const ORGS = [
+const ORGS: { name: string; src: string; tall?: boolean }[] = [
   { name: "AeC", src: aec },
   { name: "Dental Center", src: dental },
   { name: "Polybalas", src: polybalas },
   { name: "Ipec", src: ipec },
   { name: "CGI.br", src: cgibr },
+  { name: "UniCesumar", src: unicesumar },
+  { name: "Governo da Paraíba", src: govpb },
+  { name: "Exército Brasileiro", src: exercito, tall: true },
   { name: "BeMais", src: bemais },
 ];
 
@@ -64,7 +72,7 @@ export function Experience() {
           <span className="mono muted">{t.orgsTitle}</span>
           <ul className="orgs__list">
             {ORGS.map((o) => (
-              <li key={o.name} title={o.name}>{o.src ? <img src={o.src} alt={o.name} loading="lazy" /> : <span className="display">{o.name}</span>}</li>
+              <li key={o.name} title={o.name} className={o.tall ? "is-tall" : undefined}>{o.src ? <img src={o.src} alt={o.name} loading="lazy" /> : <span className="display">{o.name}</span>}</li>
             ))}
           </ul>
         </div>
@@ -93,7 +101,9 @@ export function Experience() {
             </div>
             <div className="sheet__body">
               <div className="sheet__org">
-                {x.logo ? <img className="sheet__logo" src={LOGOS[x.logo]} alt="" /> : <Mark name={x.org} />}
+                {x.logo
+                  ? <img className={`sheet__logo${TALL.has(x.logo) ? " sheet__logo--tall" : ""}`} src={LOGOS[x.logo]} alt="" />
+                  : <Mark name={x.org} />}
                 <div>
                   <b>{x.org}</b>
                   {x.site && <a className="mono" href={x.site} target="_blank" rel="noreferrer">{host(x.site)} ↗</a>}
