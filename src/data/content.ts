@@ -64,7 +64,7 @@ const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year:
   sidearm: { id: "sidearm", title: ["Side", "arm"], jp: "照準", year: "2025", stack: "Open source", stackList: ["Open source", "GitHub"], variant: "coffee", href: "https://github.com/leonardobarrosx/sidearm" },
   vault: { id: "vault", title: ["Manhwa", "Vault"], jp: "書庫", year: "2026", stack: "Go · React", stackList: ["Go", "React", "TypeScript"], variant: "paper" },
   codebarx: { id: "codebarx", title: ["Code", "BarX"], jp: "符号", year: "2025", stack: "Python", stackList: ["Python"], variant: "ink" },
-  soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2020", stack: "VB6 · MMORPG engine", stackList: ["VB6", "Pixel art", "Animation"], variant: "coffee" },
+  soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2026 —", stack: "C# · MonoGame · MMORPG engine", stackList: ["C#", ".NET", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee" },
 };
 const WORK_ORDER: WorkId[] = ["meuchamado", "velaris", "argus", "itam", "vesta", "metis", "sidearm", "vault", "codebarx", "soluna"];
 
