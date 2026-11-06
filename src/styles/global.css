@@ -297,10 +297,21 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .work__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); grid-auto-flow: dense; will-change: transform; }
 .poster { grid-column: span 4; position: relative; display: grid; grid-template-rows: auto 1fr auto; aspect-ratio: 4 / 5; padding: clamp(16px, 1.8vw, 24px); overflow: hidden; isolation: isolate; transform-style: preserve-3d; cursor: pointer; text-align: left; width: 100%; }
 .poster--tall { grid-row: span 2; aspect-ratio: auto; }
-.poster--red { background: var(--accent); color: var(--on-accent); }
-.poster--paper { background: var(--paper-2); color: var(--ink); }
-.poster--coffee { background: var(--surface-ink); color: var(--on-dark); }
-.poster--ink { background: var(--surface-ink); color: var(--on-ink); }
+.poster--red { background: var(--accent); color: var(--on-accent); --poster-bg: var(--accent); }
+.poster--paper { background: var(--paper-2); color: var(--ink); --poster-bg: var(--paper-2); }
+.poster--coffee { background: var(--surface-ink); color: var(--on-dark); --poster-bg: var(--surface-ink); }
+.poster--ink { background: var(--surface-ink); color: var(--on-ink); --poster-bg: var(--surface-ink); }
+/* a real screen mounted behind the title, so the card shows the product instead of a shape */
+.poster__shot { position: absolute; z-index: 0; left: 15%; right: -13%; top: 17%; aspect-ratio: 16 / 10; border-radius: 9px; overflow: hidden; transform: rotate(-3.5deg); box-shadow: 0 16px 38px rgba(var(--ink-rgb), 0.3); transition: transform 0.6s var(--ease-out); }
+.poster__shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+/* the tall card is twice the height: give the screen a share of it instead of a fixed ratio,
+   so it reaches down to the banding and the composition closes up */
+.poster--tall .poster__shot { top: 10%; left: 9%; right: -14%; aspect-ratio: auto; height: 38%; }
+.poster:hover .poster__shot, .poster:focus-visible .poster__shot { transform: rotate(-2deg) translateY(-7px) scale(1.035); }
+/* the poster's own colour washes up over the bottom so the display type keeps its contrast */
+.poster.has-shot::after { content: ""; position: absolute; inset: auto 0 0 0; height: 62%; z-index: 1; pointer-events: none; background: linear-gradient(to top, var(--poster-bg) 32%, rgba(0, 0, 0, 0)); }
+.poster.has-shot .poster__meta, .poster.has-shot .poster__title, .poster.has-shot .poster__foot { position: relative; z-index: 2; }
+@media (prefers-reduced-motion: reduce) { .poster__shot { transition: none; } }
 .poster__meta { display: flex; justify-content: space-between; gap: 12px; opacity: 0.85; }
 .poster__title { align-self: end; font-size: clamp(36px, 3.6vw, 56px); transform: translateZ(24px); transition: transform 0.5s var(--ease-out); }
 .poster--tall .poster__title { font-size: clamp(44px, 5vw, 84px); }

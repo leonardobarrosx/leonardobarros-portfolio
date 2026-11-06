@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { gsap, lenisRef } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
+import { coverFor } from "../data/shots";
 import { useCharWave } from "../hooks/useCharWave";
 import { Label } from "./Label";
 import { lazy, Suspense } from "react";
@@ -29,10 +30,11 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLEl
     gsap.to(el.current.querySelector(".poster__deco"), { x: 0, y: 0, duration: 0.8, ease: "power3.out" });
   };
 
+  const cover = coverFor(w.id);
   return (
     <button
       type="button"
-      className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""}`}
+      className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""} ${cover ? "has-shot" : ""}`}
       ref={el}
       onPointerEnter={wave}
       onPointerMove={onMove}
@@ -43,6 +45,11 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLEl
       data-cursor="view"
       aria-haspopup="dialog"
     >
+      {cover && (
+        <span className="poster__shot" aria-hidden="true">
+          <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} />
+        </span>
+      )}
       <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
       <h3 className="poster__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
       <span className="poster__jp jp vertical" aria-hidden="true">{w.jp}</span>
