@@ -499,6 +499,12 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .case__facts div::before { content: ""; display: block; height: 1px; background: var(--ink); opacity: 0.5; margin-bottom: 12px; transform: scaleX(var(--w)); transform-origin: left; }
 .case__facts dt { color: var(--mute); margin-bottom: 6px; }
 .case__facts dd { margin: 0; line-height: 1.5; }
+/* captured screens: the moving one leads, the stills follow and load as they come into view */
+.case__shots { display: grid; gap: var(--s2); }
+.case__shot { display: block; position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: rgba(var(--ink-rgb), 0.04); transition: border-color 0.3s, transform 0.4s var(--ease-out); }
+.case__shot:hover, .case__shot:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+.case__shot img { display: block; width: 100%; height: auto; }
+.case__shot--motion::after { content: "GIF"; position: absolute; top: 10px; right: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(var(--ink-rgb), 0.72); color: var(--paper); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
 .case__sec { display: grid; gap: var(--s2); padding: clamp(24px, 3vw, 40px) 0; border-top: 1px solid var(--line); }
 .case__sec h4 { margin: 0; display: flex; gap: 12px; align-items: baseline; }
 .case__sec h4 span { color: var(--accent-text); }

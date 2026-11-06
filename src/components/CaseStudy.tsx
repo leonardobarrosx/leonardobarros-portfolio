@@ -5,6 +5,7 @@ import { decode } from "../lib/decode";
 import type { Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
 import { useFocusTrap } from "../hooks/useFocusTrap";
+import { shotsFor } from "../data/shots";
 
 interface Props {
   works: WorkItem[];
@@ -177,6 +178,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   if (!shown) return null;
   const w = shown;
   const n = shownIndex;
+  const shots = shotsFor(w.id);
 
   return (
     <div className="case" ref={root} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
@@ -226,18 +228,32 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
             <p className="case__lead serif-i">{w.desc}</p>
             <p className="case__long">{w.long}</p>
           </section>
+          {shots.length > 0 && (
+            <section className="case__sec">
+              <h4 className="mono"><span>02</span>{t.sheet.screens}</h4>
+              <div className="case__shots">
+                {shots.map((s, i) => (
+                  <a className={`case__shot${s.motion ? " case__shot--motion" : ""}`} key={s.src}
+                     href={s.src} target="_blank" rel="noreferrer" data-cursor="view">
+                    <img src={s.src} alt={`${w.title.join(" ")} — ${i + 1}/${shots.length}`}
+                         loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
           <section className="case__sec">
-            <h4 className="mono"><span>02</span>{t.sheet.did}</h4>
+            <h4 className="mono"><span>{shots.length ? "03" : "02"}</span>{t.sheet.did}</h4>
             <ol className="case__list">
               {w.highlights.map((h, i) => <li key={h}><span className="mono">{pad(i + 1)}</span><p>{h}</p></li>)}
             </ol>
           </section>
           <section className="case__sec">
-            <h4 className="mono"><span>03</span>{t.sheet.deliverables}</h4>
+            <h4 className="mono"><span>{shots.length ? "04" : "03"}</span>{t.sheet.deliverables}</h4>
             <ul className="chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul>
           </section>
           <section className="case__sec">
-            <h4 className="mono"><span>04</span>{t.sheet.stack}</h4>
+            <h4 className="mono"><span>{shots.length ? "05" : "04"}</span>{t.sheet.stack}</h4>
             <ul className="chips chips--stack">{w.stackList.map((d) => <li key={d}>{d}</li>)}</ul>
           </section>
           {next && prev && (

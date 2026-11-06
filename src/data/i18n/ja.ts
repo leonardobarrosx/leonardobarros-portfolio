@@ -2,17 +2,17 @@ import type { Strings } from "./types";
 
 export const ja: Strings = {
   meta: {
-    role: "フルスタック＆モバイル開発者",
-    badge: "フルスタック＆モバイル",
+    role: "ソフトウェアエンジニア",
+    badge: "ソフトウェアエンジニア",
     statement: ["10年間、", "ちゃんと動いて", "見た目も良いソフトウェアを作ってきました。Web、モバイル、データ、そしてそれらをつなぐもの。"],
     location: "ジョアン・ペソア、ブラジル",
   },
-  seo: { title: "レオナルド・バロス — フルスタック＆モバイル開発者", description: "ブラジル・ジョアンペソア在住のフルスタック＆モバイル開発者、UI/UXデザイナー。React、Flutter、TypeScript、Node.js、Python、Go、C#でウェブ・モバイル・データ製品を10年間開発。" },
+  seo: { title: "Leonardo Barros — ソフトウェアエンジニア", description: "ブラジル、ジョアンペソアのソフトウェアエンジニア。十年にわたり、画面からその裏側のサービスまで、ウェブとモバイルとデータの製品を一貫して作ってきました。" },
   nav: { work: "作品", about: "プロフィール", experience: "経歴", contact: "連絡", menu: "メニュー", close: "閉じる", motion: "アニメーション", on: "オン", off: "オフ", language: "言語", theme: "テーマ", skip: "本文へスキップ", cv: "CV", available: "求職中", appearance: "表示" },
   themes: { violet: "紫", red: "赤", orange: "橙", amber: "琥珀", green: "緑", teal: "青緑", blue: "青", pink: "桃", ink: "墨", campanha: "野戦" },
   ask: { kicker: "ひとつだけ質問", question: "好きな色はどれですか？", hint: "メニューの丸からいつでも変更できます。", thanks: "いい選択です。ポートフォリオをどうぞ、ようこそ！", skip: "スキップ" },
   labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", education: "学歴", orgs: "これまでの所属", toolbox: "ツールボックスのすべて" },
-  toolbox: { languages: "言語", frontend: "フロントエンド", mobile: "モバイル", backend: "バックエンド & API", data: "データ & ストレージ", messaging: "メッセージング & 連携", testing: "テスト & 品質", security: "セキュリティ", observability: "可観測性 & 運用", performance: "パフォーマンス & キャッシュ", accessibility: "アクセシビリティ & i18n", automation: "自動化 & AI", reporting: "データ・BI・レポート", validation: "バリデーション & フォーム", cloud: "クラウド & インフラ", design: "デザイン & モーション", methods: "手法 & ツール" },
+  toolbox: { languages: "言語", web: "ウェブとモバイル", services: "サービスとAPI", data: "データ", delivery: "デリバリー" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "動くかどうかだけでなく、どう見えて、どう感じられるかを大切にしています。",
@@ -42,6 +42,7 @@ export const ja: Strings = {
   ],
   works: {
     meuchamado: { kind: "ヘルプデスク基盤", desc: "56の保健施設を支える IT チームのためのマルチテナント・ヘルプデスク。", long: "Meu Chamado は、市の保健局の56施設を支える IT チームのためのヘルプデスク基盤です。設計の土台からマルチテナントで、組織ごとに分離され、体制・ブランド・名称・メニューを契約に合わせて設定できます。同じ製品で、規則の異なる公共機関と民間企業の双方に対応できます。フロントは React、Vite、TypeScript、Tailwind、shadcn/ui。バックエンドは JWT を用いた Go API と PostgreSQL、Docker、Playwright のテスト、プッシュごとの CI。2026年3月から開発中で、顧客の技術部長とサポート担当者が受入前に動作を検証済みです。", role: ["創業者", "プロダクトデザイン", "UI/UX", "フルスタック開発"], deliverables: ["プロダクトデザイン", "UI/UX", "Web プラットフォーム", "Go API", "マルチテナント設計", "クラウド配備"], highlights: ["56の保健施設を担当するデスク向けに、チケット・施設・担当者・対応フローを整備。", "設計段階からマルチテナント。テナント分離、体制・ブランド・メニューを契約ごとに設定。", "フロントは React と TypeScript、背後に Go と PostgreSQL、Vercel と Render で公開。", "受入前に顧客の技術部長とサポートチームが検証。"] },
+    buddies: { kind: "ソーシャル3Dゲーム", desc: "自分で作って着せ替えて遊ぶ相棒。メディアのゲームページに組み込む。", long: "Énóis Buddies はメディアのゲームページ向けの小さなソーシャルゲームで、BuddyPoke の流れを汲んでいます。各自が3Dの相棒を作り、気分を選び、部屋を飾り、つながりのある人と遊んで、その場面をフィードに投稿します。ゲーム本体は Vite と TypeScript と Three.js で、ホストページの iframe の中で動きます。バックエンドは D1 上の Cloudflare Worker で、セッション、相棒、つながり、ショップを持ちます。ローカルのハーネスがホストを模倣するので、公開せずに全体を試せます。モックモードはホストを完全に置き換えるもので、ここの画面もそれで撮りました。", role: ["ゲームデザイン", "3D", "フロントエンド", "バックエンド"], deliverables: ["3Dキャラクターの仕組み", "気分と部屋", "ショップと経済", "D1上のWorker API", "ホストとの連携"], highlights: ["ブラウザで組み立てる重ね構造の3Dキャラクター。体、顔、髪、服、小物をその場で色替え。", "セッション、相棒、つながり、購入を D1 上の Cloudflare Worker で処理し、ホスト不要のモックモードも用意。", "ローカルのハーネスがホストページを再現し、本人確認、投稿プレビュー、支払い確認まで通せる。"] },
     velaris: { kind: "テクノロジー企業", desc: "自分の会社。B2B ソフトウェア、受託開発、自社プロダクト。", long: "Velaris Tecnologia は私のプロダクトづくりの拠点です。社名は帆に由来します。帆は力を方向へ変えるからです。ロゴは帆に「つながり」と「方位」を重ねています。支えるのは戦略・エンジニアリング・パートナーシップの三つ。現在は Meu Chamado を擁し、今後 ARGUS、VESTA、Metis も同じ屋根の下に入れる計画です。", role: ["創業者", "プロダクトデザイン", "ブランド", "フルスタック & モバイル"], deliverables: ["ブランド構築", "プロダクト戦略", "UI/UX", "Web・モバイルアプリ", "クラウド配備"], highlights: ["B2B ソフトウェア、受託開発、自社プロダクト。", "Meu Chamado が最初のプロダクト。", "ブランド、プロダクト、エンジニアリングを一貫して担当。"] },
     argus: { kind: "眼鏡店向け管理", desc: "処方箋から納品まで、眼鏡店のための1つのワークフロー。", long: "ARGUSは眼鏡店の日常業務を一元化します：患者、処方箋、サービスオーダー、ラボ生産、納品、在庫、販売、CRMを1つの流れに。WebはVite + TypeScript + Tailwind、モバイルはFlutter、PostgreSQL上のGo API、Supabase、RenderとVercelにデプロイ。", role: ["プロダクトデザイナー", "UI/UX", "フルスタック開発者", "モバイル"], deliverables: ["ブランドアイデンティティ", "UI/UXデザイン", "Webプラットフォーム", "モバイル対応", "バックエンドAPI", "クラウドデプロイ"], highlights: ["患者、処方箋、サービスオーダー、ラボ生産、納品、在庫、販売、CRMを1つのワークフローに。", "Vite + TypeScript + Tailwind + shadcn/uiのWebアプリ、Flutterのモバイル。", "SupabaseとPostgreSQL上のGo API、RenderとVercelにデプロイ。"] },
     itam: { kind: "IT資産管理", desc: "歯科クリニックチェーンのための資産プラットフォーム。", long: "Laravel REST APIの上に構築したReact + TypeScript + TailwindのSPAで、資産、契約、承認フローを管理。C#/.NETのテレメトリーエージェントがPCのハードウェア情報を収集し、HTTPでWeb承認キューに送信。技術者が各レコードを検証してから在庫に登録されます。", role: ["UI/UXデザイナー", "フロントエンド", "バックエンド", "C#エージェント開発"], deliverables: ["社内システム設計", "UI/UX", "Webプラットフォーム", "バックエンドAPI", "C#テレメトリーエージェント", "承認ワークフロー"], highlights: ["資産、契約、承認フローのためのLaravel REST API上のReact + TypeScript + Tailwind SPA。", "C#/.NETエージェントがPCのハードウェア情報を収集し、HTTPで検証キューに送信。", "受信した各レコードは技術者が確認してから在庫に登録。"] },
@@ -52,7 +53,7 @@ export const ja: Strings = {
     codebarx: { kind: "ユーティリティ", desc: "CODE128とCODE39のバーコードジェネレーター。", long: "ラベリングと社内物流向けにPythonで書いたCODE128／CODE39のカスタムバーコードジェネレーター。", role: ["開発"], deliverables: ["ジェネレーターライブラリ"], highlights: ["CODE128とCODE39のカスタムバーコードジェネレーター。", "ラベリングと社内物流向けにPythonで構築。"] },
     soluna: { kind: "ゲームエンジン", desc: "C#で作る2D MMORPGエンジン。すべての始まりを作り直したもの。", long: "2007年から2012年まで、EclipseとCrystalshireのエンジンで友人とオンラインRPGを運営し、スプライトとアニメーションを手で描いていました。ここから私のプログラミングが始まりました。Solunaはそのアイデアを C# でゼロから作り直したものです。権威サーバー、レイヤー式の装備によるキャラクター作成、アカウント、ゲーム内マップエディタを、ダークなインターフェースでまとめています。", role: ["コード", "ゲームデザイン", "ネットワーク"], deliverables: ["C#のクライアントとサーバー", "レイヤー式キャラクター", "ゲーム内マップエディタ"], highlights: ["一歩ごとに検証する権威UDPサーバー。", "装備で見た目が変わる、再着色レイヤーのキャラクター。", "2007〜2012年のオリジナルを2026年に作り直した、私のプログラミングの原点。"] },
   },
-  sheet: { year: "年", type: "種類", stack: "スタック", open: "プロジェクトを開く", private: "非公開プロジェクト", close: "閉じる", role: "役割", overview: "概要", did: "担当したこと", deliverables: "成果物", prev: "前へ", next: "次へ", more: "GitHub でもっと見る", copy: "リンクをコピー" },
+  sheet: { year: "年", type: "種類", stack: "スタック", open: "プロジェクトを開く", private: "非公開プロジェクト", close: "閉じる", role: "役割", overview: "概要", did: "担当したこと", screens: "画面", deliverables: "成果物", prev: "前へ", next: "次へ", more: "GitHub でもっと見る", copy: "リンクをコピー" },
   xp: { visit: "サイトを見る", period: "期間", location: "場所", type: "形態", open: "詳細" },
   experience: {
     aec: { period: "2026年4月 – 現在", type: "フルタイム · リモート", role: "シニア プランニング＆データインテリジェンス アナリスト", org: "AeC", where: "リモート", note: "計画レポートを支える自動化の監査：データ、API、ドキュメント。", bullets: ["各クライアント・各オペレーション向けの計画レポートを配信する自動化を監視・監査。Neosyx が構築し、社内環境の NeoManager 上で稼働しています。", "出力をソースで検証：データベースのクエリ、API のレスポンス、各ルーチンに文書化された業務ルールと計算ルール。", "出力がずれたときはルーチンとドキュメントを修正し、合わない数値を配信せず配信を止めます。", "インシデントを記録し、ベンダーと社内の技術チームにエスカレーションして解決まで追跡。", "コンタクトセンターの指標を扱います：キュー、スキル、サービスレベル、放棄呼、各計画が使う取扱量。"] },

@@ -12,8 +12,8 @@ const SITE = (process.env.VITE_SITE_URL ?? "https://leonardobarros.vercel.app").
 const BASE = process.env.VITE_BASE ?? "/";
 const LANGS: [string, string][] = [["en", "en"], ["pt", "pt-BR"], ["es", "es"], ["de", "de"], ["ja", "ja"], ["ko", "ko"], ["zh", "zh-CN"]];
 
-const TITLE = "Leonardo Barros — Full-Stack & Mobile Developer";
-const DESC = "Full-Stack & Mobile Developer and UI/UX designer in João Pessoa, Brazil. Ten years building web, mobile and data products with React, Flutter, TypeScript, Node.js, Python, Go and C#.";
+const TITLE = "Leonardo Barros — Software Engineer";
+const DESC = "Software engineer in João Pessoa, Brazil. Ten years building web, mobile and data products end to end, from the interface to the service behind it.";
 
 /** Emits the per-theme tokens and the localStorage bootstrap into <head>, so the saved theme paints first. */
 function themes(): Plugin {
@@ -46,8 +46,8 @@ function siteMeta(): Plugin {
           "@context": "https://schema.org",
           "@type": "Person",
           name: "Leonardo Barros",
-          jobTitle: "Full-Stack & Mobile Developer",
-          description: "Full-Stack & Mobile Developer and UI/UX designer with ten years in tech.",
+          jobTitle: "Software Engineer",
+          description: "Software engineer with ten years building web, mobile and data products.",
           url: `${SITE}/`,
           image: `${SITE}/og.png`,
           email: "mailto:xleonardobarros@gmail.com",

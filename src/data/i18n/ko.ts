@@ -2,17 +2,17 @@ import type { Strings } from "./types";
 
 export const ko: Strings = {
   meta: {
-    role: "풀스택 & 모바일 개발자",
-    badge: "풀스택 & 모바일",
+    role: "소프트웨어 엔지니어",
+    badge: "소프트웨어 엔지니어",
     statement: ["10년 동안 ", "제대로 작동하고", " 보기에도 좋은 소프트웨어를 만들어 왔습니다. 웹, 모바일, 데이터, 그리고 그 사이를 잇는 것들."],
     location: "주앙페소아, 브라질",
   },
-  seo: { title: "레오나르도 바로스 — 풀스택 & 모바일 개발자", description: "브라질 주앙페소아의 풀스택 & 모바일 개발자이자 UI/UX 디자이너. React, Flutter, TypeScript, Node.js, Python, Go, C#로 10년간 웹·모바일·데이터 제품을 만들어 왔습니다." },
+  seo: { title: "Leonardo Barros — 소프트웨어 엔지니어", description: "브라질 조안페소아의 소프트웨어 엔지니어. 십 년 동안 화면부터 그 뒤의 서비스까지 웹과 모바일과 데이터 제품을 처음부터 끝까지 만들어 왔습니다。" },
   nav: { work: "작업", about: "소개", experience: "경력", contact: "연락", menu: "메뉴", close: "닫기", motion: "애니메이션", on: "켬", off: "끔", language: "언어", theme: "테마", skip: "본문으로 건너뛰기", cv: "CV", available: "구직 중", appearance: "화면" },
   themes: { violet: "보라", red: "빨강", orange: "주황", amber: "호박", green: "초록", teal: "청록", blue: "파랑", pink: "분홍", ink: "먹", campanha: "야전" },
   ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 포트폴리오를 둘러보세요, 환영합니다!", skip: "건너뛰기" },
   labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", education: "학력", orgs: "일했던 곳", toolbox: "전체 툴박스" },
-  toolbox: { languages: "언어", frontend: "프론트엔드", mobile: "모바일", backend: "백엔드 & API", data: "데이터 & 스토리지", messaging: "메시징 & 연동", testing: "테스트 & 품질", security: "보안", observability: "관측성 & 운영", performance: "성능 & 캐싱", accessibility: "접근성 & i18n", automation: "자동화 & AI", reporting: "데이터·BI·리포팅", validation: "검증 & 폼", cloud: "클라우드 & 인프라", design: "디자인 & 모션", methods: "방법론 & 도구" },
+  toolbox: { languages: "언어", web: "웹과 모바일", services: "서비스와 API", data: "데이터", delivery: "배포" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "잘 작동하는지만이 아니라, 어떻게 보이고 어떻게 느껴지는지를 중요하게 생각합니다.",
@@ -42,6 +42,7 @@ export const ko: Strings = {
   ],
   works: {
     meuchamado: { kind: "헬프데스크 플랫폼", desc: "보건소 56곳을 지원하는 IT 팀을 위한 멀티테넌트 헬프데스크.", long: "Meu Chamado는 시 보건국 산하 56개 시설을 지원하는 IT 팀을 위한 헬프데스크 플랫폼입니다. 처음부터 멀티테넌트로 설계되어 조직마다 분리되고, 구조와 브랜드, 명칭, 메뉴를 계약에 맞게 구성할 수 있습니다. 덕분에 같은 제품으로 규칙이 다른 공공기관과 민간기업을 함께 지원합니다. 프론트는 React, Vite, TypeScript, Tailwind, shadcn/ui, 백엔드는 JWT를 쓰는 Go API와 PostgreSQL, Docker, Playwright 테스트, 매 푸시마다 도는 CI. 2026년 3월부터 개발 중이며, 고객사 기술 책임자와 지원 기술자들이 검수 전에 흐름을 확인했습니다.", role: ["창업자", "제품 디자인", "UI/UX", "풀스택 개발"], deliverables: ["제품 디자인", "UI/UX", "웹 플랫폼", "Go API", "멀티테넌트 아키텍처", "클라우드 배포"], highlights: ["56개 보건소를 담당하는 데스크를 위한 티켓, 시설, 기술자, 처리 흐름.", "설계부터 멀티테넌트: 테넌트 분리, 계약별 구조·브랜드·메뉴 구성.", "프론트는 React와 TypeScript, 뒤는 Go와 PostgreSQL, Vercel과 Render에 배포.", "검수 전에 고객사 기술 책임자와 지원 팀이 검증."] },
+    buddies: { kind: "소셜 3D 게임", desc: "직접 만들고 입히고 함께 노는 캐릭터. 매체의 게임 페이지에 삽입된다.", long: "Énóis Buddies는 매체의 게임 페이지를 위한 작은 소셜 게임으로, BuddyPoke의 결을 따릅니다. 각자 3D 캐릭터를 만들고 기분을 고르고 방을 꾸미고 연결된 사람들과 놀다가 그 장면을 피드에 올립니다. 게임은 Vite와 TypeScript와 Three.js로 만들어 호스트 페이지의 iframe 안에서 돌아갑니다. 백엔드는 D1 위의 Cloudflare Worker로 세션, 캐릭터, 연결, 상점을 담당합니다. 로컬 하네스가 호스트를 흉내 내므로 배포 없이 전체를 돌려볼 수 있습니다. 목 모드는 호스트를 완전히 대체하며, 여기 화면도 그렇게 찍었습니다.", role: ["게임 기획", "3D", "프런트엔드", "백엔드"], deliverables: ["3D 캐릭터 시스템", "기분과 방", "상점과 경제", "D1 기반 Worker API", "호스트 연동"], highlights: ["브라우저에서 조립하는 레이어 구조의 3D 캐릭터. 몸, 얼굴, 머리, 옷, 액세서리를 즉시 색 변경.", "세션과 캐릭터와 연결과 구매를 D1 위의 Cloudflare Worker가 처리하고, 호스트 없이 도는 목 모드도 있음.", "로컬 하네스가 호스트 페이지를 재현해 신원, 게시 미리보기, 결제 확인까지 그대로 시험."] },
     velaris: { kind: "테크놀로지 회사", desc: "내 회사: B2B 소프트웨어, 맞춤 개발, 자체 제품.", long: "Velaris Tecnologia는 제 제품 작업이 사는 곳입니다. 이름은 돛에서 왔습니다. 돛이 힘을 방향으로 바꾸기 때문입니다. 로고는 그 돛에 연결과 나침반을 겹쳤습니다. 전략, 엔지니어링, 파트너십 세 가지가 회사를 받칩니다. 지금은 Meu Chamado를 두고 있고, 앞으로 ARGUS, VESTA, Metis를 같은 지붕 아래로 들일 계획입니다.", role: ["창업자", "제품 디자인", "브랜드", "풀스택 & 모바일"], deliverables: ["브랜드 아이덴티티", "제품 전략", "UI/UX", "웹·모바일 앱", "클라우드 배포"], highlights: ["B2B 소프트웨어, 맞춤 개발, 자체 제품.", "Meu Chamado가 첫 제품입니다.", "브랜드, 제품, 엔지니어링을 끝까지 직접."] },
     argus: { kind: "안경점 관리", desc: "처방전부터 배송까지, 안경점을 위한 하나의 워크플로.", long: "ARGUS는 안경점의 일상 운영을 한곳에 모읍니다: 환자, 처방전, 서비스 오더, 랩 생산, 배송, 재고, 판매, CRM을 하나의 흐름으로. 웹은 Vite + TypeScript + Tailwind, 모바일은 Flutter, PostgreSQL 위의 Go API, Supabase, Render와 Vercel에 배포.", role: ["프로덕트 디자이너", "UI/UX", "풀스택 개발자", "모바일"], deliverables: ["브랜드 아이덴티티", "UI/UX 디자인", "웹 플랫폼", "모바일 지원", "백엔드 API", "클라우드 배포"], highlights: ["환자, 처방전, 서비스 오더, 랩 생산, 배송, 재고, 판매, CRM을 하나의 워크플로로.", "Vite + TypeScript + Tailwind + shadcn/ui 웹 앱, Flutter 모바일.", "Supabase와 PostgreSQL 위의 Go API, Render와 Vercel에 배포."] },
     itam: { kind: "IT 자산 관리", desc: "치과 클리닉 체인을 위한 자산 플랫폼.", long: "Laravel REST API 위에 구축한 React + TypeScript + Tailwind SPA로 자산, 계약, 승인 흐름을 관리합니다. C#/.NET 텔레메트리 에이전트가 PC 하드웨어 정보를 수집해 HTTP로 웹 승인 큐에 보내고, 기술자가 각 레코드를 검증한 뒤 인벤토리에 등록됩니다.", role: ["UI/UX 디자이너", "프런트엔드", "백엔드", "C# 에이전트 개발"], deliverables: ["내부 시스템 설계", "UI/UX", "웹 플랫폼", "백엔드 API", "C# 텔레메트리 에이전트", "승인 워크플로"], highlights: ["자산, 계약, 승인 흐름을 위한 Laravel REST API 위의 React + TypeScript + Tailwind SPA.", "C#/.NET 에이전트가 PC 하드웨어 정보를 수집해 HTTP로 검증 큐에 전송.", "들어오는 모든 레코드는 기술자가 확인한 뒤 인벤토리에 등록."] },
@@ -52,7 +53,7 @@ export const ko: Strings = {
     codebarx: { kind: "유틸리티", desc: "CODE128과 CODE39 바코드 생성기.", long: "라벨링과 내부 물류용으로 Python으로 만든 CODE128/CODE39 커스텀 바코드 생성기.", role: ["개발"], deliverables: ["생성기 라이브러리"], highlights: ["CODE128과 CODE39 커스텀 바코드 생성기.", "라벨링과 내부 물류용으로 Python으로 구축."] },
     soluna: { kind: "게임 엔진", desc: "C#으로 만든 2D MMORPG 엔진. 모든 것의 시작을 다시 만들었습니다.", long: "2007년부터 2012년까지 Eclipse와 Crystalshire 엔진으로 친구들과 온라인 RPG를 운영하며 스프라이트와 애니메이션을 직접 그렸습니다. 거기서 제 프로그래밍이 시작되었습니다. Soluna는 그 아이디어를 C#으로 처음부터 다시 만든 것입니다. 권한 서버, 레이어 방식 장비를 갖춘 캐릭터 생성, 계정, 게임 내 맵 에디터를 어두운 인터페이스로 담았습니다.", role: ["코드", "게임 디자인", "네트워크"], deliverables: ["C# 클라이언트와 서버", "레이어 방식 캐릭터", "게임 내 맵 에디터"], highlights: ["모든 걸음을 검증하는 권한 UDP 서버.", "장비에 따라 바뀌는, 다시 색칠한 레이어 캐릭터.", "2007~2012년 원작을 2026년에 다시 만든, 제 프로그래밍의 출발점."] },
   },
-  sheet: { year: "연도", type: "유형", stack: "스택", open: "프로젝트 열기", private: "비공개 프로젝트", close: "닫기", role: "역할", overview: "개요", did: "한 일", deliverables: "산출물", prev: "이전", next: "다음", more: "GitHub에서 더 보기", copy: "링크 복사" },
+  sheet: { year: "연도", type: "유형", stack: "스택", open: "프로젝트 열기", private: "비공개 프로젝트", close: "닫기", role: "역할", overview: "개요", did: "한 일", screens: "화면", deliverables: "산출물", prev: "이전", next: "다음", more: "GitHub에서 더 보기", copy: "링크 복사" },
   xp: { visit: "웹사이트 방문", period: "기간", location: "위치", type: "형태", open: "상세" },
   experience: {
     aec: { period: "2026년 4월 – 현재", type: "정규직 · 원격", role: "시니어 플래닝 & 데이터 인텔리전스 분석가", org: "AeC", where: "원격", note: "계획 리포트를 만드는 자동화에 대한 감사: 데이터, API, 문서.", bullets: ["각 고객사와 운영 조직의 계획 리포트를 전달하는 자동화를 모니터링하고 감사합니다. Neosyx가 구축했고 사내 환경의 NeoManager에서 실행됩니다.", "산출물을 원천에서 검증합니다: 데이터베이스 쿼리, API 응답, 각 루틴에 문서화된 업무 규칙과 계산 규칙.", "출력이 어긋나면 루틴과 문서를 수정하고, 맞지 않는 수치는 배포하지 않고 배포를 보류합니다.", "장애를 기록하고 벤더와 사내 기술팀에 에스컬레이션해 해결까지 추적합니다.", "컨택센터 지표를 다룹니다: 큐, 스킬, 서비스 레벨, 포기호, 각 계획이 사용하는 물량."] },

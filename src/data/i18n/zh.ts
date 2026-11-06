@@ -2,17 +2,17 @@ import type { Strings } from "./types";
 
 export const zh: Strings = {
   meta: {
-    role: "全栈与移动端开发者",
-    badge: "全栈与移动端",
+    role: "软件工程师",
+    badge: "软件工程师",
     statement: ["十年来，我一直在打造", "既好用", "又好看的软件。Web、移动端、数据，以及把它们连在一起的一切。"],
     location: "若昂佩索阿，巴西",
   },
-  seo: { title: "Leonardo Barros — 全栈与移动开发者", description: "巴西若昂佩索阿的全栈与移动开发者、UI/UX 设计师。十年来使用 React、Flutter、TypeScript、Node.js、Python、Go 和 C# 构建网页、移动和数据产品。" },
+  seo: { title: "Leonardo Barros — 软件工程师", description: "巴西若昂佩索阿的软件工程师。十年来从界面到背后的服务，完整地构建 Web、移动和数据产品。" },
   nav: { work: "作品", about: "关于", experience: "经历", contact: "联系", menu: "菜单", close: "关闭", motion: "动效", on: "开", off: "关", language: "语言", theme: "主题", skip: "跳到正文", cv: "CV", available: "正在求职", appearance: "外观" },
   themes: { violet: "紫", red: "红", orange: "橙", amber: "琥珀", green: "绿", teal: "青", blue: "蓝", pink: "粉", ink: "墨", campanha: "战地" },
   ask: { kicker: "一个小问题", question: "你最喜欢哪种颜色？", hint: "随时可以通过菜单里的圆点更改。", thanks: "选得好。请随意浏览作品集，欢迎！", skip: "跳过" },
   labels: { about: "关于我", services: "我做什么", work: "精选作品", experience: "工作经历", stack: "技术栈", contact: "联系", words: "评价", certs: "证书", education: "教育", orgs: "我工作过的地方", toolbox: "完整工具箱" },
-  toolbox: { languages: "语言", frontend: "前端", mobile: "移动端", backend: "后端与 API", data: "数据与存储", messaging: "消息与集成", testing: "测试与质量", security: "安全", observability: "可观测性与运维", performance: "性能与缓存", accessibility: "无障碍与国际化", automation: "自动化与 AI", reporting: "数据、BI 与报表", validation: "校验与表单", cloud: "云与基础设施", design: "设计与动效", methods: "方法与工具" },
+  toolbox: { languages: "语言", web: "Web 与移动端", services: "服务与 API", data: "数据", delivery: "交付" },
   marquee: ["Full-Stack", "フルスタック", "Mobile", "モバイル", "UI/UX", "デザイン", "Data", "データ", "Automation", "自動化"],
   about: {
     quote: "我在意的不只是东西能不能用，还有它的样子和用起来的感觉。",
@@ -42,6 +42,7 @@ export const zh: Strings = {
   ],
   works: {
     meuchamado: { kind: "服务台平台", desc: "为支撑 56 家卫生机构的 IT 团队打造的多租户服务台。", long: "Meu Chamado 是为某市卫生局 IT 团队打造的服务台平台，该团队负责支撑 56 家下属机构。系统从底层就是多租户：每个组织彼此隔离，组织架构、品牌、实体名称和菜单都按各自合同配置，因此同一套产品可以同时服务规则不同的公共机构和私营企业。前端使用 React、Vite、TypeScript、Tailwind 和 shadcn/ui，后端是基于 JWT 的 Go API 与 PostgreSQL，配合 Docker、Playwright 测试和每次提交触发的 CI。自 2026 年 3 月起开发，客户的技术负责人与支持工程师已在验收前验证了主要流程。", role: ["创始人", "产品设计", "UI/UX", "全栈开发"], deliverables: ["产品设计", "UI/UX", "Web 平台", "Go API", "多租户架构", "云端部署"], highlights: ["为覆盖 56 家卫生机构的服务台提供工单、机构、技术员和处理流程。", "多租户设计：租户隔离，按合同配置结构、品牌与菜单。", "前端 React 与 TypeScript，后端 Go 与 PostgreSQL，部署在 Vercel 和 Render。", "验收前由客户技术负责人与支持团队验证。"] },
+    buddies: { kind: "社交3D游戏", desc: "自己拼装、换装、一起玩的小角色，嵌在媒体的游戏页面里。", long: "Énóis Buddies 是为媒体游戏页面做的小型社交游戏，沿着 BuddyPoke 的路子：每个人拼一个3D角色，选一种心情，布置房间，和自己的联系人一起玩，再把画面发到信息流。游戏用 Vite、TypeScript 和 Three.js，跑在宿主页面的 iframe 里；后端是 D1 上的 Cloudflare Worker，管会话、角色、联系人和商店；本地的 harness 模拟宿主，不发布也能把整条链路跑通。mock 模式完全替代宿主，这里的画面就是这样拍的。", role: ["游戏设计", "3D", "前端", "后端"], deliverables: ["3D角色系统", "心情与房间", "商店与经济", "D1 上的 Worker API", "与宿主的集成"], highlights: ["在浏览器里拼装的分层3D角色：身体、脸、头发、衣服和配件，实时改色。", "会话、角色、联系人和购买都由 D1 上的 Cloudflare Worker 处理，并有不依赖宿主的 mock 模式。", "本地 harness 复刻宿主页面，连身份、发布预览和支付确认都能走一遍。"] },
     velaris: { kind: "科技公司", desc: "我的公司：B2B 软件、定制开发和自有产品。", long: "Velaris Tecnologia 是我做产品的地方。名字来自船帆，因为帆把力量变成方向；标志把这面帆与「连接」和「罗盘」结合在一起。支撑它的是三件事：策略、工程和伙伴关系。目前旗下有 Meu Chamado，计划把 ARGUS、VESTA 和 Metis 也放到同一屋檐下。", role: ["创始人", "产品设计", "品牌", "全栈与移动"], deliverables: ["品牌识别", "产品策略", "UI/UX", "Web 与移动应用", "云端部署"], highlights: ["B2B 软件、定制开发和自有产品。", "Meu Chamado 是旗下第一个产品。", "品牌、产品与工程一手负责。"] },
     argus: { kind: "眼镜店管理", desc: "从处方到交付，眼镜店的一条工作流。", long: "ARGUS 集中了眼镜店的日常运营：患者、处方、服务工单、实验室生产、交付、库存、销售和 CRM 在一个流程里。Web 端 Vite + TypeScript + Tailwind，移动端 Flutter，PostgreSQL 上的 Go API，Supabase，部署在 Render 和 Vercel。", role: ["产品设计师", "UI/UX", "全栈开发者", "移动端"], deliverables: ["品牌识别", "UI/UX 设计", "Web 平台", "移动端支持", "后端 API", "云端部署"], highlights: ["患者、处方、服务工单、实验室生产、交付、库存、销售和 CRM 在一个工作流里。", "Vite + TypeScript + Tailwind + shadcn/ui 的 Web 应用；Flutter 移动端。", "基于 Supabase 与 PostgreSQL 的 Go API，部署在 Render 和 Vercel。"] },
     itam: { kind: "IT 资产管理", desc: "为连锁牙科诊所打造的资产平台。", long: "基于 Laravel REST API 的 React + TypeScript + Tailwind 单页应用，管理资产、合同和审批流程。C#/.NET 遥测代理收集电脑硬件数据，通过 HTTP 发送到 Web 审批队列，由技术人员逐条核验后才录入库存。", role: ["UI/UX 设计师", "前端", "后端", "C# 代理开发"], deliverables: ["内部系统设计", "UI/UX", "Web 平台", "后端 API", "C# 遥测代理", "审批工作流"], highlights: ["用于资产、合同和审批的 Laravel REST API 之上的 React + TypeScript + Tailwind 单页应用。", "C#/.NET 代理收集电脑硬件数据并通过 HTTP 发送到核验队列。", "每条进入的记录都由技术人员核验后才录入库存。"] },
@@ -52,7 +53,7 @@ export const zh: Strings = {
     codebarx: { kind: "实用工具", desc: "CODE128 与 CODE39 条码生成器。", long: "用 Python 编写的 CODE128/CODE39 自定义条码生成器，用于标签打印和内部物流。", role: ["开发"], deliverables: ["生成器库"], highlights: ["CODE128 与 CODE39 自定义条码生成器。", "用 Python 构建，用于标签打印和内部物流。"] },
     soluna: { kind: "游戏引擎", desc: "用 C# 写的 2D MMORPG 引擎，重做了一切的起点。", long: "2007 到 2012 年，我用 Eclipse 和 Crystalshire 引擎和朋友一起运营网络 RPG，精灵图和动画都是手绘的。我的编程就是从那里开始的。Soluna 用 C# 从零重做了这个想法：权威服务器、分层装备的角色创建、账号系统和游戏内地图编辑器，全部采用深色界面。", role: ["代码", "游戏设计", "网络"], deliverables: ["C# 客户端与服务器", "分层纸娃娃角色", "游戏内地图编辑器"], highlights: ["逐步校验移动的权威 UDP 服务器。", "由重新着色的图层组成、随装备变化的角色。", "我编程的起点，2026 年在 2007 至 2012 年原作基础上重做。"] },
   },
-  sheet: { year: "年份", type: "类型", stack: "技术栈", open: "打开项目", private: "私有项目", close: "关闭", role: "角色", overview: "概览", did: "我做了什么", deliverables: "交付物", prev: "上一个", next: "下一个", more: "在 GitHub 上查看更多", copy: "复制链接" },
+  sheet: { year: "年份", type: "类型", stack: "技术栈", open: "打开项目", private: "私有项目", close: "关闭", role: "角色", overview: "概览", did: "我做了什么", screens: "界面", deliverables: "交付物", prev: "上一个", next: "下一个", more: "在 GitHub 上查看更多", copy: "复制链接" },
   xp: { visit: "访问网站", period: "时间", location: "地点", type: "类型", open: "详情" },
   experience: {
     aec: { period: "2026年4月 – 至今", type: "全职 · 远程", role: "高级规划与数据智能分析师", org: "AeC", where: "远程", note: "对生成计划报表的自动化流程进行审核：数据、API 与文档。", bullets: ["监控并审核为每个客户和每条业务线交付计划报表的自动化流程，这些流程由 Neosyx 构建，运行在公司内部环境的 NeoManager 上。", "在源头验证产出：数据库查询、API 响应，以及每条例程已归档的业务规则和计算规则。", "当产出出现偏差时修正例程和文档，宁可暂停交付，也不发出对不上的数字。", "记录事件，上报给供应商和内部技术团队，并跟踪到解决为止。", "处理呼叫中心指标：队列、技能组、服务水平、放弃呼叫，以及各计划团队使用的业务量。"] },
