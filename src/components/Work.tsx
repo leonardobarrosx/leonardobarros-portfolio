@@ -9,7 +9,7 @@ import { lazy, Suspense } from "react";
 
 // The case study is a whole screen of markup and animation: it only loads when a poster is opened.
 const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
-import { shared, type Work as WorkItem } from "../data/content";
+import { shared, longTitle, type Work as WorkItem } from "../data/content";
 
 function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLElement | null) => void }) {
   const el = useRef<HTMLButtonElement>(null);
@@ -34,7 +34,7 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLEl
   return (
     <button
       type="button"
-      className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""} ${cover ? "has-shot" : ""}`}
+      className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""} ${longTitle(w.title) ? "poster--long" : ""} ${cover ? "has-shot" : ""}`}
       ref={el}
       onPointerEnter={wave}
       onPointerMove={onMove}
@@ -55,7 +55,7 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLEl
       <span className="poster__jp jp vertical" aria-hidden="true">{w.jp}</span>
       <div className="poster__foot mono"><span>{w.stack}</span><span className="desc">{w.desc}</span></div>
       <span className="poster__deco" aria-hidden="true" />
-      {w.href && <span className="poster__arrow" aria-hidden="true">↗</span>}
+      {(w.href || w.repo) && <span className="poster__arrow" aria-hidden="true">↗</span>}
     </button>
   );
 }

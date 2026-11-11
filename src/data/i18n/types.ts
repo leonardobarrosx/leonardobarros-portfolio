@@ -3,7 +3,7 @@ import type { ToolGroupId } from "../toolbox";
 
 export type Lang = "en" | "pt" | "es" | "de" | "ja" | "ko" | "zh";
 export type Variant = "red" | "paper" | "coffee" | "ink";
-export type WorkId = "meuchamado" | "buddies" | "argus" | "itam" | "vesta" | "metis" | "sidearm" | "vault" | "codebarx" | "soluna";
+export type WorkId = "meuchamado" | "motor" | "ninho" | "cutucanois" | "argus" | "itam" | "vesta" | "metis" | "vault" | "codebarx" | "soluna";
 export type XpId = "aec" | "dental" | "polybalas" | "ipec" | "unicesumar" | "sesds" | "army" | "freelance" | "bemais";
 
 /** Translated strings for one project. Language-neutral fields live in `worksBase`. */
@@ -44,7 +44,7 @@ export interface Strings {
     salute: { queen: string; title: string; hint: string; play: string; pause: string; exit: string }; quote: string; paragraphs: string[]; facts: [string, string][]; valuesTitle: string; values: { title: string; text: string }[]; offTitle: string; off: string };
   services: { title: string; text: string }[];
   works: Record<WorkId, WorkText>;
-  sheet: { year: string; type: string; stack: string; open: string; private: string; close: string; role: string; overview: string; did: string; screens: string; deliverables: string; prev: string; next: string; more: string; copy: string };
+  sheet: { year: string; type: string; stack: string; open: string; code: string; private: string; close: string; role: string; overview: string; did: string; screens: string; deliverables: string; prev: string; next: string; more: string; copy: string };
   xp: { visit: string; period: string; location: string; type: string; open: string };
   experience: Record<XpId, XpText>;
   testimonials: { name: string; role: string; quote: string; photo: "claudio" | "roger" }[];

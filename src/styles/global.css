@@ -315,6 +315,9 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .poster__meta { display: flex; justify-content: space-between; gap: 12px; opacity: 0.85; }
 .poster__title { align-self: end; font-size: clamp(36px, 3.6vw, 56px); transform: translateZ(24px); transition: transform 0.5s var(--ease-out); }
 .poster--tall .poster__title { font-size: clamp(44px, 5vw, 84px); }
+/* a title with one long word (Transferências) steps down so the word stays inside the card */
+.poster--long .poster__title { font-size: clamp(28px, 2.6vw, 44px); }
+.poster--tall.poster--long .poster__title { font-size: clamp(30px, 2.9vw, 48px); }
 .poster__title span { display: block; }
 .poster__title .wave-char { display: inline-block; will-change: transform; }
 .service__title .wave-char { display: inline-block; will-change: transform; }
@@ -497,6 +500,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .case__heroin { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(16px, 1.8vw, 28px); }
 .case__heroin .poster__meta { font-size: var(--t-mono); }
 .case__title { margin: 0; align-self: end; font-size: clamp(48px, 5.6vw, 100px); line-height: 0.9; letter-spacing: -0.005em; }
+.case__title--long { font-size: clamp(32px, 3.1vw, 56px); }
 .case__title .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .case__title .line:nth-child(2) { padding-left: 0.28em; }
 .case__title .char { display: inline-block; }
@@ -546,6 +550,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
   .case__slot { width: min(100%, 520px); }
   .case__main { grid-column: 1 / -1; }
   .case__title { font-size: clamp(44px, 12vw, 84px); }
+  .case__title--long { font-size: clamp(30px, 8.5vw, 50px); }
   .case__jp { top: 14%; bottom: auto; }
 }
 @media (max-width: 560px) { .case__facts { grid-template-columns: 1fr; } }

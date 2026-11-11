@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { gsap, lenisRef, SplitText } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { decode } from "../lib/decode";
-import type { Work as WorkItem } from "../data/content";
+import { longTitle, type Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import { shotsFor } from "../data/shots";
@@ -204,15 +204,15 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
               <span className="poster__jp jp vertical case__jp" aria-hidden="true">{w.jp}</span>
               <div className="case__heroin">
                 <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
-                <h2 className="case__title display">{w.title.map((s) => <span className="line" key={s}>{s}</span>)}</h2>
+                <h2 className={`case__title display${longTitle(w.title) ? " case__title--long" : ""}`}>{w.title.map((s) => <span className="line" key={s}>{s}</span>)}</h2>
                 <ul className="case__roles mono">{w.role.map((r) => <li key={r}>{r}</li>)}</ul>
               </div>
             </div>
           </div>
           <div className="case__cta">
-            {w.href
-              ? <><a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a><span className="mono muted case__host">{host(w.href)}</span></>
-              : <span className="mono muted">{t.sheet.private}</span>}
+            {w.href && <><a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a><span className="mono muted case__host">{host(w.href)}</span></>}
+            {w.repo && <a className="btn btn--sm" href={w.repo} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.code} ↗</a>}
+            {!w.href && !w.repo && <span className="mono muted">{t.sheet.private}</span>}
           </div>
         </aside>
 

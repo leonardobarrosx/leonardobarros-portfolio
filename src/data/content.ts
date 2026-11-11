@@ -54,20 +54,21 @@ export function toDMS(lat: number, lng: number): string {
 
 /* ---------- language-neutral bases ---------- */
 
-const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; tall?: boolean }> = {
+const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; repo?: string; tall?: boolean }> = {
   meuchamado: { id: "meu-chamado", title: ["Meu", "Chamado"], jp: "支援", year: "2026 —", stack: "React · TypeScript · Go · PostgreSQL · Docker", stackList: ["React", "Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "JWT", "Docker", "Playwright", "GitHub Actions", "Render", "Vercel"], variant: "ink", tall: true, href: "https://meuchamado.vercel.app" },
-  buddies: { id: "buddies", title: ["Énóis", "Buddies"], jp: "仲間", year: "2026 —", stack: "Three.js · TypeScript · Cloudflare Workers · D1", stackList: ["Three.js", "WebGL", "TypeScript", "Vite", "Cloudflare Workers", "Hono", "D1", "Blender"], variant: "paper" },
-  argus: { id: "argus", title: ["Argus"], jp: "眼", year: "2026", stack: "Vite · TypeScript · Go · PostgreSQL · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
-  itam: { id: "itam", title: ["ITAM"], jp: "資産", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red", tall: true },
+  motor: { id: "motor", title: ["Motor de", "Transferências"], jp: "送金", year: "2026", stack: "Java 21 · Spring Boot · Kafka · Apache Camel · React", stackList: ["Java 21", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Flyway", "Apache Kafka", "Apache Camel", "ISO 20022", "JUnit 5", "Mockito", "Testcontainers", "React", "TypeScript", "Docker", "GitHub Actions"], variant: "red", tall: true, repo: "https://github.com/leonardobarrosx/motor-transferencias" },
+  ninho: { id: "ninho", title: ["Ninho"], jp: "巣", year: "2026", stack: "Flutter · Go · Supabase · PostgreSQL", stackList: ["Flutter", "Dart", "Go", "Supabase", "PostgreSQL", "Row Level Security", "Render", "Vercel", "Playwright"], variant: "coffee" },
+  cutucanois: { id: "cutucanois", title: ["Cutuca", "Nóis"], jp: "仲間", year: "2026", stack: "JavaScript · Canvas 3D · Supabase Edge Functions", stackList: ["JavaScript", "Canvas 2D", "3D engine", "TypeScript", "Supabase Edge Functions", "PostgreSQL", "Node.js", "SQLite", "Vercel"], variant: "ink", href: "https://cutucanois.vercel.app" },
+  argus: { id: "argus", title: ["Argus"], jp: "眼", year: "2026", stack: "React · TypeScript · Go · PostgreSQL", stackList: ["React", "Vite", "TypeScript", "Tailwind", "Go", "Gin", "pgx", "PostgreSQL", "Row Level Security", "JWT", "Docker"], variant: "paper" },
+  itam: { id: "itam", title: ["ITAM"], jp: "資産", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red" },
   vesta: { id: "vesta", title: ["Vesta"], jp: "食", year: "2026", stack: "TypeScript · Go · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
   metis: { id: "metis", title: ["Metis"], jp: "家具", year: "2026 —", stack: "Concept · Flutter · Go · Firebase", stackList: ["Figma", "Flutter", "Dart", "Go", "Firebase"], variant: "red" },
-  sidearm: { id: "sidearm", title: ["Side", "arm"], jp: "照準", year: "2025", stack: "Open source", stackList: ["Open source", "GitHub"], variant: "coffee", href: "https://github.com/leonardobarrosx/sidearm" },
-  vault: { id: "vault", title: ["Manhwa", "Vault"], jp: "書庫", year: "2026", stack: "Go · React", stackList: ["Go", "React", "TypeScript"], variant: "paper" },
-  codebarx: { id: "codebarx", title: ["Code", "BarX"], jp: "符号", year: "2025", stack: "Python", stackList: ["Python"], variant: "ink" },
-  soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2026 —", stack: "C# · MonoGame · MMORPG engine", stackList: ["C#", ".NET", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee", href: "https://github.com/leonardobarrosx/soluna" },
+  vault: { id: "vault", title: ["Manhwa", "Vault"], jp: "書庫", year: "2026", stack: "Go · React · Wails", stackList: ["Go", "React", "TypeScript", "Wails", "SQLite", "Windows"], variant: "ink" },
+  codebarx: { id: "codebarx", title: ["Code", "BarX"], jp: "符号", year: "2025", stack: "Python · PyQt6", stackList: ["Python", "PyQt6", "python-barcode"], variant: "paper" },
+  soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2026 —", stack: "C# · MonoGame · MMORPG engine", stackList: ["C#", ".NET", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee", repo: "https://github.com/leonardobarrosx/soluna" },
 };
-// the three with real screens lead the section
-const WORK_ORDER: WorkId[] = ["meuchamado", "vesta", "buddies", "argus", "itam", "metis", "sidearm", "vault", "codebarx", "soluna"];
+// the two tall cards lead: the product in use and the Java banking core
+const WORK_ORDER: WorkId[] = ["meuchamado", "motor", "vesta", "ninho", "cutucanois", "argus", "soluna", "itam", "codebarx", "vault", "metis"];
 
 const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "aec" | "dental" | "polybalas" | "ipec" | "bemais" | "unicesumar" | "govpb" | "exercito" }> = {
   aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br", logo: "aec" },
@@ -95,6 +96,9 @@ const serviceJp = ["構築", "データ", "運用", "デザイン"];
 /* ---------- assembled shape used by the components ---------- */
 
 export type Work = (typeof worksBase)[WorkId] & Strings["works"][WorkId];
+
+/** A title with a word longer than the display type can hold at full size, e.g. "Transferências". */
+export const longTitle = (title: string[]) => title.some((s) => s.length > 9);
 export type Experience = (typeof xpBase)[XpId] & Strings["experience"][XpId];
 
 export interface Content {
