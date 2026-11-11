@@ -1,8 +1,8 @@
 # leonardobarros-portfolio
 
-Personal portfolio of Leonardo Barros, Full-Stack & Mobile Developer.
+Personal portfolio of Leonardo Barros, Software Engineer (full stack).
 
-Editorial poster aesthetic on a 12-column grid: warm paper, red ink, coffee darks, condensed display type and katakana accents. Built with Vite, React and TypeScript; animations with GSAP (ScrollTrigger, SplitText), Lenis smooth scroll and a few WebGL shaders.
+Editorial poster aesthetic on a 12-column grid: warm paper, red ink, coffee darks, condensed display type and katakana accents. Built with Vite (React SWC plugin), React and TypeScript; animations with GSAP (ScrollTrigger, SplitText), Lenis smooth scroll and a few WebGL shaders.
 
 ## Features
 

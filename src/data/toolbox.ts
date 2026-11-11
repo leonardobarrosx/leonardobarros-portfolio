@@ -8,9 +8,9 @@ export type ToolGroupId = "languages" | "web" | "services" | "data" | "delivery"
 export interface ToolGroup { id: ToolGroupId; jp: string; items: string[] }
 
 export const toolbox: ToolGroup[] = [
-  { id: "languages", jp: "言語", items: ["TypeScript", "JavaScript", "Go", "Python", "C#", "Dart", "PHP", "SQL"] },
-  { id: "web", jp: "前面", items: ["React", "Vite", "Tailwind CSS", "Redux Toolkit / Zustand", "TanStack Query", "Flutter", "Three.js", "GSAP", "WCAG 2.2 AA"] },
-  { id: "services", jp: "背面", items: ["Node.js / Express", "Go (Gin)", "Django", "Laravel", "ASP.NET Core", "REST / OpenAPI", "WebSockets", "JWT / OAuth 2.0"] },
-  { id: "data", jp: "資料", items: ["PostgreSQL", "Oracle", "MongoDB", "Redis", "Supabase", "Firebase", "Indexing & query tuning", "ETL & reporting"] },
-  { id: "delivery", jp: "配信", items: ["Docker", "Nginx", "Linux", "GitHub Actions", "Vercel / Render", "Cloudflare", "Playwright / Cypress", "Jest / Vitest"] },
+  { id: "languages", jp: "言語", items: ["TypeScript", "Go", "Python", "Java", "SQL"] },
+  { id: "web", jp: "前面", items: ["React", "Vite + SWC", "Tailwind CSS", "TanStack Query"] },
+  { id: "services", jp: "背面", items: ["Spring Boot", "Apache Camel", "Go (Gin)", "Django", "REST / OpenAPI", "JWT / OAuth 2.0"] },
+  { id: "data", jp: "資料", items: ["PostgreSQL", "Oracle", "Redis"] },
+  { id: "delivery", jp: "配信", items: ["Docker", "Linux", "GitHub Actions", "Playwright", "Vitest / Jest"] },
 ];
