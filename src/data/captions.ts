@@ -73,10 +73,10 @@ const captions: Record<string, Record<string, Line>> = {
     "02-inicio": ["Format, quantities and prefix", "Formato, quantidades e prefixo", "Formato, cantidades y prefijo", "Format, Mengen und Präfix", "形式、数量、接頭辞", "형식, 수량, 접두사", "格式、数量与前缀"],
   },
   vault: {
-    "01-inicio": ["Home with shelves", "Início com as estantes", "Inicio con las estanterías", "Start mit Regalen", "本棚のあるホーム", "책장이 있는 홈", "带书架的首页"],
-    "02-catalogo": ["Catalogue with filters", "Catálogo com filtros", "Catálogo con filtros", "Katalog mit Filtern", "フィルター付きのカタログ", "필터가 있는 카탈로그", "带筛选的目录"],
-    "03-capitulos": ["Picking chapters to archive", "Escolhendo capítulos para arquivar", "Eligiendo capítulos para archivar", "Kapitel zum Archivieren wählen", "保存する章を選ぶ", "보관할 회차 고르기", "选择要归档的章节"],
-    "04-download": ["Download panel: folder, arrangement and format", "Painel de download: pasta, organização e formato", "Panel de descarga: carpeta, organización y formato", "Download-Panel: Ordner, Anordnung und Format", "ダウンロード：フォルダ、構成、形式", "다운로드: 폴더, 구성, 형식", "下载面板：文件夹、组织方式与格式"],
+    "01-inicio": ["Home: latest update, continue reading and shelf", "Início: última atualização, continuar lendo e estante", "Inicio: última actualización, seguir leyendo y estantería", "Start: neuestes Update, Weiterlesen und Regal", "ホーム：最新更新、続きを読む、本棚", "홈: 최신 업데이트, 이어 읽기, 책장", "首页：最新更新、继续阅读与书架"],
+    "02-catalogo": ["Catalogue of 4,317 series with filters", "Catálogo de 4.317 séries com filtros", "Catálogo de 4.317 series con filtros", "Katalog mit 4.317 Serien und Filtern", "4,317作品のカタログとフィルター", "4,317개 시리즈 카탈로그와 필터", "4,317 部作品的目录与筛选"],
+    "03-capitulos": ["Series page: picking chapters to archive", "Página da série: escolhendo capítulos para arquivar", "Página de la serie: eligiendo capítulos para archivar", "Serienseite: Kapitel zum Archivieren wählen", "作品ページ：保存する章を選ぶ", "시리즈 페이지: 보관할 회차 고르기", "作品页：选择要归档的章节"],
+    "04-download": ["Download history: 47 chapters, 7 GB on disk", "Histórico de downloads: 47 capítulos, 7 GB em disco", "Historial de descargas: 47 capítulos, 7 GB en disco", "Download-Verlauf: 47 Kapitel, 7 GB auf der Festplatte", "ダウンロード履歴：47章、ディスク上7 GB", "다운로드 기록: 47화, 디스크 7GB", "下载记录：47 章，占用 7 GB"],
   },
 };
 
