@@ -5,7 +5,8 @@ import { decode } from "../lib/decode";
 import { longTitle, type Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
 import { useFocusTrap } from "../hooks/useFocusTrap";
-import { shotsFor } from "../data/shots";
+import { coverFor, shotsFor } from "../data/shots";
+import { captionFor } from "../data/captions";
 
 interface Props {
   works: WorkItem[];
@@ -18,6 +19,17 @@ interface Props {
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
+/** Breaks the overview at the sentence end nearest its middle, so it reads as two short paragraphs. */
+function paragraphs(text: string): string[] {
+  if (text.length < 280) return [text];
+  const cuts: number[] = [];
+  const re = /[.!?]\s+|[。！？]/g;
+  for (let m = re.exec(text); m; m = re.exec(text)) cuts.push(m.index + m[0].length);
+  const inner = cuts.filter((c) => c < text.length - 1);
+  if (!inner.length) return [text];
+  const at = inner.reduce((a, b) => (Math.abs(b - text.length / 2) < Math.abs(a - text.length / 2) ? b : a));
+  return [text.slice(0, at).trim(), text.slice(at).trim()];
+}
 const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 const paperRgb = () => getComputedStyle(document.documentElement).getPropertyValue("--paper-rgb").trim() || "239, 233, 223";
 
@@ -32,7 +44,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const shownIndex = shown ? works.findIndex((w) => w.id === shown.id) : -1;
   const next = shownIndex >= 0 ? works[(shownIndex + 1) % works.length] : null;
   const prev = shownIndex >= 0 ? works[(shownIndex - 1 + works.length) % works.length] : null;
-  const { t } = usePrefs();
+  const { t, lang } = usePrefs();
 
   const root = useRef<HTMLDivElement>(null);
   const dim = useRef<HTMLDivElement>(null);
@@ -199,8 +211,13 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
       <div className="case__grid wrap">
         <aside className="case__side">
           <div className="case__slot" ref={slot}>
-            <div className={`case__hero poster poster--${w.variant}`} ref={hero}>
+            <div className={`case__hero poster poster--${w.variant}${coverFor(w.id) ? " has-shot" : ""}`} ref={hero}>
               <span className="poster__deco" aria-hidden="true" />
+              {coverFor(w.id) && (
+                <span className="poster__shot case__cover" key={w.id} aria-hidden="true">
+                  <img src={coverFor(w.id)} alt="" decoding="async" draggable={false} />
+                </span>
+              )}
               <span className="poster__jp jp vertical case__jp" aria-hidden="true">{w.jp}</span>
               <div className="case__heroin">
                 <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
@@ -226,19 +243,25 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           <section className="case__sec">
             <h4 className="mono"><span>01</span>{t.sheet.overview}</h4>
             <p className="case__lead serif-i">{w.desc}</p>
-            <p className="case__long">{w.long}</p>
+            {paragraphs(w.long).map((para) => <p className="case__long" key={para}>{para}</p>)}
           </section>
           {shots.length > 0 && (
             <section className="case__sec">
               <h4 className="mono"><span>02</span>{t.sheet.screens}</h4>
               <div className="case__shots">
-                {shots.map((s, i) => (
-                  <a className={`case__shot${s.motion ? " case__shot--motion" : ""}`} key={s.src}
-                     href={s.src} target="_blank" rel="noreferrer" data-cursor="view">
-                    <img src={s.src} alt={`${w.title.join(" ")} — ${i + 1}/${shots.length}`}
-                         loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
-                  </a>
-                ))}
+                {shots.map((s, i) => {
+                  const caption = captionFor(w.id, s.name, lang);
+                  return (
+                    <figure className="case__fig" key={s.src}>
+                      <a className={`case__shot${s.motion ? " case__shot--motion" : ""}`}
+                         href={s.src} target="_blank" rel="noreferrer" data-cursor="view">
+                        <img src={s.src} alt={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
+                             loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+                      </a>
+                      {caption && <figcaption className="case__cap mono"><span>{pad(i + 1)}</span>{caption}</figcaption>}
+                    </figure>
+                  );
+                })}
               </div>
             </section>
           )}

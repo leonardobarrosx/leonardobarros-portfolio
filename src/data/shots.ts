@@ -15,6 +15,8 @@ export interface Shot {
   src: string;
   /** The loop is a GIF: it leads the gallery and is never lazy-loaded. */
   motion: boolean;
+  /** File name without the extension, which is what the captions are keyed by. */
+  name: string;
 }
 
 const byWork: Record<string, Shot[]> = {};
@@ -25,7 +27,7 @@ for (const path of Object.keys(files).sort()) {
   const [, work, name] = m;
   // cover.webp is the card's own crop and never joins the sequence
   if (name.startsWith("cover.")) { covers[work] = files[path]; continue; }
-  (byWork[work] ??= []).push({ src: files[path], motion: name.endsWith(".gif") });
+  (byWork[work] ??= []).push({ src: files[path], motion: name.endsWith(".gif"), name: name.replace(/\.[a-z]+$/, "") });
 }
 // the moving one first, then the numbered sequence as sorted above
 for (const list of Object.values(byWork)) list.sort((a, b) => Number(b.motion) - Number(a.motion));
