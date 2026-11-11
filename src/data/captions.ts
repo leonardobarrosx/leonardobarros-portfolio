@@ -61,13 +61,14 @@ const captions: Record<string, Record<string, Line>> = {
     "06-pacientes": ["Patients and dependants", "Pacientes e dependentes", "Pacientes y dependientes", "Patienten und Angehörige", "患者と家族", "환자와 가족", "顾客及其家属"],
   },
   soluna: {
-    "01-vila": ["The village, in game", "A vila, dentro do jogo", "La aldea, en el juego", "Das Dorf im Spiel", "ゲーム内の村", "게임 속 마을", "游戏中的村庄"],
-    "02-criacao": ["Character creation", "Criação de personagem", "Creación de personaje", "Charaktererstellung", "キャラクター作成", "캐릭터 생성", "角色创建"],
-    "03-equipamento": ["Equipment on the paper doll", "Equipamento no personagem", "Equipo en el personaje", "Ausrüstung an der Figur", "キャラクターの装備", "캐릭터 장비", "角色装备"],
-    "04-noite": ["Night lighting", "Iluminação noturna", "Iluminación nocturna", "Nachtbeleuchtung", "夜のライティング", "밤 조명", "夜间光照"],
-    "05-editor": ["In-game map editor", "Editor de mapas dentro do jogo", "Editor de mapas dentro del juego", "Karteneditor im Spiel", "ゲーム内マップエディター", "게임 내 맵 에디터", "游戏内地图编辑器"],
-    "06-floresta": ["The forest", "A floresta", "El bosque", "Der Wald", "森", "숲", "森林"],
+    "01-vila": ["Vigil of Soluna: the village, merchant and shrine", "Vigília de Soluna: a vila, o mercador e o santuário", "Vigilia de Soluna: la aldea, el mercader y el santuario", "Wacht von Soluna: Dorf, Händler und Schrein", "ソルナの見張り：村、商人、祠", "솔루나의 파수: 마을, 상인, 성소", "索露娜守望：村庄、商人与神龛"],
+    "02-bosque": ["Forest of the Forgotten: exploration, creatures and gathering spots", "Bosque dos Esquecidos: exploração, criaturas e pontos de coleta", "Bosque de los Olvidados: exploración, criaturas y puntos de recolección", "Wald der Vergessenen: Erkundung, Kreaturen und Sammelstellen", "忘れられた森：探索、クリーチャー、採集ポイント", "잊힌 자들의 숲: 탐험, 크리처, 채집 지점", "遗忘之林：探索、生物与采集点"],
+    "03-estalagem": ["The inn, reached through a door in the village", "A estalagem, acessada por uma porta da vila", "La posada, a la que se entra por una puerta de la aldea", "Das Gasthaus, erreichbar durch eine Tür im Dorf", "村の扉から入れる宿屋", "마을 문으로 들어가는 여관", "从村庄的门进入的旅店"],
+    "04-ruinas": ["Ruins of the Eclipse: a procedurally generated floor", "Ruínas do Eclipse: andar gerado proceduralmente", "Ruinas del Eclipse: un piso generado proceduralmente", "Ruinen der Finsternis: ein prozedural erzeugtes Stockwerk", "蝕の遺跡：手続き生成のフロア", "일식의 유적: 절차적으로 생성된 층", "日蚀遗迹：程序生成的楼层"],
+    "05-atelie": ["Art studio in the engine: directional sprites, forms and tiles", "Ateliê de arte na engine: sprites direcionais, formas e tiles", "Taller de arte en el motor: sprites direccionales, formas y tiles", "Kunstatelier in der Engine: Richtungs-Sprites, Gestalten und Tiles", "エンジン内のアトリエ：方向別スプライト、姿、タイル", "엔진 안 아틀리에: 방향별 스프라이트, 형태, 타일", "引擎内的美术工坊：方向精灵、形态与图块"],
+    "06-editor": ["Game editor (F2): ruin styles", "Editor do jogo (F2): estilos das ruínas", "Editor del juego (F2): estilos de las ruinas", "Spieleditor (F2): Ruinenstile", "ゲームエディタ（F2）：遺跡のスタイル", "게임 에디터(F2): 유적 스타일", "游戏编辑器（F2）：遗迹风格"],
   },
+
   codebarx: {
     "01-lote": ["A generated batch, with codes selected to save", "Lote gerado, com códigos selecionados para salvar", "Lote generado, con códigos seleccionados para guardar", "Erzeugte Serie, Codes zum Speichern ausgewählt", "生成したバッチと保存用に選んだコード", "생성된 묶음과 저장할 코드 선택", "生成的批次，已选中要保存的条码"],
     "02-inicio": ["Format, quantities and prefix", "Formato, quantidades e prefixo", "Formato, cantidades y prefijo", "Format, Mengen und Präfix", "形式、数量、接頭辞", "형식, 수량, 접두사", "格式、数量与前缀"],
