@@ -20,14 +20,14 @@ export const shared = {
   last: "Barros",
   nameJp: "レオナルド・バロス",
   roleJp: "ソフトウェアエンジニア",
-  tagline: "TypeScript • Go • React • Flutter • UI/UX",
+  tagline: "React • TypeScript • Go • Python • Java",
   volume: "Vol. 01 — 2026",
   timezone: "America/Fortaleza",
   email: "xleonardobarros@gmail.com",
   linkedin: "https://www.linkedin.com/in/leonardobarrosx",
   github: "https://github.com/leonardobarrosx",
   cv: { en: "cv/Leonardo-Barros-CV-EN.pdf", pt: "cv/Leonardo-Barros-CV-PT.pdf" },
-  stack: ["React", "TypeScript", "Flutter", "Node.js", "Python", "Go", "C#", "Laravel", "Angular", "Vue", "Django", "Express", "PostgreSQL", "Oracle", "MongoDB", "Redis", "Firebase", "Supabase", "Tailwind", "n8n", "Docker", "Nginx", "GitHub Actions", "Jest", "Cypress", "Figma", "Illustrator", "GSAP"],
+  stack: ["React", "TypeScript", "Vite", "SWC", "Tailwind", "Go", "Python", "Java", "Spring Boot", "Apache Camel", "PostgreSQL", "Oracle", "Redis", "Docker", "GitHub Actions"],
 };
 
 /** João Pessoa landmarks; decimal degrees rendered as DMS by the Landmarks component. */
@@ -57,7 +57,6 @@ export function toDMS(lat: number, lng: number): string {
 const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; tall?: boolean }> = {
   meuchamado: { id: "meu-chamado", title: ["Meu", "Chamado"], jp: "支援", year: "2026 —", stack: "React · TypeScript · Go · PostgreSQL · Docker", stackList: ["React", "Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "JWT", "Docker", "Playwright", "GitHub Actions", "Render", "Vercel"], variant: "ink", tall: true, href: "https://meuchamado.vercel.app" },
   buddies: { id: "buddies", title: ["Énóis", "Buddies"], jp: "仲間", year: "2026 —", stack: "Three.js · TypeScript · Cloudflare Workers · D1", stackList: ["Three.js", "WebGL", "TypeScript", "Vite", "Cloudflare Workers", "Hono", "D1", "Blender"], variant: "paper" },
-  velaris: { id: "velaris", title: ["Velaris"], jp: "帆", year: "2026 —", stack: "B2B · Custom software · Own products", stackList: ["Product strategy", "Brand", "React", "TypeScript", "Go", "Flutter", "Figma"], variant: "coffee", href: "https://www.instagram.com/velaristecnologia/" },
   argus: { id: "argus", title: ["Argus"], jp: "眼", year: "2026", stack: "Vite · TypeScript · Go · PostgreSQL · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
   itam: { id: "itam", title: ["ITAM"], jp: "資産", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red", tall: true },
   vesta: { id: "vesta", title: ["Vesta"], jp: "食", year: "2026", stack: "TypeScript · Go · Flutter", stackList: ["Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "Flutter", "Supabase", "Render", "Vercel"], variant: "paper" },
@@ -68,7 +67,7 @@ const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year:
   soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2026 —", stack: "C# · MonoGame · MMORPG engine", stackList: ["C#", ".NET", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee", href: "https://github.com/leonardobarrosx/soluna" },
 };
 // the three with real screens lead the section
-const WORK_ORDER: WorkId[] = ["meuchamado", "vesta", "buddies", "velaris", "argus", "itam", "metis", "sidearm", "vault", "codebarx", "soluna"];
+const WORK_ORDER: WorkId[] = ["meuchamado", "vesta", "buddies", "argus", "itam", "metis", "sidearm", "vault", "codebarx", "soluna"];
 
 const xpBase: Record<XpId, { id: XpId; years: string; site?: string; logo?: "aec" | "dental" | "polybalas" | "ipec" | "bemais" | "unicesumar" | "govpb" | "exercito" }> = {
   aec: { id: "aec", years: "2026 —", site: "https://www.aec.com.br", logo: "aec" },

@@ -1,5 +1,5 @@
 import { defineConfig, type Plugin } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import { writeFileSync } from "node:fs";
 import { themeBootstrap, themeCss } from "./src/data/themes";
 
@@ -47,7 +47,7 @@ function siteMeta(): Plugin {
           "@type": "Person",
           name: "Leonardo Barros",
           jobTitle: "Software Engineer",
-          description: "Software engineer with ten years building web, mobile and data products.",
+          description: "Full-stack software engineer: React and TypeScript on the front end; Go, Python and Java on the back end.",
           url: `${SITE}/`,
           image: `${SITE}/og.png`,
           email: "mailto:xleonardobarros@gmail.com",
