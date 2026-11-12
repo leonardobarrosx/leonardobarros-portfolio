@@ -302,25 +302,34 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .poster--coffee { background: var(--surface-ink); color: var(--on-dark); --poster-bg: var(--surface-ink); }
 .poster--ink { background: var(--surface-ink); color: var(--on-ink); --poster-bg: var(--surface-ink); }
 /* a real screen mounted behind the title, so the card shows the product instead of a shape */
-.poster__shot { position: absolute; z-index: 0; left: 15%; right: -13%; top: 17%; aspect-ratio: 16 / 10; border-radius: 9px; overflow: hidden; transform: rotate(-3.5deg); box-shadow: 0 16px 38px rgba(var(--ink-rgb), 0.3); transition: transform 0.6s var(--ease-out); }
+/* The screen sits in a small window frame, a little larger and straighter than before, and squares
+   up on hover so it can be read; the bar keeps a bright screenshot from melting into a light card. */
+.poster__shot { position: absolute; z-index: 0; left: 9%; right: -9%; top: 14%; aspect-ratio: 16 / 10.9; padding-top: 14px; border-radius: 10px; overflow: hidden; background: #1c191e; transform: rotate(-2.5deg); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 18px 40px rgba(var(--ink-rgb), 0.32); transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out); }
+.poster__shot::before { content: ""; position: absolute; top: 5px; left: 9px; width: 28px; height: 5px; background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 2px, transparent 2.6px) 0 0 / 10px 5px repeat-x; }
 .poster__shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
 /* the tall card is twice the height: give the screen a share of it instead of a fixed ratio,
    so it reaches down to the banding and the composition closes up */
-.poster--tall .poster__shot { top: 10%; left: 9%; right: -14%; aspect-ratio: auto; height: 38%; }
-.poster:hover .poster__shot, .poster:focus-visible .poster__shot { transform: rotate(-2deg) translateY(-7px) scale(1.035); }
+.poster--tall .poster__shot { top: 9%; left: 7%; right: -11%; aspect-ratio: auto; height: 44%; }
+.poster:hover .poster__shot, .poster:focus-visible .poster__shot { transform: rotate(0deg) translateY(-8px) scale(1.04); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 26px 52px rgba(var(--ink-rgb), 0.4); }
 /* the poster's own colour washes up over the bottom so the display type keeps its contrast */
-.poster.has-shot::after { content: ""; position: absolute; inset: auto 0 0 0; height: 62%; z-index: 1; pointer-events: none; background: linear-gradient(to top, var(--poster-bg) 32%, rgba(0, 0, 0, 0)); }
+.poster.has-shot::after { content: ""; position: absolute; inset: auto 0 0 0; height: 56%; z-index: 1; pointer-events: none; background: linear-gradient(to top, var(--poster-bg) 34%, rgba(0, 0, 0, 0)); }
 .poster.has-shot .poster__meta, .poster.has-shot .poster__title, .poster.has-shot .poster__foot { position: relative; z-index: 2; }
 @media (prefers-reduced-motion: reduce) { .poster__shot { transition: none; } }
 .poster__meta { display: flex; justify-content: space-between; gap: 12px; opacity: 0.85; }
 .poster__title { align-self: end; font-size: clamp(36px, 3.6vw, 56px); transform: translateZ(24px); transition: transform 0.5s var(--ease-out); }
 .poster--tall .poster__title { font-size: clamp(44px, 5vw, 84px); }
+/* a title with one long word (Transferências) steps down so the word stays inside the card */
+.poster--long .poster__title { font-size: clamp(28px, 2.6vw, 44px); }
+.poster--tall.poster--long .poster__title { font-size: clamp(30px, 2.9vw, 48px); }
 .poster__title span { display: block; }
 .poster__title .wave-char { display: inline-block; will-change: transform; }
 .service__title .wave-char { display: inline-block; will-change: transform; }
 .poster__title span:nth-child(2) { padding-left: 0.3em; }
 .poster:hover .poster__title { transform: translateZ(24px) translateY(-4px); }
 .poster__jp { position: absolute; top: 16%; right: clamp(16px, 1.8vw, 24px); font-size: clamp(18px, 2vw, 28px); font-weight: 900; letter-spacing: 0.15em; opacity: 0.85; z-index: 2; }
+/* with a screen on the card the kanji would sit on top of it; it tucks behind the frame instead */
+.poster.has-shot .poster__jp { z-index: 0; opacity: 0.6; }
+.poster.has-shot .poster__shot { z-index: 1; }
 .poster__foot { display: grid; gap: 6px; padding-top: 12px; margin-top: 12px; border-top: 1px solid currentColor; }
 .poster__foot .desc { font-family: var(--font-body); font-size: 13px; line-height: 1.45; text-transform: none; letter-spacing: 0; opacity: 0.85; }
 .poster__deco { position: absolute; z-index: -1; pointer-events: none; }
@@ -494,9 +503,15 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .case__hero .poster__deco { z-index: 0; transform: translateY(calc(var(--p) * -48px)); transition: background-color 0.55s ease; }
 .case__hero.poster--ink .poster__deco { bottom: 56%; height: 13%; } /* the bigger title needs the stripes higher */
 .case__jp { top: auto; bottom: 7%; right: 6%; font-size: clamp(40px, 5vw, 76px); letter-spacing: 0.08em; opacity: 0.16; z-index: 0; transform: translateY(calc(var(--p) * 36px)); }
-.case__heroin { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(16px, 1.8vw, 28px); }
+.case__heroin { position: relative; z-index: 2; height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(16px, 1.8vw, 28px); }
 .case__heroin .poster__meta { font-size: var(--t-mono); }
+/* the project's cover in the case study's hero, framed like on the card; it fades in per project */
+.case__cover { top: 15%; left: 8%; right: -10%; animation: case-cover-in 0.6s var(--ease-out) both; }
+.case__hero.has-shot .poster__deco { opacity: 0.35; }
+@keyframes case-cover-in { from { opacity: 0; transform: rotate(-2.5deg) translateY(14px); } }
+@media (prefers-reduced-motion: reduce) { .case__cover { animation: none; } }
 .case__title { margin: 0; align-self: end; font-size: clamp(48px, 5.6vw, 100px); line-height: 0.9; letter-spacing: -0.005em; }
+.case__title--long { font-size: clamp(32px, 3.1vw, 56px); }
 .case__title .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .case__title .line:nth-child(2) { padding-left: 0.28em; }
 .case__title .char { display: inline-block; }
@@ -512,6 +527,10 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
 .case__facts dd { margin: 0; line-height: 1.5; }
 /* captured screens: the moving one leads, the stills follow and load as they come into view */
 .case__shots { display: grid; gap: var(--s2); }
+.case__fig { margin: 0; display: grid; gap: 10px; }
+.case__cap { display: flex; gap: 10px; align-items: baseline; font-size: 12px; line-height: 1.5; color: var(--mute); text-transform: none; letter-spacing: 0.02em; }
+.case__cap span { color: var(--accent-text, var(--accent)); flex: none; }
+.case__long + .case__long { margin-top: 1em; }
 .case__shot { display: block; position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: rgba(var(--ink-rgb), 0.04); transition: border-color 0.3s, transform 0.4s var(--ease-out); }
 .case__shot:hover, .case__shot:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
 .case__shot img { display: block; width: 100%; height: auto; }
@@ -546,6 +565,7 @@ html.has-cursor, html.has-cursor body, html.has-cursor * { cursor: none !importa
   .case__slot { width: min(100%, 520px); }
   .case__main { grid-column: 1 / -1; }
   .case__title { font-size: clamp(44px, 12vw, 84px); }
+  .case__title--long { font-size: clamp(30px, 8.5vw, 50px); }
   .case__jp { top: 14%; bottom: auto; }
 }
 @media (max-width: 560px) { .case__facts { grid-template-columns: 1fr; } }
