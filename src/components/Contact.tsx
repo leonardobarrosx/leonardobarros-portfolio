@@ -5,6 +5,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
 import { shared } from "../data/content";
+import { actionLabels } from "../data/actionLabels";
 import { Landmarks } from "./Landmarks";
 
 export function Contact() {
@@ -57,6 +58,7 @@ export function Contact() {
             </div>
             <div className="contact__cv mono">
               <span className="muted">{t.contact.cv} · {t.contact.cvNote}</span>
+              <a href={`${import.meta.env.BASE_URL}${lang === "pt" ? shared.cv.pt : shared.cv.en}`} target="_blank" rel="noopener noreferrer">{actionLabels[lang].viewCv} ↗</a>
               <a className={lang === "pt" ? "is-active" : ""} href={`${import.meta.env.BASE_URL}${shared.cv.pt}`} download>PT ↓</a>
               <a className={lang !== "pt" ? "is-active" : ""} href={`${import.meta.env.BASE_URL}${shared.cv.en}`} download>EN ↓</a>
             </div>

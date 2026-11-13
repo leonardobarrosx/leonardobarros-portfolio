@@ -17,9 +17,10 @@ import { DistortImage } from "./DistortImage";
 import { InfantryMark } from "./InfantryMark";
 import { SaluteToast, useSalute } from "./Salute";
 import { BrazilFlag } from "./BrazilFlag";
+import { actionLabels } from "../data/actionLabels";
 
 export function About() {
-  const { t } = usePrefs();
+  const { t, lang } = usePrefs();
   const salute = useSalute();
   const root = useRef<HTMLElement>(null);
   useReveal(root);
@@ -47,7 +48,9 @@ export function About() {
               <span className="tag mono">LB — 026</span>
               <span className="jp vertical" aria-hidden="true">レオナルド</span>
             </div>
-            <figcaption className={`army ${salute.crowned ? "is-saluted" : ""}`} {...salute.handlers}>
+            <details className="about__background">
+              <summary className="mono">{actionLabels[lang].background} <span aria-hidden="true">+</span></summary>
+              <figcaption className={`army ${salute.crowned ? "is-saluted" : ""}`} {...salute.handlers}>
               <InfantryMark title={t.about.army.title} crowned={salute.crowned} />
               <div className="army__text mono">
                 {t.about.army.lines.map((l, i) => <span key={i}>{l}</span>)}
@@ -57,7 +60,8 @@ export function About() {
                   <a href="https://commons.wikimedia.org/wiki/File:Distintivo_da_Arma_de_Infantaria_-_Ex%C3%A9rcito_Brasileiro.svg" target="_blank" rel="noreferrer">Diego Biavati, CC BY-SA 4.0</a>
                 </span>
               </div>
-            </figcaption>
+              </figcaption>
+            </details>
           </figure>
 
           <div className="about__main">

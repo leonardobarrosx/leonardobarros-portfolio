@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { gsap, SplitText, lenisRef, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
+import { actionLabels } from "../data/actionLabels";
+import "../styles/recruiter.css";
 import { decode } from "../lib/decode";
 import { Landmarks } from "./Landmarks";
 import { useProximity } from "../hooks/useProximity";
@@ -11,7 +13,9 @@ import { lazy, Suspense } from "react";
 const LiquidSun = lazy(() => import("./LiquidSun").then((m) => ({ default: m.LiquidSun })));
 
 export function Hero({ ready }: { ready: boolean }) {
-  const { t } = usePrefs();
+  const { t, lang } = usePrefs();
+  const action = actionLabels[lang];
+  const cvHref = import.meta.env.BASE_URL + (lang === "pt" ? shared.cv.pt : shared.cv.en);
   const root = useRef<HTMLElement>(null);
   const [distort, setDistort] = useState(false);
   useProximity(root, ".hero__title .char", distort, 260, { split: true });
@@ -102,6 +106,13 @@ export function Hero({ ready }: { ready: boolean }) {
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
         </div>
         <p className="hero__statement">{pre}<em className="serif-i">{em}</em>{post}</p>
+        <nav className="hero__actions" aria-label={action.projects}>
+          <a className="hero__action hero__action--primary" href="#work" onClick={(e) => { e.preventDefault(); scrollToHash("#work"); }}>{action.projects}<span aria-hidden="true">↗</span></a>
+          <a className="hero__action" href={shared.linkedin} target="_blank" rel="noopener noreferrer">{action.linkedin}<span aria-hidden="true">↗</span></a>
+          <a className="hero__action" href={cvHref} target="_blank" rel="noopener noreferrer">{action.viewCv}<span aria-hidden="true">↗</span></a>
+          <a className="hero__action hero__action--quiet" href={cvHref} download>{action.downloadCv}<span aria-hidden="true">↓</span></a>
+          <a className="hero__action hero__action--quiet" href={"mailto:" + shared.email}>{action.contact}<span aria-hidden="true">↗</span></a>
+        </nav>
         <button className="hero__badge" type="button" onClick={() => scrollToHash("#about")} aria-label="Scroll to about">
           <svg viewBox="0 0 120 120">
             <defs><path id="badge-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
