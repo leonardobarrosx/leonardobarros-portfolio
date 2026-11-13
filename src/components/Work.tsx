@@ -92,6 +92,7 @@ export function Work() {
   const featureIds = ["meu-chamado", "motor", "argus"];
   const featured = featureIds.flatMap((id) => t.works.filter((work) => work.id === id));
   const others = t.works.filter((work) => !featureIds.includes(work.id));
+  const expanded = showAll || (openId !== null && others.some((w) => w.id === openId));
 
   return (
     <section className="section editorial-work" id="work" ref={root}>
@@ -106,11 +107,11 @@ export function Work() {
         </div>
         {others.length > 0 && (
           <div className="editorial-work__progressive">
-            <button type="button" className="editorial-work__toggle mono" onClick={() => setShowAll((value) => !value)} aria-expanded={showAll} aria-controls="work-other-projects">
+            <button type="button" className="editorial-work__toggle mono" onClick={() => setShowAll((value) => !value)} aria-expanded={expanded} aria-controls="work-other-projects">
               <span>{showAll ? actions.fewerProjects : actions.allProjects}</span>
               <span aria-hidden="true">{showAll ? "−" : "+"}</span>
             </button>
-            {(showAll || (openId !== null && others.some((w) => w.id === openId))) && (
+            {expanded && (
               <div id="work-other-projects" className="editorial-work__expanded">
                 <div className="editorial-work__divider mono"><span>{actions.otherProjects}</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
                 <div className="editorial-work__grid">
