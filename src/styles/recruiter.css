@@ -22,3 +22,11 @@
   .editorial-work__toggle { min-height:56px; }
 }
 @media(prefers-reduced-motion:reduce) { .editorial-work__expanded {animation:none;} .hero__action {transition:none;} }
+
+/* An optional personal detail, not the main professional pitch. */
+.about__background { margin-top:18px; border-top:1px solid var(--line); padding-top:12px; }
+.about__background summary { display:flex; justify-content:space-between; align-items:center; gap:16px; cursor:pointer; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); list-style:none; padding:8px 0; }
+.about__background summary::-webkit-details-marker {display:none;}
+.about__background summary:focus-visible {outline:3px solid var(--accent);outline-offset:3px;}
+.about__background[open] summary span { transform:rotate(45deg); }
+.about__background .army { margin-top:10px; }
