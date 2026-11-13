@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
+import { actionLabels } from "../data/actionLabels";
 import { decode } from "../lib/decode";
 import { LangMenu } from "./LangMenu";
 import { ThemeMenu } from "./ThemeMenu";
@@ -19,6 +20,7 @@ export function Nav({ ready }: { ready: boolean }) {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const cvHref = `${import.meta.env.BASE_URL}${lang === "pt" ? shared.cv.pt : shared.cv.en}`;
+  const actions = actionLabels[lang];
   const bar = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const progress = useRef<HTMLDivElement>(null);
@@ -117,7 +119,7 @@ export function Nav({ ready }: { ready: boolean }) {
               <button onClick={toggleMotion} aria-pressed={motionOn} title={t.nav.motion}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
             </div>
             <div className="pill seg nav__cv">
-              <a href={cvHref} download title={t.contact.cv}>{t.nav.cv} ↓</a>
+              <a href={cvHref} target="_blank" rel="noopener noreferrer" title={actions.viewCv}>{t.nav.cv} ↗</a>
             </div>
             <div className="pill seg nav__burger">
               <button onClick={() => setOpen(true)} aria-expanded={open}>{t.nav.menu}</button>
@@ -142,7 +144,7 @@ export function Nav({ ready }: { ready: boolean }) {
           <div className="menu__row">
             <button className="menu__scheme mono" onClick={toggleScheme}>{t.nav.appearance}: {scheme === "dark" ? "☾" : "☀"}</button>
             <button className="menu__motion mono" onClick={toggleMotion} aria-pressed={motionOn}>{t.nav.motion}: {motionOn ? t.nav.on : t.nav.off}</button>
-            <a className="menu__cv" href={cvHref} download>{t.contact.cv} ↓</a>
+            <a className="menu__cv" href={cvHref} target="_blank" rel="noopener noreferrer">{actions.viewCv} ↗</a>
           </div>
           <span>{t.meta.location} · JPA {time}</span>
           <span>{shared.email}</span>
