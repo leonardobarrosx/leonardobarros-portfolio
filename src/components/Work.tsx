@@ -4,6 +4,7 @@ import { useReveal } from "../hooks/useReveal";
 import { coverFor, featureFor } from "../data/shots";
 import { Label } from "./Label";
 import { shared, type Work as WorkItem } from "../data/content";
+import { actionLabels } from "../data/actionLabels";
 import "../styles/project-editorial.css";
 
 const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
@@ -48,7 +49,9 @@ function Poster({ w, position, featured, onOpen }: {
 }
 
 export function Work() {
-  const { t } = usePrefs();
+  const { t, lang } = usePrefs();
+  const actions = actionLabels[lang];
+  const [showAll, setShowAll] = useState(false);
   const root = useRef<HTMLElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState<DOMRect | null>(null);
@@ -86,8 +89,9 @@ export function Work() {
     setOpenId(next.id);
   }, [index, t.works]);
 
-  const featured = t.works.slice(0, 3);
-  const others = t.works.slice(3);
+  const featureIds = ["meu-chamado", "motor", "argus"];
+  const featured = featureIds.flatMap((id) => t.works.filter((work) => work.id === id));
+  const others = t.works.filter((work) => !featureIds.includes(work.id));
 
   return (
     <section className="section editorial-work" id="work" ref={root}>
@@ -101,12 +105,20 @@ export function Work() {
           {featured.map((w, i) => <Poster key={w.id} w={w} position={i + 1} featured onOpen={open} />)}
         </div>
         {others.length > 0 && (
-          <>
-            <div className="editorial-work__divider mono"><span>MORE WORK</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
-            <div className="editorial-work__grid">
-              {others.map((w, i) => <Poster key={w.id} w={w} position={i + 4} featured={false} onOpen={open} />)}
-            </div>
-          </>
+          <div className="editorial-work__progressive">
+            <button type="button" className="editorial-work__toggle mono" onClick={() => setShowAll((value) => !value)} aria-expanded={showAll} aria-controls="work-other-projects">
+              <span>{showAll ? actions.fewerProjects : actions.allProjects}</span>
+              <span aria-hidden="true">{showAll ? "−" : "+"}</span>
+            </button>
+            {showAll && (
+              <div id="work-other-projects" className="editorial-work__expanded">
+                <div className="editorial-work__divider mono"><span>{actions.otherProjects}</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
+                <div className="editorial-work__grid">
+                  {others.map((w, i) => <Poster key={w.id} w={w} position={i + 4} featured={false} onOpen={open} />)}
+                </div>
+              </div>
+            )}
+          </div>
         )}
         <a className="work__more mono" href={shared.github} target="_blank" rel="noreferrer" data-reveal data-cursor="link">
           {t.sheet.more} <span aria-hidden="true">↗</span>
