@@ -18,7 +18,7 @@ export const pt: Strings = {
     quote: "Me importo com como as coisas ficam e como é usá-las, não só se funcionam.",
     paragraphs: [
       "Dez anos em tecnologia, quase sempre com mais de um chapéu. Desenvolvedor full-stack e mobile freelancer desde 2016, analista de TI numa distribuidora e numa rede de clínicas odontológicas, e hoje analista de planejamento e inteligência de dados na AeC, onde automatizo e valido os relatórios de uma grande operação de contact center.",
-      "Entrei nisso tudo pelos games. Aprendi inglês traduzindo patch notes pra um blog, depois aprendi a programar fazendo ferramentas pros jogos que jogava e, no fim, meu próprio RPG online. O lado de design e ilustração vem do mesmo lugar. Passei 2017 no Exército Brasileiro: sou Aspirante a Oficial R/2 da arma de Infantaria, formado no NPOR do 15º BI Mtz com a turma Treme-Terra.",
+      "Comecei a programar por causa dos games: aprendi inglês traduzindo patch notes, criei ferramentas para os jogos que eu jogava e depois desenvolvi meu próprio RPG online. Essa mesma curiosidade me levou ao design, à ilustração e à experiência do usuário. Hoje combino arquitetura de software, interfaces cuidadosas e inteligência de dados para construir produtos úteis do início ao fim.",
       "Em paralelo desenvolvo projetos próprios, a começar pelo Meu Chamado: uma plataforma de helpdesk multi-tenant para o TI que atende 56 unidades de saúde. ARGUS (gestão para óticas) e VESTA (operação de restaurantes) saíram da mesma bancada, junto com um conjunto crescente de ferramentas internas e automações.",
     ],
     army: { title: "Oficial da reserva, Exército Brasileiro", lines: ["Aspirante a Oficial R/2 · Infantaria", "NPOR · 15º BI Mtz · 2017", "Turma Treme-Terra"], credit: "Distintivo:" },
