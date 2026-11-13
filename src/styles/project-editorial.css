@@ -1,0 +1,110 @@
+
+/* Editorial project showcase — intentionally isolated from the global poster system. */
+.editorial-work { overflow: clip; }
+.editorial-work__heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin:-14px 0 36px; }
+.editorial-work__intro { font-size:clamp(25px,3vw,43px); line-height:1.1; max-width:22ch; }
+.editorial-work__count { font-size:11px; color:var(--mute); white-space:nowrap; }
+.editorial-work__featured, .editorial-work__grid { display:grid; gap:var(--gap); }
+.editorial-work__featured { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.editorial-work__featured > :first-child { grid-column:1/-1; }
+.editorial-work__grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.editorial-work__divider { display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:14px; margin:clamp(42px,6vw,84px) 0 20px; font-size:11px; letter-spacing:.1em; }
+
+.editorial-work .editorial-card { --card-paper:var(--paper); display:flex; flex-direction:column; grid-column:auto; grid-row:auto; aspect-ratio:auto; padding:0; border:1px solid var(--line); background:var(--paper-2); color:var(--ink); overflow:hidden; isolation:isolate; transform:none; transform-style:flat; width:100%; border-radius:3px; text-align:left; }
+.editorial-card__visual { display:block; position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:var(--surface-ink); }
+.editorial-card__visual::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.20),transparent 38%); pointer-events:none; }
+.editorial-card__visual img { display:block; width:100%; height:100%; object-fit:cover; object-position:center top; transform:scale(1.001); transition:transform .85s var(--ease-out),filter .5s ease; }
+.editorial-card:hover .editorial-card__visual img, .editorial-card:focus-visible .editorial-card__visual img { transform:scale(1.055); }
+.editorial-card__index { position:absolute; top:16px; left:18px; padding:8px 10px; color:#fff; background:rgba(20,17,16,.78); backdrop-filter:blur(7px); z-index:2; font-size:10px; letter-spacing:.09em; }
+.editorial-card__corner { position:absolute; right:15px; top:13px; color:#fff; z-index:2; font-size:26px; line-height:1; transition:transform .4s var(--ease-out); }
+.editorial-card:hover .editorial-card__corner { transform:translate(4px,-4px); }
+.editorial-card__placeholder { display:grid; place-items:center; width:100%; height:100%; padding:20px; font-size:clamp(30px,4vw,70px); text-align:center; color:var(--on-dark); background:var(--surface-ink); }
+.editorial-card__content { display:grid; gap:12px; padding:clamp(18px,2vw,28px); flex:1; }
+.editorial-card__eyebrow { display:flex; justify-content:space-between; gap:14px; font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--mute); }
+.editorial-card__heading { display:block; margin-top:4px; font-size:clamp(28px,3.1vw,52px); line-height:.98; color:var(--ink); text-wrap:balance; overflow-wrap:anywhere; transition:color .25s; }
+.editorial-card:hover .editorial-card__heading { color:var(--accent-text); }
+.editorial-card__description { display:block; font:400 14px/1.55 var(--font-body); color:var(--ink-2); max-width:58ch; }
+.editorial-card__footer { display:flex; justify-content:space-between; align-items:end; gap:15px; margin-top:auto; padding-top:18px; border-top:1px solid var(--line); font-size:10px; letter-spacing:.03em; color:var(--mute); }
+.editorial-card__stack { display:block; line-height:1.6; }
+.editorial-card__explore { font-size:22px; color:var(--ink); line-height:1; }
+.editorial-work__featured > :first-child .editorial-card__visual { aspect-ratio:19/8; }
+.editorial-work__featured > :first-child .editorial-card__content { grid-template-columns: 1fr 1fr; column-gap:32px; align-items:center; }
+.editorial-work__featured > :first-child .editorial-card__eyebrow, .editorial-work__featured > :first-child .editorial-card__footer { grid-column:1/-1; }
+.editorial-work__featured > :first-child .editorial-card__heading { font-size:clamp(38px,6vw,86px); }
+.editorial-work__featured > :first-child .editorial-card__description { font-size:clamp(14px,1.4vw,18px); }
+.editorial-work__grid .editorial-card__visual { aspect-ratio: 4/3; }
+.editorial-work__grid .editorial-card__heading { font-size:clamp(28px,2.5vw,42px); }
+
+/* Case studies become a wide product-first editorial spread, while retaining the original
+   modal's deep links, focus handling, slide navigation and card-to-hero GSAP animation. */
+.case-editorial { --case-inset-x:clamp(12px,3vw,46px); --case-inset-y:clamp(12px,2vh,28px); --case-max:1500px; }
+.case-editorial .case__panel { border-radius:5px; }
+.case-editorial .case__grid { display:flex; flex-direction:column; gap:clamp(32px,5vw,70px); width:min(100% - 2 * var(--gutter),1250px); padding-top:clamp(18px,3vw,42px); }
+.case-editorial .case__side { position:static; display:grid; grid-template-columns:minmax(0,1fr); gap:20px; width:100%; }
+.case-editorial .case__slot { width:100%; max-width:none; height:clamp(380px,54vw,690px); aspect-ratio:auto; overflow:hidden; }
+.case-editorial .case__hero { position:absolute; display:block; width:100%; height:100%; padding:0; overflow:hidden; border-radius:2px; background:var(--surface-dark); color:var(--on-dark); }
+.case-editorial .case__hero::after { display:none; }
+.case-editorial .case__cover { position:absolute; inset:0; width:100%; height:100%; padding:0; background:transparent; box-shadow:none; border-radius:0; transform:none; animation:none; }
+.case-editorial .case__cover::before { display:none; }
+.case-editorial .case__cover img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+.case-editorial .case__hero:has(.case__cover)::after { content:""; display:block; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg,rgba(0,0,0,.54),transparent 40%,rgba(0,0,0,.12) 64%,rgba(0,0,0,.86)); }
+.case-editorial .case__hero .poster__deco { display:none; }
+.case-editorial .case__jp { display:none; }
+.case-editorial .case__heroin { position:relative; z-index:2; display:flex; flex-direction:column; justify-content:space-between; gap:24px; padding:clamp(22px,4vw,56px); height:100%; }
+.case-editorial .case__heroin .poster__meta { color:#fff; font-size:11px; opacity:1; text-shadow:0 2px 10px rgba(0,0,0,.6); }
+.case-editorial .case__title { align-self:start; margin-top:auto; font-size:clamp(48px,8vw,126px); line-height:.96; max-width:12ch; color:#fff; text-shadow:0 4px 22px rgba(0,0,0,.30); }
+.case-editorial .case__title--long { font-size:clamp(34px,5vw,78px); }
+.case-editorial .case__title .line:nth-child(2) { padding-left:0; }
+.case-editorial .case__roles { margin:0; }
+.case-editorial .case__roles li { color:#fff; border-color:rgba(255,255,255,.65); background:rgba(0,0,0,.25); }
+.case-editorial .case__cta { display:flex; justify-content:flex-start; flex-wrap:wrap; gap:12px 18px; align-items:center; padding-bottom:4px; }
+.case-editorial .case__main { width:min(100%,1000px); margin-inline:auto; }
+.case-editorial .case__facts { grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-bottom:clamp(38px,5vw,64px); }
+.case-editorial .case__sec { padding:clamp(28px,4vw,56px) 0; }
+.case-editorial .case__lead { max-width:37ch; font-size:clamp(26px,3.4vw,48px); }
+.case-editorial .case__long { max-width:75ch; }
+.case-editorial .case__shots { display:grid; gap:clamp(25px,4vw,48px); }
+.case-editorial .case__fig { gap:14px; }
+.case-editorial .case__shot { border-radius:5px; }
+.case-editorial .case__cap { font-size:12px; }
+.case-editorial .case__list { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:28px; }
+.case-editorial .case__list li:nth-child(2) { border-top:0; padding-top:0; }
+.case-editorial .case__next { border-radius:3px; }
+@media (max-width:1000px) {
+  .editorial-work__grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .case-editorial .case__panel { inset:32px 0 0; border-radius:12px 12px 0 0; }
+  .case-editorial .case__slot { height:clamp(330px,64vw,600px); }
+  .case-editorial .case__facts { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  .editorial-work__heading { align-items:start; }
+  .editorial-work__featured, .editorial-work__grid { grid-template-columns:minmax(0,1fr); }
+  .editorial-work__featured > :first-child { grid-column:auto; }
+  .editorial-work__featured > :first-child .editorial-card__visual { aspect-ratio:4/3; }
+  .editorial-work__featured > :first-child .editorial-card__content { display:grid; grid-template-columns:1fr; }
+  .editorial-work__featured > :first-child .editorial-card__eyebrow, .editorial-work__featured > :first-child .editorial-card__footer { grid-column:auto; }
+  .editorial-work__featured > :first-child .editorial-card__heading { font-size:clamp(36px,9vw,56px); }
+  .case-editorial .case__grid { width:min(100% - 32px,1250px); }
+  .case-editorial .case__slot { height:clamp(340px,108vw,540px); }
+  .case-editorial .case__heroin { padding:24px; }
+  .case-editorial .case__title { font-size:clamp(42px,11vw,68px); }
+  .case-editorial .case__title--long { font-size:clamp(31px,8vw,54px); }
+  .case-editorial .case__facts { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .case-editorial .case__list { grid-template-columns:1fr; }
+  .case-editorial .case__list li:nth-child(2) { border-top:1px solid var(--line); padding-top:14px; }
+}
+@media (max-width:430px) {
+  .editorial-work__heading { flex-direction:column; }
+  .case-editorial .case__facts { grid-template-columns:1fr; }
+  .case-editorial .case__slot { height:420px; }
+  .case-editorial .case__title { font-size:45px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .editorial-card__visual img, .editorial-card__corner { transition:none; }
+}
+
+/* Neutralize legacy poster overlays and 3D presentation on image-first cards. */
+.editorial-work .editorial-card.has-shot::after { display:none; }
+.editorial-work .editorial-card .poster__deco { display:none; }
+.editorial-work .editorial-card:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+.case-editorial .case__bar button:focus-visible, .case-editorial .case__cta a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }

@@ -1,61 +1,48 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { gsap, lenisRef } from "../lib/gsap";
-import { motion, usePrefs } from "../state/prefs";
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from "react";
+import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
-import { coverFor } from "../data/shots";
-import { useCharWave } from "../hooks/useCharWave";
+import { coverFor, featureFor } from "../data/shots";
 import { Label } from "./Label";
-import { lazy, Suspense } from "react";
+import { shared, type Work as WorkItem } from "../data/content";
+import "../styles/project-editorial.css";
 
-// The case study is a whole screen of markup and animation: it only loads when a poster is opened.
 const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
-import { shared, longTitle, type Work as WorkItem } from "../data/content";
 
-function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLElement | null) => void }) {
+function Poster({ w, position, featured, onOpen }: {
+  w: WorkItem;
+  position: number;
+  featured: boolean;
+  onOpen: (id: string, from?: HTMLElement | null) => void;
+}) {
   const el = useRef<HTMLButtonElement>(null);
-  const wave = useCharWave(".poster__title");
-
-  const onMove = (e: React.PointerEvent) => {
-    if (!motion.enabled || !el.current) return;
-    const r = el.current.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(el.current, { rotateY: px * 6, rotateX: -py * 6, duration: 0.6, ease: "power3.out", transformPerspective: 900 });
-    // the decoration "flows" toward the pointer
-    gsap.to(el.current.querySelector(".poster__deco"), { x: px * 24, y: py * 24, duration: 0.8, ease: "power3.out" });
-  };
-  const onLeave = () => {
-    if (!el.current) return;
-    gsap.to(el.current, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power3.out" });
-    gsap.to(el.current.querySelector(".poster__deco"), { x: 0, y: 0, duration: 0.8, ease: "power3.out" });
-  };
-
-  const cover = coverFor(w.id);
+  const cover = featureFor(w.id) ?? coverFor(w.id);
   return (
     <button
       type="button"
-      className={`poster poster--${w.variant} ${w.tall ? "poster--tall" : ""} ${longTitle(w.title) ? "poster--long" : ""} ${cover ? "has-shot" : ""}`}
+      className={`poster editorial-card poster--${w.variant}${featured ? " editorial-card--featured" : ""}${cover ? " has-shot" : ""}`}
       ref={el}
-      onPointerEnter={wave}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
       onClick={() => onOpen(w.id, el.current)}
       data-reveal="clip"
       data-work={w.id}
       data-cursor="view"
       aria-haspopup="dialog"
+      aria-label={`${w.title.join(" ")} — ${w.desc}`}
     >
-      {cover && (
-        <span className="poster__shot" aria-hidden="true">
-          <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} />
+      <span className="editorial-card__visual" aria-hidden="true">
+        {cover ? <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} /> :
+          <span className="editorial-card__placeholder display">{w.title.join(" ")}</span>}
+        <span className="editorial-card__index mono">{String(position).padStart(2, "0")} / PROJECT</span>
+        <span className="editorial-card__corner" aria-hidden="true">↗</span>
+      </span>
+      <span className="editorial-card__content">
+        <span className="editorial-card__eyebrow mono"><span>{w.kind}</span><span>{w.year}</span></span>
+        <span className="editorial-card__heading display">{w.title.join(" ")}</span>
+        <span className="editorial-card__description">{w.desc}</span>
+        <span className="editorial-card__footer mono">
+          <span className="editorial-card__stack">{w.stack}</span>
+          <span className="editorial-card__explore">↗</span>
         </span>
-      )}
-      <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
-      <h3 className="poster__title display">{w.title.map((s) => <span key={s}>{s}</span>)}</h3>
-      <span className="poster__jp jp vertical" aria-hidden="true">{w.jp}</span>
-      <div className="poster__foot mono"><span>{w.stack}</span><span className="desc">{w.desc}</span></div>
-      <span className="poster__deco" aria-hidden="true" />
-      {(w.href || w.repo) && <span className="poster__arrow" aria-hidden="true">↗</span>}
+      </span>
     </button>
   );
 }
@@ -63,13 +50,11 @@ function Poster({ w, onOpen }: { w: WorkItem; onOpen: (id: string, from?: HTMLEl
 export function Work() {
   const { t } = usePrefs();
   const root = useRef<HTMLElement>(null);
-  const grid = useRef<HTMLDivElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState<DOMRect | null>(null);
   const opened = useRef(false);
   useReveal(root);
 
-  // Deep link: #work/<id> opens the case study; the URL follows the panel.
   useEffect(() => {
     const fromHash = () => {
       const m = location.hash.match(/^#work\/([a-z0-9-]+)$/);
@@ -85,10 +70,15 @@ export function Work() {
     history.replaceState(null, "", `#work/${id}`);
     setOpenId(id);
   }, []);
-  const close = useCallback(() => { history.replaceState(null, "", "#work"); setOpenId(null); }, []);
+
+  const close = useCallback(() => {
+    history.replaceState(null, "", "#work");
+    setOpenId(null);
+  }, []);
 
   const index = t.works.findIndex((w) => w.id === openId);
-  if (index >= 0) opened.current = true; // once opened, keep it mounted so the close animation can play
+  if (index >= 0) opened.current = true;
+
   const step = useCallback((dir: 1 | -1) => {
     if (index < 0) return;
     const next = t.works[(index + dir + t.works.length) % t.works.length];
@@ -96,29 +86,28 @@ export function Work() {
     setOpenId(next.id);
   }, [index, t.works]);
 
-  // Grid skews with scroll velocity, posters drift at different speeds.
-  useLayoutEffect(() => {
-    if (!root.current || !motion.enabled) return;
-    const ctx = gsap.context(() => {
-      const lenis = lenisRef.current;
-      const skew = gsap.quickTo(grid.current, "skewY", { duration: 0.5, ease: "power3" });
-      const onScroll = (e: { velocity: number }) => skew(gsap.utils.clamp(-2.5, 2.5, e.velocity * 0.03));
-      lenis?.on("scroll", onScroll);
-      gsap.utils.toArray<HTMLElement>(".poster").forEach((p, i) => {
-        gsap.to(p, { y: i % 3 === 1 ? -28 : 16, ease: "none", scrollTrigger: { trigger: p, start: "top bottom", end: "bottom top", scrub: 1.2 } });
-      });
-      return () => lenis?.off("scroll", onScroll);
-    }, root);
-    return () => ctx.revert();
-  }, [t]);
+  const featured = t.works.slice(0, 3);
+  const others = t.works.slice(3);
 
   return (
-    <section className="section" id="work" ref={root}>
+    <section className="section editorial-work" id="work" ref={root}>
       <div className="wrap">
         <Label n="03" text={t.labels.work} jp="作品" />
-        <div className="work__grid" ref={grid}>
-          {t.works.map((item) => <Poster w={item} key={item.id} onOpen={open} />)}
+        <div className="editorial-work__heading">
+          <p className="editorial-work__intro serif-i">{t.labels.work}</p>
+          <span className="mono editorial-work__count">{String(t.works.length).padStart(2, "0")} / SELECTED PROJECTS</span>
         </div>
+        <div className="editorial-work__featured">
+          {featured.map((w, i) => <Poster key={w.id} w={w} position={i + 1} featured onOpen={open} />)}
+        </div>
+        {others.length > 0 && (
+          <>
+            <div className="editorial-work__divider mono"><span>MORE WORK</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
+            <div className="editorial-work__grid">
+              {others.map((w, i) => <Poster key={w.id} w={w} position={i + 4} featured={false} onOpen={open} />)}
+            </div>
+          </>
+        )}
         <a className="work__more mono" href={shared.github} target="_blank" rel="noreferrer" data-reveal data-cursor="link">
           {t.sheet.more} <span aria-hidden="true">↗</span>
         </a>

@@ -5,7 +5,7 @@ import { decode } from "../lib/decode";
 import { longTitle, type Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
 import { useFocusTrap } from "../hooks/useFocusTrap";
-import { coverFor, shotsFor } from "../data/shots";
+import { coverFor, featureFor, shotsFor } from "../data/shots";
 import { captionFor } from "../data/captions";
 
 interface Props {
@@ -193,7 +193,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const shots = shotsFor(w.id);
 
   return (
-    <div className="case" ref={root} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
+    <div className="case case-editorial" ref={root} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
       {/* the page shows through around the panel; clicking it closes, like the ✕ */}
       <div className="case__dim" ref={dim} onClick={onClose} data-cursor="close" aria-hidden="true" />
       <div className="case__panel" ref={panel}>
@@ -202,7 +202,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
         <span className="sr-only">{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
         <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
         <span className="case__bar-right">
-          <span className="case__keys" aria-hidden="true"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>
+          <span className="case__keys"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>
           <button type="button" className="case__copy" onClick={copyLink} data-cursor="link">{copied ? `${t.contact.copied} ✓` : t.sheet.copy}</button>
           <button type="button" className="case__close" onClick={onClose} ref={closeBtn} data-cursor="link">{t.sheet.close} ✕</button>
         </span>
@@ -211,11 +211,11 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
       <div className="case__grid wrap">
         <aside className="case__side">
           <div className="case__slot" ref={slot}>
-            <div className={`case__hero poster poster--${w.variant}${coverFor(w.id) ? " has-shot" : ""}`} ref={hero}>
+            <div className={`case__hero poster poster--${w.variant}${featureFor(w.id) ? " has-shot" : ""}`} ref={hero}>
               <span className="poster__deco" aria-hidden="true" />
-              {coverFor(w.id) && (
+              {featureFor(w.id) && (
                 <span className="poster__shot case__cover" key={w.id} aria-hidden="true">
-                  <img src={coverFor(w.id)} alt="" decoding="async" draggable={false} />
+                  <img src={featureFor(w.id) ?? coverFor(w.id)} alt="" decoding="async" draggable={false} />
                 </span>
               )}
               <span className="poster__jp jp vertical case__jp" aria-hidden="true">{w.jp}</span>

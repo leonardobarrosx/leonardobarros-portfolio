@@ -40,3 +40,18 @@ export function shotsFor(id: string): Shot[] {
 export function coverFor(id: string): string | undefined {
   return covers[id];
 }
+
+/** The clearest real product view for each project's editorial card and case-study hero. */
+const preferred: Record<string, string> = {
+  ninho: "02-telas",
+  cutucanois: "02-aparencia",
+  argus: "02-laboratorio",
+  motor: "01-inicio",
+  "meu-chamado": "02-painel",
+  soluna: "01-vila",
+  vault: "01-inicio",
+};
+export function featureFor(id: string): string | undefined {
+  const name = preferred[id];
+  return (name ? byWork[id]?.find((shot) => shot.name === name)?.src : undefined) ?? covers[id];
+}
