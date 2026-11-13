@@ -211,10 +211,10 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
       <div className="case__grid wrap">
         <aside className="case__side">
           <div className="case__slot" ref={slot}>
-            <div className={`case__hero poster poster--${w.variant}${featureFor(w.id) ? " has-shot" : ""}`} ref={hero}>
+            <div className={`case__hero case__hero--${w.variant}${featureFor(w.id) ? " has-shot" : ""}`} ref={hero}>
               <span className="poster__deco" aria-hidden="true" />
               {featureFor(w.id) && (
-                <span className="poster__shot case__cover" key={w.id} aria-hidden="true">
+                <span className="case__cover" key={w.id} aria-hidden="true">
                   <img src={featureFor(w.id) ?? coverFor(w.id)} alt="" decoding="async" draggable={false} />
                 </span>
               )}
