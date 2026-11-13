@@ -3,6 +3,7 @@ import { gsap, SplitText, lenisRef, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
 import { actionLabels } from "../data/actionLabels";
+import "../styles/recruiter.css";
 import { decode } from "../lib/decode";
 import { Landmarks } from "./Landmarks";
 import { useProximity } from "../hooks/useProximity";
