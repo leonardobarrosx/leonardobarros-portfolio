@@ -102,3 +102,9 @@
 @media (prefers-reduced-motion:reduce) {
   .editorial-card__visual img, .editorial-card__corner { transition:none; }
 }
+
+/* Neutralize legacy poster overlays and 3D presentation on image-first cards. */
+.editorial-work .editorial-card.has-shot::after { display:none; }
+.editorial-work .editorial-card .poster__deco { display:none; }
+.editorial-work .editorial-card:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+.case-editorial .case__bar button:focus-visible, .case-editorial .case__cta a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
