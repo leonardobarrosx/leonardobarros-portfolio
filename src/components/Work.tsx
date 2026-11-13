@@ -3,7 +3,7 @@ import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { coverFor, featureFor } from "../data/shots";
 import { Label } from "./Label";
-import { shared, type Work as WorkItem } from "../data/content";
+import { shared, longTitle, type Work as WorkItem } from "../data/content";
 import { actionLabels } from "../data/actionLabels";
 import "../styles/project-editorial.css";
 
@@ -20,7 +20,7 @@ function Poster({ w, position, featured, onOpen }: {
   return (
     <button
       type="button"
-      className={`poster editorial-card poster--${w.variant}${featured ? " editorial-card--featured" : ""}${cover ? " has-shot" : ""}`}
+      className={`editorial-card editorial-card--${w.variant}${featured ? " editorial-card--featured" : ""}${longTitle(w.title) ? " editorial-card--long" : ""}${cover ? " has-shot" : ""}`}
       ref={el}
       onClick={() => onOpen(w.id, el.current)}
       data-reveal="clip"
