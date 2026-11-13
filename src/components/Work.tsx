@@ -110,7 +110,7 @@ export function Work() {
               <span>{showAll ? actions.fewerProjects : actions.allProjects}</span>
               <span aria-hidden="true">{showAll ? "−" : "+"}</span>
             </button>
-            {showAll && (
+            {(showAll || (openId !== null && others.some((w) => w.id === openId))) && (
               <div id="work-other-projects" className="editorial-work__expanded">
                 <div className="editorial-work__divider mono"><span>{actions.otherProjects}</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
                 <div className="editorial-work__grid">
