@@ -26,7 +26,7 @@ for (const path of Object.keys(files).sort()) {
   if (!m) continue;
   const [, work, name] = m;
   // VESTA's earlier captures predate the current React UI: only show explicitly labelled updated SVG recreations.
-  if (work === "vesta" && !name.endsWith(".svg")) continue;
+  if (work === "vesta") continue; // Require current, browser-captured screenshots; old files and mock SVGs are intentionally hidden.
   // cover is the card's own crop and never joins the sequence
   if (name.startsWith("cover.")) { covers[work] = files[path]; continue; }
   (byWork[work] ??= []).push({ src: files[path], motion: name.endsWith(".gif"), name: name.replace(/\.[a-z]+$/, "") });
