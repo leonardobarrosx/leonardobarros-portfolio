@@ -31,6 +31,8 @@ const captions: Record<string, Record<string, Line>> = {
     "07-escuro": ["Dark theme", "Tema escuro", "Tema oscuro", "Dunkles Theme", "ダークテーマ", "다크 테마", "深色主题"],
   },
   vesta: {
+    "01-kds-current": ["Current kitchen interface — UI recreation with sample data", "Cozinha atual — recriação visual com dados ilustrativos", "Interfaz actual de cocina — recreación con datos ficticios", "Aktuelle Küchenoberfläche — Nachbildung mit Beispieldaten", "現行キッチン画面：サンプルデータで再現", "현재 주방 UI — 예시 데이터로 재현", "当前厨房界面——示例数据重现"],
+    "02-dashboard-current": ["Current management interface — UI recreation with sample data", "Painel atual — recriação visual com dados ilustrativos", "Panel actual — recreación con datos ficticios", "Aktuelles Dashboard — Nachbildung mit Beispieldaten", "現行管理画面：サンプルデータで再現", "현재 관리 화면 — 예시 데이터로 재현", "当前管理界面——示例数据重现"],
     loop: ["An order moving from the table to the kitchen", "Um pedido saindo da mesa para a cozinha", "Un pedido que va de la mesa a la cocina", "Eine Bestellung vom Tisch in die Küche", "テーブルから厨房へ流れる注文", "테이블에서 주방으로 가는 주문", "订单从餐桌流向厨房"],
     "01-cozinha": ["Kitchen display", "Tela da cozinha", "Pantalla de cocina", "Küchendisplay", "厨房ディスプレイ", "주방 화면", "厨房显示屏"],
     "02-pedidos": ["Orders by table", "Pedidos por mesa", "Pedidos por mesa", "Bestellungen pro Tisch", "テーブル別の注文", "테이블별 주문", "按桌查看订单"],
