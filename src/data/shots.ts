@@ -1,11 +1,11 @@
 /**
- * Screens captured from running projects, plus explicitly labelled source-based UI previews for VESTA.
+ * Screens captured from the projects actually running, with mock data.
  *
  * Files live in `src/assets/cases/<work id>/` and are picked up here by name, so adding a capture
  * is a matter of dropping the file in the folder: `NN-name.webp` joins the sequence in order and
  * `loop.gif` becomes the moving one, which the gallery shows first.
  */
-const files = import.meta.glob("../assets/cases/*/*.{webp,gif,svg}", {
+const files = import.meta.glob("../assets/cases/*/*.{webp,gif}", {
   eager: true,
   query: "?url",
   import: "default",
@@ -25,8 +25,6 @@ for (const path of Object.keys(files).sort()) {
   const m = path.match(/\/cases\/([^/]+)\/([^/]+)$/);
   if (!m) continue;
   const [, work, name] = m;
-  // VESTA's earlier captures predate the current React UI: only show explicitly labelled updated SVG recreations.
-  if (work === "vesta") continue; // Require current, browser-captured screenshots; old files and mock SVGs are intentionally hidden.
   // cover is the card's own crop and never joins the sequence
   if (name.startsWith("cover.")) { covers[work] = files[path]; continue; }
   (byWork[work] ??= []).push({ src: files[path], motion: name.endsWith(".gif"), name: name.replace(/\.[a-z]+$/, "") });
@@ -47,9 +45,10 @@ export function coverFor(id: string): string | undefined {
 const preferred: Record<string, string> = {
   ninho: "02-telas",
   cutucanois: "02-aparencia",
-  argus: "02-laboratorio",
+  argus: "07-assistente-ia",
   motor: "01-inicio",
   "meu-chamado": "02-painel",
+  vesta: "01-mesas",
   soluna: "01-vila",
   vault: "01-inicio",
 };
