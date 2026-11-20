@@ -45,7 +45,7 @@ export function coverFor(id: string): string | undefined {
 const preferred: Record<string, string> = {
   ninho: "02-telas",
   cutucanois: "02-aparencia",
-  argus: "02-laboratorio",
+  argus: "07-assistente-ia",
   motor: "01-inicio",
   "meu-chamado": "02-painel",
   vesta: "01-mesas",
