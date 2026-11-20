@@ -50,7 +50,7 @@ const preferred: Record<string, string> = {
   cutucanois: "02-aparencia",
   argus: "02-laboratorio",
   motor: "01-inicio",
-  "meu-chamado": "02-painel",
+  "meu-chamado": "01-landing",
   soluna: "01-vila",
   vault: "01-inicio",
 };

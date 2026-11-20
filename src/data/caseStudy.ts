@@ -41,7 +41,7 @@ export const caseThemes: Record<string, CaseTheme> = {
     stage: "#0e5e3a", onStage: "#ffffff", dark: "#0b4a2d", onDark: "#eef7f2", accentDark: "#f5c518",
     palette: ["#0e5e3a", "#0b4a2d", "#e5408a", "#22b8d9", "#f5c518"],
     fonts: [{ family: "system-ui", weight: 700, role: "display" }, { family: "system-ui", weight: 400, role: "ui" }],
-    heroA: "01-landing", heroB: "02-painel", stageShot: "02-painel",
+    heroA: "01-landing", heroB: "09-m-landing", stageShot: "04-painel",
   },
   motor: {
     bg: "#f8f5f0", fg: "#1f1613", muted: "#7b6d66", accent: "#e3301c", onAccent: "#ffffff", chrome: "#ffffff", card: "#ece6dd",
