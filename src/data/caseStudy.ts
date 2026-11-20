@@ -26,7 +26,7 @@ export const caseThemes: Record<string, CaseTheme> = {
     palette: ["#fa1e4e", "#ff2d55", "#020617", "#f5f2fb", "#25d366"],
     fonts: [{ family: "Inter", weight: 800, role: "display" }, { family: "Inter", weight: 400, role: "ui" }, { family: "Sora", weight: 700, role: "display" }],
     load: "Sora:wght@700",
-    heroA: "01-landing", heroB: "03-recursos", stageShot: "01-landing",
+    heroA: "01-landing", heroB: "12-m-garcom-mesas", stageShot: "05-painel",
   },
   argus: {
     bg: "#f6f8fc", fg: "#0f172a", muted: "#64748b", accent: "#1769ff", onAccent: "#ffffff", chrome: "#ffffff", card: "#eaf0fb",
@@ -34,7 +34,7 @@ export const caseThemes: Record<string, CaseTheme> = {
     palette: ["#1769ff", "#001f5c", "#f6f8fc", "#d9dce4", "#0f172a"],
     fonts: [{ family: "Plus Jakarta Sans", weight: 700, role: "display" }, { family: "Plus Jakarta Sans", weight: 400, role: "ui" }],
     load: "Plus+Jakarta+Sans:wght@400;700",
-    heroA: "01-visao-geral", heroB: "03-pdv", stageShot: "01-visao-geral",
+    heroA: "01-landing", heroB: "11-m-landing", stageShot: "05-visao-geral",
   },
   "meu-chamado": {
     bg: "#f6f9f7", fg: "#0b1f16", muted: "#5b6b63", accent: "#0e5e3a", onAccent: "#ffffff", chrome: "#ffffff", card: "#e7f0eb",

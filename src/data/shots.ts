@@ -48,7 +48,7 @@ const preferred: Record<string, string> = {
   vesta: "01-landing",
   ninho: "01-landing",
   cutucanois: "02-aparencia",
-  argus: "02-laboratorio",
+  argus: "01-landing",
   motor: "01-inicio",
   "meu-chamado": "01-landing",
   soluna: "01-vila",
