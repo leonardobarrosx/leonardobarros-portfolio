@@ -104,14 +104,12 @@ export function Hero({ ready }: { ready: boolean }) {
         <Suspense fallback={<div className="hero__sun" aria-hidden="true" />}><LiquidSun area={root} /></Suspense>
         <div className="hero__role mono">
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
+          <span className="hero__focus">{action.fullStack} · {shared.focus}</span>
         </div>
         <p className="hero__statement">{pre}<em className="serif-i">{em}</em>{post}</p>
         <nav className="hero__actions" aria-label={action.projects}>
-          <a className="hero__action hero__action--primary" href="#work" onClick={(e) => { e.preventDefault(); scrollToHash("#work"); }}>{action.projects}<span aria-hidden="true">↗</span></a>
-          <a className="hero__action" href={shared.linkedin} target="_blank" rel="noopener noreferrer">{action.linkedin}<span aria-hidden="true">↗</span></a>
-          <a className="hero__action" href={cvHref} target="_blank" rel="noopener noreferrer">{action.viewCv}<span aria-hidden="true">↗</span></a>
-          <a className="hero__action hero__action--quiet" href={cvHref} download>{action.downloadCv}<span aria-hidden="true">↓</span></a>
-          <a className="hero__action hero__action--quiet" href={"mailto:" + shared.email}>{action.contact}<span aria-hidden="true">↗</span></a>
+          <a className="hero__action hero__action--primary" href="#work" onClick={(e) => { e.preventDefault(); scrollToHash("#work"); }}>{action.projects}<span aria-hidden="true">→</span></a>
+          <a className="hero__action hero__action--secondary" href={cvHref} download>{action.resume}<span aria-hidden="true">↓</span></a>
         </nav>
         <button className="hero__badge" type="button" onClick={() => scrollToHash("#about")} aria-label="Scroll to about">
           <svg viewBox="0 0 120 120">
