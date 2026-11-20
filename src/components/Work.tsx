@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState, lazy, Suspense } from "react";
-import { usePrefs } from "../state/prefs";
+import { motion, usePrefs } from "../state/prefs";
+import { gsap } from "../lib/gsap";
 import { useReveal } from "../hooks/useReveal";
 import { coverFor, featureFor } from "../data/shots";
 import { Label } from "./Label";
 import { shared, longTitle, type Work as WorkItem } from "../data/content";
 import { actionLabels } from "../data/actionLabels";
+import { caseThemes } from "../data/caseStudy";
 import "../styles/project-editorial.css";
 
 const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
@@ -17,6 +19,7 @@ function Poster({ w, position, featured, onOpen }: {
 }) {
   const el = useRef<HTMLButtonElement>(null);
   const cover = featureFor(w.id) ?? coverFor(w.id);
+  const brand = caseThemes[w.id];
   return (
     <button
       type="button"
@@ -29,8 +32,14 @@ function Poster({ w, position, featured, onOpen }: {
       aria-haspopup="dialog"
       aria-label={`${w.title.join(" ")} — ${w.desc}`}
     >
-      <span className="editorial-card__visual" aria-hidden="true">
-        {cover ? <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} /> :
+      <span className={`editorial-card__visual${brand && cover ? " is-branded" : ""}`} aria-hidden="true"
+            style={brand ? ({ "--card-stage": brand.stage } as React.CSSProperties) : undefined}>
+        {cover && brand ? (
+          <span className="editorial-card__frame">
+            <span className="editorial-card__dots"><i /><i /><i /></span>
+            <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} />
+          </span>
+        ) : cover ? <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} /> :
           <span className="editorial-card__placeholder display">{w.title.join(" ")}</span>}
         <span className="editorial-card__index mono">{String(position).padStart(2, "0")} / PROJECT</span>
         <span className="editorial-card__corner" aria-hidden="true">↗</span>
@@ -51,12 +60,23 @@ function Poster({ w, position, featured, onOpen }: {
 export function Work() {
   const { t, lang } = usePrefs();
   const actions = actionLabels[lang];
-  const [showAll, setShowAll] = useState(false);
   const root = useRef<HTMLElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState<DOMRect | null>(null);
   const opened = useRef(false);
   useReveal(root);
+
+  // The product windows on the covers rise a little as their card scrolls through the viewport.
+  useEffect(() => {
+    const el = root.current;
+    if (!el || !motion.enabled) return;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".editorial-card__frame", el).forEach((frame) => {
+        gsap.fromTo(frame, { yPercent: 12 }, { yPercent: 0, ease: "none", scrollTrigger: { trigger: frame.closest(".editorial-card"), start: "top bottom", end: "center 45%", scrub: 0.6 } });
+      });
+    }, el);
+    return () => ctx.revert();
+  }, [lang]);
 
   useEffect(() => {
     const fromHash = () => {
@@ -89,10 +109,9 @@ export function Work() {
     setOpenId(next.id);
   }, [index, t.works]);
 
-  const featureIds = ["meu-chamado", "motor", "argus"];
+  const featureIds = ["vesta", "argus", "meu-chamado"];
   const featured = featureIds.flatMap((id) => t.works.filter((work) => work.id === id));
   const others = t.works.filter((work) => !featureIds.includes(work.id));
-  const expanded = showAll || (openId !== null && others.some((w) => w.id === openId));
 
   return (
     <section className="section editorial-work" id="work" ref={root}>
@@ -106,19 +125,11 @@ export function Work() {
           {featured.map((w, i) => <Poster key={w.id} w={w} position={i + 1} featured onOpen={open} />)}
         </div>
         {others.length > 0 && (
-          <div className="editorial-work__progressive">
-            <button type="button" className="editorial-work__toggle mono" onClick={() => setShowAll((value) => !value)} aria-expanded={expanded} aria-controls="work-other-projects">
-              <span>{showAll ? actions.fewerProjects : actions.allProjects}</span>
-              <span aria-hidden="true">{showAll ? "−" : "+"}</span>
-            </button>
-            {expanded && (
-              <div id="work-other-projects" className="editorial-work__expanded">
-                <div className="editorial-work__divider mono"><span>{actions.otherProjects}</span><span>{String(others.length).padStart(2, "0")} PROJECTS</span></div>
-                <div className="editorial-work__grid">
-                  {others.map((w, i) => <Poster key={w.id} w={w} position={i + 4} featured={false} onOpen={open} />)}
-                </div>
-              </div>
-            )}
+          <div className="editorial-work__expanded" id="work-other-projects">
+            <div className="editorial-work__divider mono"><span>{actions.otherProjects}</span><span>{String(others.length).padStart(2, "0")}</span></div>
+            <div className="editorial-work__grid">
+              {others.map((w, i) => <Poster key={w.id} w={w} position={i + featured.length + 1} featured={false} onOpen={open} />)}
+            </div>
           </div>
         )}
         <a className="work__more mono" href={shared.github} target="_blank" rel="noreferrer" data-reveal data-cursor="link">
