@@ -15,15 +15,21 @@ export function Ask({ ready }: { ready: boolean }) {
   const card = useRef<HTMLDivElement>(null);
   const question = useRef<HTMLParagraphElement>(null);
 
-  // Show after the intro, once the visitor has started reading: a little scroll, or a few seconds.
-  // Never again after it was answered or skipped (or a theme was picked from the menu); `?ask` forces it.
+  // Never over the first read: it waits until the visitor has been through the work and reaches the
+  // experience section (or most of the page). Never again after it was answered or skipped (or a theme
+  // was picked from the menu); `?ask` forces it.
   useEffect(() => {
     const forced = new URLSearchParams(location.search).has("ask");
     if (!ready || (read(LS_ASKED) && !forced)) return;
     let fired = false;
     const fire = () => { if (fired) return; fired = true; setShow(true); };
-    const onScroll = () => { if (window.scrollY > 200) fire(); };
-    const timer = window.setTimeout(fire, 4500);
+    const onScroll = () => {
+      const xp = document.getElementById("experience");
+      const reached = xp ? xp.getBoundingClientRect().top < window.innerHeight * 0.5 : false;
+      const deep = window.scrollY > (document.documentElement.scrollHeight - window.innerHeight) * 0.6;
+      if (reached || deep) fire();
+    };
+    const timer = forced ? window.setTimeout(fire, 1200) : 0;
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.clearTimeout(timer); window.removeEventListener("scroll", onScroll); };
   }, [ready]);
