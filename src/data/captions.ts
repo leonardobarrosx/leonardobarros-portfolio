@@ -13,7 +13,7 @@ type Line = [string, string, string, string, string, string, string];
 
 const captions: Record<string, Record<string, Line>> = {
   "meu-chamado": {
-    loop: ["A ticket from opening to resolution", "Um chamado da abertura à solução", "Un ticket de la apertura a la solución", "Ein Ticket von der Eröffnung bis zur Lösung", "チケットの起票から解決まで", "티켓 접수부터 해결까지", "工单从创建到解决"],
+    loop: ["A tour of the panel: dashboard, queue, ticket, SLA and reports", "Um tour pelo painel: dashboard, fila, chamado, SLA e relatórios", "Un recorrido por el panel: dashboard, cola, ticket, SLA e informes", "Ein Rundgang durchs Panel: Dashboard, Warteschlange, Ticket, SLA und Berichte", "パネルを一巡：ダッシュボード、キュー、チケット、SLA、レポート", "패널 둘러보기: 대시보드, 대기열, 티켓, SLA, 보고서", "面板一览：仪表盘、队列、工单、SLA 和报表"],
     "01-landing": ["Landing page", "Página inicial", "Página de inicio", "Startseite", "ランディングページ", "랜딩 페이지", "首页"],
     "02-painel": ["Dashboard with the day's queue", "Painel com a fila do dia", "Panel con la cola del día", "Dashboard mit der Tageswarteschlange", "当日のキューを表示するダッシュボード", "오늘의 대기열을 보여 주는 대시보드", "显示当日队列的仪表盘"],
     "03-fila": ["Ticket queue with filters", "Fila de chamados com filtros", "Cola de tickets con filtros", "Ticket-Warteschlange mit Filtern", "フィルター付きのチケット一覧", "필터가 있는 티켓 대기열", "带筛选的工单队列"],
@@ -41,7 +41,7 @@ const captions: Record<string, Record<string, Line>> = {
     "05-garcom": ["Waiter app on the phone", "App do garçom no celular", "App del camarero en el móvil", "Kellner-App auf dem Handy", "スマホのホールスタッフ用アプリ", "휴대폰의 서빙 직원 앱", "手机上的服务员应用"],
   },
   ninho: {
-    loop: ["Paying a bill, undoing it, marking an appointment done and switching to dark", "Pagando uma conta, desfazendo, marcando uma consulta e trocando para o escuro", "Pagar una cuenta, deshacerlo, marcar una cita y pasar al tema oscuro", "Rechnung bezahlen, rückgängig machen, Termin abhaken, dunkles Theme", "支払い、取り消し、通院の完了、ダークテーマへの切り替え", "결제, 되돌리기, 진료 완료 표시, 다크 테마 전환", "付款、撤销、标记预约完成并切换到深色主题"],
+    "loop-m": ["The app on the phone: overview, finances, layette, baby and health", "O app no celular: visão geral, finanças, enxoval, bebê e saúde", "La app en el móvil: resumen, finanzas, ajuar, bebé y salud", "Die App auf dem Handy: Übersicht, Finanzen, Erstausstattung, Baby und Gesundheit", "スマホのアプリ：概要、家計、出産準備、赤ちゃん、健康", "휴대폰 앱: 개요, 가계, 출산 준비물, 아기, 건강", "手机上的应用：概览、财务、待产包、宝宝和健康"],
     "01-desktop": ["Overview on a computer", "Visão geral no computador", "Resumen en el ordenador", "Übersicht am Computer", "パソコンでの概要画面", "컴퓨터에서 보는 개요", "电脑上的概览"],
     "02-telas": ["Overview, finances and layette", "Visão geral, finanças e enxoval", "Resumen, finanzas y ajuar", "Übersicht, Finanzen und Erstausstattung", "概要、家計、出産準備品", "개요, 재정, 출산 준비물", "概览、财务与婴儿用品"],
     "03-saude": ["Health, a new entry and the account menu", "Saúde, novo lançamento e menu da conta", "Salud, nuevo registro y menú de la cuenta", "Gesundheit, neuer Eintrag und Kontomenü", "健康、新規入力、アカウントメニュー", "건강, 새 항목, 계정 메뉴", "健康、新增记录与账户菜单"],

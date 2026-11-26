@@ -44,7 +44,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const shownIndex = shown ? works.findIndex((w) => w.id === shown.id) : -1;
   const next = shownIndex >= 0 ? works[(shownIndex + 1) % works.length] : null;
   const prev = shownIndex >= 0 ? works[(shownIndex - 1 + works.length) % works.length] : null;
-  const { t, lang } = usePrefs();
+  const { t, lang, motionOn } = usePrefs();
 
   const root = useRef<HTMLDivElement>(null);
   const dim = useRef<HTMLDivElement>(null);
@@ -253,10 +253,17 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
                   const caption = captionFor(w.id, s.name, lang);
                   return (
                     <figure className="case__fig" key={s.src}>
-                      <a className={`case__shot${s.motion ? " case__shot--motion" : ""}`}
+                      <a className={`case__shot${s.motion ? " case__shot--motion" : ""}${s.phone ? " case__shot--phone" : ""}`}
                          href={s.src} target="_blank" rel="noreferrer" data-cursor="view">
-                        <img src={s.src} alt={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
-                             loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+                        {s.video ? (
+                          // muted + playsInline so it autoplays on phones too; with motion off it stays on the first frame
+                          <video key={String(motionOn)} src={s.src} aria-label={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
+                                 autoPlay={motionOn} loop muted playsInline preload={motionOn ? "auto" : "metadata"}
+                                 disablePictureInPicture />
+                        ) : (
+                          <img src={s.src} alt={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
+                               loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+                        )}
                       </a>
                       {caption && <figcaption className="case__cap mono"><span>{pad(i + 1)}</span>{caption}</figcaption>}
                     </figure>
