@@ -44,12 +44,6 @@
   .hero__focus::before { display: none; }
 }
 
-/* The disc multiplies into paper; on a dark ground that turns it black, so there it glows instead. */
-html[data-scheme="dark"] .hero__sun { mix-blend-mode: normal; filter: drop-shadow(0 0 60px rgba(var(--accent-rgb), .45)) saturate(1.08) brightness(1.08); }
-@media (prefers-color-scheme: dark) {
-  html:not([data-scheme="light"]) .hero__sun { mix-blend-mode: normal; filter: drop-shadow(0 0 60px rgba(var(--accent-rgb), .45)) saturate(1.08) brightness(1.08); }
-}
-
 /* The mark: the sun with the initials inside, readable at a glance. */
 .nav__mark { gap: 0; padding: 4px 12px 4px 0; }
 .nav__mark i { width: 40px; height: 40px; display: inline-grid; place-items: center; margin-right: -14px; position: relative; z-index: 0; transition: transform .5s cubic-bezier(.2,.8,.2,1); }

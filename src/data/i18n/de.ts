@@ -13,7 +13,7 @@ export const de: Strings = {
   ask: { kicker: "Eine kurze Frage", question: "Was ist deine Lieblingsfarbe?", hint: "Du kannst sie jederzeit über den Punkt im Menü ändern.", thanks: "Gute Wahl. Viel Spaß mit dem Portfolio, willkommen!", skip: "Überspringen" },
   labels: { about: "Über mich", services: "Was ich mache", work: "Ausgewählte Arbeiten", experience: "Erfahrung", stack: "Stack", contact: "Kontakt", words: "Stimmen", certs: "Zertifikate", education: "Ausbildung", orgs: "Wo ich gearbeitet habe", toolbox: "Der komplette Werkzeugkasten" },
   toolbox: { languages: "Sprachen", web: "Frontend", services: "Dienste & APIs", data: "Daten", delivery: "Auslieferung" },
-  marquee: ["Full-Stack", "フルスタック", "Front-end", "フロントエンド", "Back-end", "バックエンド", "Daten", "データ", "APIs", "連携"],
+  marquee: ["Full-Stack", "Front-end", "Back-end", "Daten", "APIs"],
   about: {
     quote: "Mir ist wichtig, wie Dinge aussehen und wie sie sich anfühlen, nicht nur, ob sie funktionieren.",
     paragraphs: [

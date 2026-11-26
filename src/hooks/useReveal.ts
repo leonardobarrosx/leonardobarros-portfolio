@@ -29,6 +29,8 @@ export function useReveal(root: RefObject<HTMLElement | null>) {
             duration: clip ? 1.3 : 1,
             delay,
             ease: clip ? "power4.out" : "power3.out",
+            // a clip left in place would also cut off the hard offset shadows of the cards
+            clearProps: clip ? "clipPath" : undefined,
             scrollTrigger: { trigger: node, start: "top 90%", once: true },
           },
         );

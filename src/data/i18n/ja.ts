@@ -13,7 +13,7 @@ export const ja: Strings = {
   ask: { kicker: "ひとつだけ質問", question: "好きな色はどれですか？", hint: "メニューの丸からいつでも変更できます。", thanks: "いい選択です。ポートフォリオをどうぞ、ようこそ！", skip: "スキップ" },
   labels: { about: "プロフィール", services: "できること", work: "選りすぐりの作品", experience: "経歴", stack: "技術スタック", contact: "連絡", words: "声", certs: "資格", education: "学歴", orgs: "これまでの所属", toolbox: "ツールボックスのすべて" },
   toolbox: { languages: "言語", web: "フロントエンド", services: "サービスとAPI", data: "データ", delivery: "デリバリー" },
-  marquee: ["Full-Stack", "フルスタック", "Front-end", "フロントエンド", "Back-end", "バックエンド", "Data", "データ", "APIs", "連携"],
+  marquee: ["Full-Stack", "Front-end", "Back-end", "Data", "APIs"],
   about: {
     quote: "動くかどうかだけでなく、どう見えて、どう感じられるかを大切にしています。",
     paragraphs: [

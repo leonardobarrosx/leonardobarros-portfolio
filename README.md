@@ -2,7 +2,15 @@
 
 Personal portfolio of Leonardo Barros, Software Engineer (full stack).
 
-Editorial poster aesthetic on a 12-column grid: warm paper, red ink, coffee darks, condensed display type and katakana accents. Built with Vite (React SWC plugin), React and TypeScript; animations with GSAP (ScrollTrigger, SplitText), Lenis smooth scroll and a few WebGL shaders.
+Brutalist poster aesthetic on a 12-column grid, under the **LAB** brand (L.A.B. = Leonardo de Araujo Barros, and also a software lab): warm paper, red ink, coffee darks, thick ink borders and hard offset shadows, condensed display type, mono labels indexed in hex. Decoration is a collage: the LAB stamp, 16×16 pixel sprites taped onto the page (games, design, code, computers) and text as the machine reads it (binary and hexdumps). Built with Vite (React SWC plugin), React and TypeScript; animations with GSAP (ScrollTrigger, SplitText), Lenis smooth scroll and a WebGL ripple on the photo.
+
+### Brand kit
+
+- `src/assets/brand/lab-stamp.webp`: the stamp with ink texture, the main mark (64px and up: hero, loader, case studies). Used as a CSS mask, so it takes the theme's accent.
+- `src/assets/brand/lab-mark.webp`: the clean mark for small sizes (nav, favicon).
+- `src/data/pixels.ts`: the sprite sheet, one string per row; `<Pixel name="gamepad" />` draws it as SVG.
+- `src/components/lab/`: `LabMark`, `Pixel`, `Sticker` (a sprite or note taped on) and the hero `HeroCollage`.
+- `src/lib/hex.ts` and `src/styles/textures.css`: hex/binary helpers and the binary and hexdump textures.
 
 ## Features
 
@@ -10,8 +18,8 @@ Editorial poster aesthetic on a 12-column grid: warm paper, red ink, coffee dark
 - Nine colour themes (red by default, then orange, amber, green, teal, blue, violet, pink, ink) from the swatch menu in the nav; persisted and applied before first paint. First-time visitors get asked their favourite colour by a small card once they start scrolling; hovering a swatch previews the theme, picking one keeps it
 - Dark and light schemes for every theme: follows `prefers-color-scheme`, with a toggle that is remembered
 - Motion toggle (persisted) that also honours `prefers-reduced-motion`
-- Pointer work: a custom cursor, letters that bend toward the pointer with a chromatic split, a WebGL disc in the hero and a WebGL ripple on the photo
-- A click lands like a soft shot: a ring at the pointer, a chromatic kick through the display type near it, a nudge on the small pieces around, and a stone dropped in the disc and the photo. Up to four waves travel at once in each shader, so clicking again layers another instead of restarting the last
+- Pointer work: a custom cursor, letters that bend toward the pointer with a chromatic split, a collage in the hero whose pieces separate with the pointer, and a WebGL ripple on the photo
+- A click lands like a soft shot: a ring at the pointer, a chromatic kick through the display type near it, a nudge on the small pieces around, the stickers in the hero knocked loose, and a stone dropped in the photo. Up to four waves travel at once in each shader, so clicking again layers another instead of restarting the last
 - Case studies open in a panel that grows out of the poster (cover pinned left, spread scrolling right), with prev/next, copy link, click-outside to close and deep links (`#work/<id>`); roles open the same way from the experience list (`#experience/<id>`)
 - Intro plays once per session (`sessionStorage`)
 - Custom scrollbars (hairline track, accent thumb, draggable) for the page and the panels on pointer devices

@@ -1,5 +1,6 @@
 import type { Lang, Variant, WorkId, XpId, Strings } from "./i18n/types";
 import { en } from "./i18n/en";
+import type { PixelName } from "./pixels";
 
 export type { Lang, Variant };
 
@@ -18,12 +19,10 @@ export const shared = {
   url: "https://leonardobarrosx.github.io/leonardobarros-portfolio/",
   first: "Leonardo",
   last: "Barros",
-  nameJp: "レオナルド・バロス",
-  roleJp: "ソフトウェアエンジニア",
   tagline: "Java • Spring Boot • Go • React • TypeScript",
   /** The stack the hero leads with: what the target roles ask for. */
   focus: "Java/Spring · Go · React",
-  volume: "Vol. 01 — 2026",
+  volume: "LAB — Vol. 01 / 2026",
   timezone: "America/Fortaleza",
   email: "xleonardobarros@gmail.com",
   linkedin: "https://www.linkedin.com/in/leonardobarrosx",
@@ -56,18 +55,18 @@ export function toDMS(lat: number, lng: number): string {
 
 /* ---------- language-neutral bases ---------- */
 
-const worksBase: Record<WorkId, { id: string; title: string[]; jp: string; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; repo?: string; tall?: boolean }> = {
-  meuchamado: { id: "meu-chamado", title: ["Meu", "Chamado"], jp: "支援", year: "2026 —", stack: "React · TypeScript · Go · PostgreSQL · Docker", stackList: ["React", "Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "JWT", "Docker", "Playwright", "GitHub Actions", "Render", "Vercel"], variant: "ink", tall: true, href: "https://meuchamado.vercel.app" },
-  motor: { id: "motor", title: ["Motor de", "Transferências"], jp: "送金", year: "2026", stack: "Java 21 · Spring Boot · Kafka · Apache Camel · React", stackList: ["Java 21", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Flyway", "Apache Kafka", "Apache Camel", "ISO 20022", "JUnit 5", "Mockito", "Testcontainers", "React", "TypeScript", "Docker", "GitHub Actions"], variant: "red", tall: true, repo: "https://github.com/leonardobarrosx/motor-transferencias" },
-  ninho: { id: "ninho", title: ["Ninho"], jp: "巣", year: "2026", stack: "Flutter · Go · Supabase · PostgreSQL", stackList: ["Flutter", "Dart", "Go", "Supabase", "PostgreSQL", "Row Level Security", "HTML", "CSS", "JavaScript", "Render", "Vercel", "Playwright"], variant: "coffee" },
-  cutucanois: { id: "cutucanois", title: ["Cutuca", "Nóis"], jp: "仲間", year: "2026", stack: "JavaScript · Canvas 3D · Supabase Edge Functions", stackList: ["JavaScript", "Canvas 2D", "3D engine", "TypeScript", "Supabase Edge Functions", "PostgreSQL", "Node.js", "SQLite"], variant: "ink", href: "https://enois.ia.br/games/obsoleto/cutucanois" },
-  argus: { id: "argus", title: ["Argus"], jp: "眼", year: "2026", stack: "React · TypeScript · Go · PostgreSQL", stackList: ["React", "Vite", "TypeScript", "Tailwind", "Go", "Gin", "pgx", "PostgreSQL", "Row Level Security", "JWT", "Docker"], variant: "paper" },
-  itam: { id: "itam", title: ["ITAM"], jp: "資産", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red" },
-  vesta: { id: "vesta", title: ["Vesta"], jp: "食", year: "2026", stack: "React · TypeScript · Go · PostgreSQL", stackList: ["React", "Vite", "TypeScript", "Tailwind", "Go", "Gin", "PostgreSQL", "SSE", "PWA", "Turborepo"], variant: "paper" },
-  metis: { id: "metis", title: ["Metis"], jp: "家具", year: "2026 —", stack: "Concept · Flutter · Go · Firebase", stackList: ["Figma", "Flutter", "Dart", "Go", "Firebase"], variant: "red" },
-  vault: { id: "vault", title: ["Manhwa", "Vault"], jp: "書庫", year: "2026", stack: "Go · React · Wails", stackList: ["Go", "React", "TypeScript", "Wails", "SQLite", "Windows"], variant: "ink" },
-  codebarx: { id: "codebarx", title: ["Code", "BarX"], jp: "符号", year: "2025", stack: "Python · PyQt6", stackList: ["Python", "PyQt6", "python-barcode"], variant: "paper" },
-  soluna: { id: "soluna", title: ["Soluna"], jp: "月と太陽", year: "2026 —", stack: "C# · .NET 10 · MonoGame", stackList: ["C#", ".NET 10", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee", repo: "https://github.com/leonardobarrosx/soluna" },
+const worksBase: Record<WorkId, { id: string; title: string[]; icon: PixelName; year: string; stack: string; stackList: string[]; variant: Variant; href?: string; repo?: string; tall?: boolean }> = {
+  meuchamado: { id: "meu-chamado", title: ["Meu", "Chamado"], icon: "chat", year: "2026 —", stack: "React · TypeScript · Go · PostgreSQL · Docker", stackList: ["React", "Vite", "TypeScript", "Tailwind", "shadcn/ui", "Go", "PostgreSQL", "JWT", "Docker", "Playwright", "GitHub Actions", "Render", "Vercel"], variant: "ink", tall: true, href: "https://meuchamado.vercel.app" },
+  motor: { id: "motor", title: ["Motor de", "Transferências"], icon: "coin", year: "2026", stack: "Java 21 · Spring Boot · Kafka · Apache Camel · React", stackList: ["Java 21", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Flyway", "Apache Kafka", "Apache Camel", "ISO 20022", "JUnit 5", "Mockito", "Testcontainers", "React", "TypeScript", "Docker", "GitHub Actions"], variant: "red", tall: true, repo: "https://github.com/leonardobarrosx/motor-transferencias" },
+  ninho: { id: "ninho", title: ["Ninho"], icon: "nest", year: "2026", stack: "Flutter · Go · Supabase · PostgreSQL", stackList: ["Flutter", "Dart", "Go", "Supabase", "PostgreSQL", "Row Level Security", "HTML", "CSS", "JavaScript", "Render", "Vercel", "Playwright"], variant: "coffee" },
+  cutucanois: { id: "cutucanois", title: ["Cutuca", "Nóis"], icon: "dog", year: "2026", stack: "JavaScript · Canvas 3D · Supabase Edge Functions", stackList: ["JavaScript", "Canvas 2D", "3D engine", "TypeScript", "Supabase Edge Functions", "PostgreSQL", "Node.js", "SQLite"], variant: "ink", href: "https://enois.ia.br/games/obsoleto/cutucanois" },
+  argus: { id: "argus", title: ["Argus"], icon: "eye", year: "2026", stack: "React · TypeScript · Go · PostgreSQL", stackList: ["React", "Vite", "TypeScript", "Tailwind", "Go", "Gin", "pgx", "PostgreSQL", "Row Level Security", "JWT", "Docker"], variant: "paper" },
+  itam: { id: "itam", title: ["ITAM"], icon: "chip", year: "2025–26", stack: "React · TypeScript · Tailwind · Laravel · C#/.NET", stackList: ["React", "TypeScript", "Tailwind", "Laravel", "PHP", "C#/.NET", "REST API"], variant: "red" },
+  vesta: { id: "vesta", title: ["Vesta"], icon: "coffee", year: "2026", stack: "React · TypeScript · Go · PostgreSQL", stackList: ["React", "Vite", "TypeScript", "Tailwind", "Go", "Gin", "PostgreSQL", "SSE", "PWA", "Turborepo"], variant: "paper" },
+  metis: { id: "metis", title: ["Metis"], icon: "palette", year: "2026 —", stack: "Concept · Flutter · Go · Firebase", stackList: ["Figma", "Flutter", "Dart", "Go", "Firebase"], variant: "red" },
+  vault: { id: "vault", title: ["Manhwa", "Vault"], icon: "book", year: "2026", stack: "Go · React · Wails", stackList: ["Go", "React", "TypeScript", "Wails", "SQLite", "Windows"], variant: "ink" },
+  codebarx: { id: "codebarx", title: ["Code", "BarX"], icon: "barcode", year: "2025", stack: "Python · PyQt6", stackList: ["Python", "PyQt6", "python-barcode"], variant: "paper" },
+  soluna: { id: "soluna", title: ["Soluna"], icon: "joystick", year: "2026 —", stack: "C# · .NET 10 · MonoGame", stackList: ["C#", ".NET 10", "MonoGame", "LiteNetLib", "Game design"], variant: "coffee", repo: "https://github.com/leonardobarrosx/soluna" },
 };
 // the three products with a landing page and an application lead, then the Java banking core
 const WORK_ORDER: WorkId[] = ["vesta", "argus", "meuchamado", "motor", "ninho", "soluna", "cutucanois", "vault", "codebarx", "itam", "metis"];
@@ -93,7 +92,7 @@ const certBase: { icon: "efset" | "cisco" | "google" | "connect"; id?: string }[
   { icon: "google", id: "130962867" },
   { icon: "connect" },
 ];
-const serviceJp = ["構築", "データ", "運用", "デザイン"];
+const serviceIcon: PixelName[] = ["laptop", "chip", "monitor", "pen"];
 
 /* ---------- assembled shape used by the components ---------- */
 
@@ -105,14 +104,14 @@ export type Experience = (typeof xpBase)[XpId] & Strings["experience"][XpId];
 
 export interface Content {
   seo: Strings["seo"];
-  meta: Strings["meta"] & { roleJp: string; tagline: string; volume: string };
+  meta: Strings["meta"] & { tagline: string; volume: string };
   nav: Strings["nav"];
   themes: Strings["themes"];
   ask: Strings["ask"];
   labels: Strings["labels"];
   marquee: string[];
   about: Strings["about"];
-  services: { n: string; title: string; jp: string; text: string }[];
+  services: { n: string; title: string; icon: PixelName; text: string }[];
   works: Work[];
   sheet: Strings["sheet"];
   xp: Strings["xp"];
@@ -124,20 +123,20 @@ export interface Content {
   certs: { icon: "efset" | "cisco" | "google" | "connect"; id?: string; name: string; issuer: string; meta: string }[];
   education: Strings["education"];
   credentials: string[];
-  contact: Strings["contact"] & { jp: string };
+  contact: Strings["contact"];
 }
 
 function assemble(s: Strings): Content {
   return {
     seo: s.seo,
-    meta: { ...s.meta, roleJp: shared.roleJp, tagline: shared.tagline, volume: shared.volume },
+    meta: { ...s.meta, tagline: shared.tagline, volume: shared.volume },
     nav: s.nav,
     themes: s.themes,
     ask: s.ask,
     labels: s.labels,
     marquee: s.marquee,
     about: s.about,
-    services: s.services.map((sv, i) => ({ n: `0${i + 1}`, jp: serviceJp[i], ...sv })),
+    services: s.services.map((sv, i) => ({ n: `0${i + 1}`, icon: serviceIcon[i], ...sv })),
     works: WORK_ORDER.map((id) => ({ ...worksBase[id], ...s.works[id] })),
     sheet: s.sheet,
     xp: s.xp,
@@ -149,7 +148,7 @@ function assemble(s: Strings): Content {
     certs: certBase.map((c, i) => ({ ...c, ...s.certs[i] })),
     education: s.education,
     credentials: s.credentials,
-    contact: { ...s.contact, jp: "話しましょう" },
+    contact: s.contact,
   };
 }
 

@@ -9,6 +9,9 @@ import { shotsFor, type Shot } from "../data/shots";
 import { captionFor } from "../data/captions";
 import { caseLabels, caseThemes, type CaseTheme } from "../data/caseStudy";
 import "../styles/case-study.css";
+import { hexId, toHex } from "../lib/hex";
+import { Sticker } from "./lab/Sticker";
+import { LabMark } from "./lab/LabMark";
 
 interface Props {
   works: WorkItem[];
@@ -20,7 +23,6 @@ interface Props {
   onStep: (dir: 1 | -1) => void;
 }
 
-const pad = (n: number) => String(n).padStart(2, "0");
 /** Breaks the overview at the sentence end nearest its middle, so it reads as two short paragraphs. */
 function paragraphs(text: string): string[] {
   if (text.length < 280) return [text];
@@ -72,7 +74,7 @@ function Browser({ shot, alt, className = "", eager = false }: { shot: Shot; alt
   }
   return (
     <div className={`cs-browser ${className}`}>
-      <span className="cs-browser__bar" aria-hidden="true"><i /><i /><i /></span>
+      <span className="cs-browser__bar" aria-hidden="true"><i /><i /><i /><b>{shot.name}</b></span>
       <img src={shot.src} alt={alt} loading={eager || shot.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
     </div>
   );
@@ -193,7 +195,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           .fromTo(".case__bar", { opacity: 0 }, { opacity: 1, duration: 0.5, clearProps: "opacity" }, 0.45);
         if (origin) {
           // the panel opens out of the poster that was clicked
-          tl.fromTo(pn, { clipPath: insetFor(pn, origin) }, { clipPath: "inset(0px 0px 0px 0px round 6px)", duration: 0.9, ease: "power4.inOut", clearProps: "clipPath" }, 0);
+          tl.fromTo(pn, { clipPath: insetFor(pn, origin) }, { clipPath: "inset(0px 0px 0px 0px round 0px)", duration: 0.9, ease: "power4.inOut", clearProps: "clipPath" }, 0);
         } else {
           tl.fromTo(pn, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "all" }, 0.05);
         }
@@ -210,9 +212,9 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
       // hero mockups drift apart as the page scrolls past them
       gsap.to(".cs-hero__shots > :first-child", { yPercent: -10, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-hero", start: "top top", end: "bottom top", scrub: true } });
       gsap.to(".cs-hero__shots > :nth-child(2)", { yPercent: 14, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-hero", start: "top top", end: "bottom top", scrub: true } });
-      // stage: the window grows into place and the kanji slides behind it
+      // stage: the window grows into place and the bytes of the name slide behind it
       gsap.fromTo(".cs-stage .cs-browser", { scale: 0.84, y: 60 }, { scale: 1, y: 0, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-stage", start: "top bottom", end: "center center", scrub: 0.6 } });
-      gsap.fromTo(".cs-stage__jp", { xPercent: -12 }, { xPercent: 8, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-stage", start: "top bottom", end: "bottom top", scrub: true } });
+      gsap.fromTo(".cs-stage__hex", { xPercent: -12 }, { xPercent: 8, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-stage", start: "top bottom", end: "bottom top", scrub: true } });
       // section heads, paragraphs and closing lines rise once as they come in
       gsap.utils.toArray<HTMLElement>(".cs-reveal", el).forEach((node) => {
         gsap.from(node, { y: 40, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { ...sc, trigger: node, start: "top 90%", once: true } });
@@ -253,7 +255,10 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const alt = (s: Shot, i: number) => captionFor(w.id, s.name, lang) ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`;
   const fontName = (f: NonNullable<CaseTheme["fonts"]>[number]) => f.family === "system-ui" ? "System UI" : f.family;
   const fontLabel = { display: L.display, ui: L.ui, data: L.data };
-  const counter = `${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`;
+  const counter = `EXP_${hexId(n + 1)} / ${hexId(works.length)} · ${w.kind} · ${w.year}`;
+  /** Section heads carry their place in the case as a byte: [0x01] Overview. */
+  let sec = 0;
+  const head = (label: string) => <span className="mono cs-head__label"><i>[{hexId(++sec)}]</i> {label}</span>;
 
   return (
     <div className="case cs" ref={root} style={themeVars(th)} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
@@ -274,10 +279,11 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
         <div className="cs-body" ref={body} key={w.id}>
           {/* Hero */}
           <header className={`cs-hero${heroA ? "" : " cs-hero--text"}`}>
-            <div className="cs-hero__top mono"><span>{shared.name} — {L.study} {pad(n + 1)}</span><span>{w.kind} · {w.year}</span></div>
+            <div className="cs-hero__top mono"><span><LabMark className="cs-hero__mark" /> LAB / {L.study} {hexId(n + 1)}</span><span>{toHex(w.id.toUpperCase())}</span><span>{w.kind} · {w.year}</span></div>
             <div className="cs-hero__grid">
               <div className="cs-hero__copy">
-                <span className="cs-hero__tag mono">{w.role[0] ?? L.study}</span>
+                <span className="cs-hero__tags"><span className="cs-hero__tag mono">EXP_{hexId(n + 1)}</span><span className="cs-hero__tag cs-hero__tag--alt mono">{w.role[0] ?? L.study}</span></span>
+                <Sticker icon={w.icon} rotate={-8} className="cs-hero__sticker" />
                 <h2 className={`cs-hero__title display${longTitle(w.title) ? " cs-hero__title--long" : ""}`}>{w.title.map((s) => <span className="line" key={s}>{s}</span>)}</h2>
                 <p className="cs-hero__kind serif-i">{w.kind}</p>
                 <p className="cs-hero__desc">{w.desc}</p>
@@ -306,14 +312,14 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           {/* Stage */}
           {stage && (
             <section className="cs-stage" aria-label={w.title.join(" ")}>
-              <span className="cs-stage__jp jp" aria-hidden="true">{w.jp}</span>
+              <span className="cs-stage__hex mono" aria-hidden="true">{toHex(w.title.join(" "))}</span>
               <Browser shot={stage} alt={alt(stage, still.indexOf(stage))} />
             </section>
           )}
 
           {/* Overview */}
           <section className="cs-sec cs-overview">
-            <div className="cs-head cs-reveal"><span className="mono">{t.sheet.overview}</span></div>
+            <div className="cs-head cs-reveal">{head(t.sheet.overview)}</div>
             <div className="cs-overview__body">
               <p className="cs-overview__lead serif-i cs-reveal">{w.desc}</p>
               <div className="cs-overview__text">{paragraphs(w.long).map((para) => <p className="cs-reveal" key={para}>{para}</p>)}</div>
@@ -323,14 +329,14 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           {/* Screens */}
           {shots.length > 0 && (
             <section className="cs-sec cs-screens">
-              <div className="cs-head cs-reveal"><span className="mono">{t.sheet.screens}</span><h3 className="display">{L.screensTitle}</h3></div>
+              <div className="cs-head cs-reveal">{head(t.sheet.screens)}<h3 className="display">{L.screensTitle}</h3></div>
               <div className="cs-shots">
                 {shots.map((s, i) => {
                   const caption = captionFor(w.id, s.name, lang);
                   return (
                     <figure key={s.src} className={s.motion ? "is-motion" : s.phone ? "is-phone" : undefined}>
                       <a href={s.src} target="_blank" rel="noreferrer" data-cursor="view"><Browser shot={s} alt={alt(s, i)} /></a>
-                      {caption && <figcaption><span className="mono">{pad(i + 1)}</span>{caption}</figcaption>}
+                      {caption && <figcaption><span className="mono">{hexId(i + 1)}</span>{caption}</figcaption>}
                     </figure>
                   );
                 })}
@@ -340,9 +346,9 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
           {/* Engineering */}
           <section className="cs-eng">
-            <div className="cs-head cs-reveal"><span className="mono">{L.engineering}</span><h3 className="display">{L.engTitle}</h3></div>
+            <div className="cs-head cs-reveal">{head(L.engineering)}<h3 className="display">{L.engTitle}</h3></div>
             <ol className="cs-eng__list">
-              {w.highlights.map((h, i) => <li key={h}><span className="display">{pad(i + 1)}</span><p>{h}</p></li>)}
+              {w.highlights.map((h, i) => <li key={h}><span className="display">{hexId(i + 1)}</span><p>{h}</p></li>)}
             </ol>
             <div className="cs-eng__cols">
               <div><h4 className="mono">{t.sheet.deliverables}</h4><ul className="cs-chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul></div>
@@ -352,7 +358,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
           {/* Visual system */}
           <section className="cs-sec cs-visual">
-            <div className="cs-head cs-reveal"><span className="mono">{L.visual}</span><h3 className="display">{L.visualTitle}</h3></div>
+            <div className="cs-head cs-reveal">{head(L.visual)}<h3 className="display">{L.visualTitle}</h3></div>
             <ul className="cs-palette">
               {th.palette.map((c) => <li key={c}><span className="cs-swatch" style={{ background: c }} /><span className="mono">{c.toUpperCase()}</span></li>)}
             </ul>
@@ -371,6 +377,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
           {/* Closing */}
           <section className="cs-close">
+            <LabMark variant="stamp" className="cs-close__stamp cs-reveal" />
             <p className="cs-close__title display cs-reveal">{L.closeTitle}</p>
             <p className="cs-close__note serif-i cs-reveal">{L.closeNote}</p>
             <div className="cs-close__cta cs-reveal">
@@ -381,7 +388,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
               <div className="cs-close__nav">
                 <button type="button" className="cs-prev mono" onClick={() => step(-1)} data-cursor="link">← {t.sheet.prev} · {prev.title.join(" ")}</button>
                 <button type="button" className="cs-next" onClick={() => step(1)} data-cursor="view" aria-label={`${L.next}: ${next.title.join(" ")}`}>
-                  <span className="mono">{L.next} — {pad((n + 1) % works.length + 1)} / {pad(works.length)}</span>
+                  <span className="mono">{L.next} — EXP_{hexId((n + 1) % works.length + 1)} / {hexId(works.length)}</span>
                   <span className="cs-next__title display">{next.title.join(" ")} →</span>
                 </button>
               </div>
@@ -399,5 +406,5 @@ function insetFor(pn: HTMLElement, r: DOMRect): string {
   const p = pn.getBoundingClientRect();
   const top = Math.max(0, r.top - p.top), left = Math.max(0, r.left - p.left);
   const right = Math.max(0, p.right - r.right), bottom = Math.max(0, p.bottom - r.bottom);
-  return `inset(${top}px ${right}px ${bottom}px ${left}px round 6px)`;
+  return `inset(${top}px ${right}px ${bottom}px ${left}px)`;
 }

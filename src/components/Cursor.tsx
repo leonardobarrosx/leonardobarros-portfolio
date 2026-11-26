@@ -32,7 +32,7 @@ export function Cursor() {
     const rx = gsap.quickTo(ring.current, "x", { duration: 0.42, ease: "power3" });
     const ry = gsap.quickTo(ring.current, "y", { duration: 0.42, ease: "power3" });
 
-    const TEXT = "p, h1, h2, h3, h4, li, dd, dt, blockquote, figcaption, span.jp, .mono, .serif-i";
+    const TEXT = "p, h1, h2, h3, h4, li, dd, dt, blockquote, figcaption, .mono, .serif-i";
     const modeFor = (t: Element | null): Mode => {
       if (!t) return "";
       if (t.closest("[data-cursor='view']")) return "is-view";

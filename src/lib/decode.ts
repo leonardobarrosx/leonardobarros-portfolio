@@ -1,11 +1,12 @@
 import { gsap } from "./gsap";
 
-const KATA = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ";
+/** The middle wave: hex digits and a little punctuation from code. */
+const HEX = "0123456789ABCDEF#<>/{}";
 const rnd = (s: string) => s[Math.floor(Math.random() * s.length)];
 
 /**
  * Three overlapping waves run left to right over the text:
- * binary is "typed", then converts to katakana, then resolves into the final string.
+ * binary is "typed", then converts to hex, then resolves into the final string.
  * Untyped slots hold a no-break space so monospace containers keep their width.
  */
 export function decode(el: HTMLElement, text: string, duration = 1.4) {
@@ -27,7 +28,7 @@ export function decode(el: HTMLElement, text: string, duration = 1.4) {
       const kata = p >= 0.32 + f * 0.45;
       const done = p >= 0.58 + f * 0.42;
       if (done) out += ch;
-      else if (kata) { if (roll || !cache[i] || "01".includes(cache[i])) cache[i] = rnd(KATA); out += cache[i]; }
+      else if (kata) { if (roll || !cache[i] || "01".includes(cache[i])) cache[i] = rnd(HEX); out += cache[i]; }
       else if (typed) { if (roll || !cache[i]) cache[i] = rnd("01"); out += cache[i]; }
       else out += "\u00A0";
     }
