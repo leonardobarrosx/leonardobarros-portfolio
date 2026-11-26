@@ -34,7 +34,7 @@ export const caseThemes: Record<string, CaseTheme> = {
     palette: ["#1769ff", "#001f5c", "#f6f8fc", "#d9dce4", "#0f172a"],
     fonts: [{ family: "Plus Jakarta Sans", weight: 700, role: "display" }, { family: "Plus Jakarta Sans", weight: 400, role: "ui" }],
     load: "Plus+Jakarta+Sans:wght@400;700",
-    heroA: "01-landing", heroB: "11-m-landing", stageShot: "05-visao-geral",
+    heroA: "01-landing", heroB: "17-m-ia", stageShot: "12-assistente-ia",
   },
   "meu-chamado": {
     bg: "#f6f9f7", fg: "#0b1f16", muted: "#5b6b63", accent: "#0e5e3a", onAccent: "#ffffff", chrome: "#ffffff", card: "#e7f0eb",
