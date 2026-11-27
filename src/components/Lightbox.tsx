@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, type PointerEvent as ReactPointerEvent } from "react";
 import { gsap } from "../lib/gsap";
-import { motion } from "../state/prefs";
+import { motion, usePrefs } from "../state/prefs";
 import type { Shot } from "../data/shots";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -29,6 +29,7 @@ export function Lightbox({ shots, index, title, alt, caption, labels, onIndex, o
   const prevIndex = useRef(-1);
   const leaving = useRef(false);
   const open = index >= 0;
+  const { motionOn } = usePrefs();
   const count = shots.length;
 
   const go = useCallback((d: 1 | -1) => { if (count > 1) onIndex((index + d + count) % count); }, [index, count, onIndex]);
@@ -76,7 +77,7 @@ export function Lightbox({ shots, index, title, alt, caption, labels, onIndex, o
   // Neighbours load ahead, so stepping never waits on the network.
   useEffect(() => {
     if (!open || count < 2) return;
-    [index + 1, index - 1].forEach((i) => { const img = new Image(); img.src = shots[(i + count) % count].src; });
+    [index + 1, index - 1].forEach((i) => { const s = shots[(i + count) % count]; if (s.video) return; const img = new Image(); img.src = s.src; });
   }, [open, index, count, shots]);
 
   // Open: the backdrop fades and the screen rises. Step: the screen slides in from the side it came from.
@@ -128,9 +129,11 @@ export function Lightbox({ shots, index, title, alt, caption, labels, onIndex, o
 
       <div className="lb__stage" onPointerDown={onDown} onPointerUp={onUp} onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
         {count > 1 && <button type="button" className="lb__nav lb__nav--prev" onClick={() => go(-1)} aria-label={labels.prev} data-cursor="link"><span aria-hidden="true">←</span></button>}
-        <figure className={`lb__frame${shot.phone ? " lb__frame--phone" : ""}`} key={shot.src}>
+        <figure className={`lb__frame${shot.phone ? " lb__frame--phone" : ""}${shot.video ? " lb__frame--video" : ""}`} key={shot.src}>
           {!shot.phone && <span className="lb__bar" aria-hidden="true"><i /><i /><i /></span>}
-          <img src={shot.src} alt={alt(shot, shown)} decoding="async" draggable={false} />
+          {shot.video
+            ? <video key={`${shot.src}-${motionOn}`} src={shot.src} aria-label={alt(shot, shown)} autoPlay={motionOn} loop muted playsInline preload="auto" disablePictureInPicture />
+            : <img src={shot.src} alt={alt(shot, shown)} decoding="async" draggable={false} />}
         </figure>
         {count > 1 && <button type="button" className="lb__nav lb__nav--next" onClick={() => go(1)} aria-label={labels.next} data-cursor="link"><span aria-hidden="true">→</span></button>}
       </div>
@@ -141,7 +144,9 @@ export function Lightbox({ shots, index, title, alt, caption, labels, onIndex, o
           <div className="lb__thumbs">
             {shots.map((s, i) => (
               <button type="button" key={s.src} className={`${i === shown ? "is-current" : ""}${s.phone ? " is-phone" : ""}`} onClick={() => onIndex(i)} aria-label={`${pad(i + 1)} — ${alt(s, i)}`} aria-current={i === shown ? "true" : undefined}>
-                <img src={s.src} alt="" loading="lazy" decoding="async" draggable={false} />
+                {s.video
+                  ? <video src={`${s.src}#t=0.1`} muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
+                  : <img src={s.src} alt="" loading="lazy" decoding="async" draggable={false} />}
               </button>
             ))}
           </div>

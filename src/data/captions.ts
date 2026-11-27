@@ -13,7 +13,7 @@ type Line = [string, string, string, string, string, string, string];
 
 const captions: Record<string, Record<string, Line>> = {
   "meu-chamado": {
-    loop: ["A ticket from opening to resolution", "Um chamado da abertura à solução", "Un ticket de la apertura a la solución", "Ein Ticket von der Eröffnung bis zur Lösung", "チケットの起票から解決まで", "티켓 접수부터 해결까지", "工单从创建到解决"],
+    loop: ["A tour of the panel: dashboard, queue, ticket, SLA and reports", "Um tour pelo painel: dashboard, fila, chamado, SLA e relatórios", "Un recorrido por el panel: dashboard, cola, ticket, SLA e informes", "Ein Rundgang durchs Panel: Dashboard, Warteschlange, Ticket, SLA und Berichte", "パネルを一巡：ダッシュボード、キュー、チケット、SLA、レポート", "패널 둘러보기: 대시보드, 대기열, 티켓, SLA, 보고서", "面板一览：仪表盘、队列、工单、SLA 和报表"],
     "01-landing": ["The landing page", "A landing page", "La landing page", "Die Landingpage", "ランディングページ", "랜딩 페이지", "落地页"],
     "02-funcionalidades": ["Landing: a single queue and deadlines by priority", "Landing: fila única e prazo por prioridade", "Landing: cola única y plazos por prioridad", "Landingpage: eine Warteschlange und Fristen nach Priorität", "ランディング：単一のキューと優先度別の期限", "랜딩: 하나의 대기열과 우선순위별 기한", "落地页：统一队列与按优先级的时限"],
     "03-caminho": ["Landing: a ticket's path, from request to confirmation", "Landing: o caminho do chamado, do pedido à confirmação", "Landing: el camino del ticket, de la solicitud a la confirmación", "Landingpage: der Weg eines Tickets von der Anfrage bis zur Bestätigung", "ランディング：依頼から確認までのチケットの流れ", "랜딩: 요청부터 확인까지 티켓의 흐름", "落地页：工单从提出到确认的流程"],
@@ -54,6 +54,7 @@ const captions: Record<string, Record<string, Line>> = {
   },
 
   ninho: {
+    "loop-m": ["The app on the phone: overview, finances, layette, baby and health", "O app no celular: visão geral, finanças, enxoval, bebê e saúde", "La app en el móvil: resumen, finanzas, ajuar, bebé y salud", "Die App auf dem Handy: Übersicht, Finanzen, Erstausstattung, Baby und Gesundheit", "スマホのアプリ：概要、家計、出産準備、赤ちゃん、健康", "휴대폰 앱: 개요, 가계, 출산 준비물, 아기, 건강", "手机上的应用：概览、财务、待产包、宝宝和健康"],
     "01-landing": ["The landing page", "A landing page", "La landing page", "Die Landingpage", "ランディングページ", "랜딩 페이지", "落地页"],
     "02-landing-escuro": ["The landing page in the dark theme", "A landing page no tema escuro", "La landing page en tema oscuro", "Die Landingpage im dunklen Theme", "ダークテーマのランディングページ", "다크 테마의 랜딩 페이지", "深色主题的落地页"],
     "03-visao-geral": ["Web app: the month at a glance", "App web: o mês num relance", "App web: el mes de un vistazo", "Web-App: der Monat auf einen Blick", "ウェブアプリ：ひと目でわかる今月", "웹 앱: 한눈에 보는 이번 달", "Web 应用：本月一览"],
