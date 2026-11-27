@@ -4,6 +4,7 @@ import { motion, usePrefs } from "../state/prefs";
 import { decode } from "../lib/decode";
 import { longTitle, shared, type Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
+import { Lightbox } from "./Lightbox";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import { shotsFor, type Shot } from "../data/shots";
 import { captionFor } from "../data/captions";
@@ -105,6 +106,9 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const busy = useRef(false);
   const closing = useRef(false);
   const [copied, setCopied] = useState(false);
+  /** The screen open in the lightbox, -1 when none. */
+  const [zoom, setZoom] = useState(-1);
+  const closeZoom = useCallback(() => setZoom(-1), []);
   useFocusTrap(root, !!shown);
 
   const copyLink = useCallback(() => {
@@ -169,6 +173,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   }, [shown, onClose, step]);
 
   useEffect(() => { if (shown) loadCaseFonts(caseThemes[shown.id]?.load); }, [shown]);
+  useEffect(() => { setZoom(-1); }, [shown?.id]);
 
   // Open / switch animation, then the scroll-driven reveals inside the panel.
   useLayoutEffect(() => {
@@ -309,7 +314,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
           {stage && (
             <section className="cs-stage" aria-label={w.title.join(" ")}>
               <span className="cs-stage__jp jp" aria-hidden="true">{w.jp}</span>
-              <Browser shot={stage} alt={alt(stage, still.indexOf(stage))} />
+              <button type="button" className="cs-shot cs-shot--stage" onClick={() => setZoom(shots.indexOf(stage))} data-cursor="view" aria-label={alt(stage, shots.indexOf(stage))}><Browser shot={stage} alt={alt(stage, still.indexOf(stage))} /></button>
             </section>
           )}
 
@@ -331,7 +336,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
                   const caption = captionFor(w.id, s.name, lang);
                   return (
                     <figure key={s.src} className={[s.motion && "is-motion", s.phone && "is-phone"].filter(Boolean).join(" ") || undefined}>
-                      <a href={s.src} target="_blank" rel="noreferrer" data-cursor="view"><Browser shot={s} alt={alt(s, i)} /></a>
+                      <button type="button" className="cs-shot" onClick={() => setZoom(i)} data-cursor="view" aria-label={`${t.sheet.screens} ${pad(i + 1)} — ${alt(s, i)}`}><Browser shot={s} alt={alt(s, i)} /></button>
                       {caption && <figcaption><span className="mono">{pad(i + 1)}</span>{caption}</figcaption>}
                     </figure>
                   );
@@ -392,6 +397,16 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
         </div>
       </div>
       <Scrollbar target={panel} className="sb--case" />
+      <Lightbox
+        shots={shots}
+        index={zoom}
+        title={w.title.join(" ")}
+        alt={alt}
+        caption={(s) => captionFor(w.id, s.name, lang)}
+        labels={{ prev: t.sheet.prev, next: t.sheet.next, close: t.sheet.close }}
+        onIndex={setZoom}
+        onClose={closeZoom}
+      />
     </div>
   );
 }

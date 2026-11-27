@@ -52,13 +52,18 @@ html[data-scheme="dark"] .hero__sun { mix-blend-mode: normal; filter: drop-shado
 
 /* The mark: the sun with the initials inside, readable at a glance. */
 .nav__mark { gap: 0; padding: 4px 12px 4px 0; }
-.nav__mark i { width: 40px; height: 40px; display: inline-grid; place-items: center; margin-right: -14px; position: relative; z-index: 0; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
 .nav__mark { position: relative; font-size: 24px; letter-spacing: .01em; }
-.nav__mark:hover i { transform: scale(1.12) translateX(-2px); }
-.nav__mark span { position: relative; z-index: 1; }
 
 /* Experience: role in sentence case, company and place in mono. Anton stays on section titles. */
 .xp__role { font-family: var(--font-body, "Inter", system-ui, sans-serif); font-weight: 600; text-transform: none; letter-spacing: -.01em; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; }
 .xp__org { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--on-dark, var(--paper)); opacity: .82; }
 .xp__note { max-width: 62ch; line-height: 1.5; }
 html[lang="ko"] .xp__role, html[lang="zh-CN"] .xp__role, html[lang="ja"] .xp__role { line-height: 1.3; }
+
+/* The LAB logo in place of the old LB monogram. */
+.nav__mark { padding: 2px 12px 2px 0; }
+.nav__logo { display: block; width: 48px; height: 48px; background: var(--accent); -webkit-mask: var(--mark) center / contain no-repeat; mask: var(--mark) center / contain no-repeat; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.nav__mark:hover .nav__logo { transform: rotate(-6deg) scale(1.08); }
+.menu__top .nav__logo { width: 44px; height: 44px; }
+@media (max-width:560px) { .nav__logo { width: 42px; height: 42px; } }
+@media (prefers-reduced-motion: reduce) { .nav__logo { transition: none; } }

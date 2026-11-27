@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { gsap, ScrollTrigger, scrollToHash } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { shared } from "../data/content";
@@ -6,6 +6,10 @@ import { actionLabels } from "../data/actionLabels";
 import { decode } from "../lib/decode";
 import { LangMenu } from "./LangMenu";
 import { ThemeMenu } from "./ThemeMenu";
+import labMark from "../assets/brand/lab-mark.webp";
+
+/** The LAB monogram (Leonardo de Araujo Barros), drawn as a mask so it takes the theme accent. */
+const Logo = () => <span className="nav__logo" style={{ "--mark": `url(${labMark})` } as CSSProperties} aria-hidden="true" />;
 
 function localTime() {
   return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: shared.timezone }).format(new Date());
@@ -102,7 +106,7 @@ export function Nav({ ready }: { ready: boolean }) {
       <header className={`nav ${dark ? "nav--dark" : ""}`}>
         <div className="nav__bar wrap" ref={bar} style={{ opacity: 0 }}>
           <div className="nav__left">
-            <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Top"><i /><span>LB</span></a>
+            <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Leonardo Barros — Top"><Logo /></a>
             <span className="nav__status mono"><i aria-hidden="true" />{t.nav.available}</span>
           </div>
           <nav className="pill nav__links" aria-label="Sections">{links}</nav>
@@ -130,7 +134,7 @@ export function Nav({ ready }: { ready: boolean }) {
 
       <div className="menu" ref={menu} aria-hidden={!open}>
         <div className="menu__top">
-          <span className="nav__mark"><i /><span>LB</span></span>
+          <span className="nav__mark"><Logo /></span>
           <button className="pill seg" onClick={() => setOpen(false)}><span style={{ padding: "6px 10px" }}>{t.nav.close}</span></button>
         </div>
         <nav className="menu__links">
