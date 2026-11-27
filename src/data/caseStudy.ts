@@ -56,7 +56,7 @@ export const caseThemes: Record<string, CaseTheme> = {
     palette: ["#ff8a5c", "#fff2ea", "#3a3248", "#f5efd7", "#d7b7b1"],
     fonts: [{ family: "Nunito", weight: 800, role: "display" }, { family: "Nunito", weight: 400, role: "ui" }],
     load: "Nunito:wght@400;800",
-    heroA: "01-landing", heroB: "08-m-visao-geral", stageShot: "03-visao-geral",
+    heroA: "01-landing", heroB: "09-m-visao-geral", stageShot: "03-visao-geral",
   },
   soluna: {
     bg: "#15171a", fg: "#ece4d2", muted: "#9a9389", accent: "#e0b45a", accentText: "#e0b45a", onAccent: "#15171a", chrome: "#24272b", card: "#1f2226",
