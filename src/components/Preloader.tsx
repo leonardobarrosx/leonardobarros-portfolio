@@ -4,10 +4,8 @@ import { motion } from "../state/prefs";
 import { shared } from "../data/content";
 import { decode } from "../lib/decode";
 import { usePrefs } from "../state/prefs";
-import { LabMark } from "./lab/LabMark";
 
-/** While it counts, the loader flicks through the bytes of the name, the way a dump scrolls past. */
-const GLYPHS = Array.from(new TextEncoder().encode("LEONARDO DE ARAUJO BARROS"), (b) => `0x${b.toString(16).toUpperCase()}`);
+const GLYPHS = ["レ", "オ", "ナ", "ル", "ド", "バ", "ロ", "ス"];
 const SS_KEY = "lb:intro";
 
 function seenThisSession() {
@@ -44,10 +42,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     });
     tl.to(state, { n: 100, duration: 1.5, ease: "power2.inOut", onUpdate: () => setCount(Math.round(state.n)) })
       .to(bar.current, { scaleX: 1, duration: 1.5, ease: "power2.inOut" }, 0)
-      .add(() => { window.clearInterval(glyphTimer); setGlyph(""); })
-      // the seal is pressed on at 100%, as in the brand's stamp reveal
-      .fromTo(".loader__stamp", { scale: 1.8, opacity: 0, rotate: -12 }, { scale: 1, opacity: 1, rotate: -4, duration: 0.35, ease: "power4.in" })
-      .fromTo(root.current, { x: 0 }, { x: 5, duration: 0.05, yoyo: true, repeat: 3, ease: "none" })
+      .add(() => { window.clearInterval(glyphTimer); setGlyph(shared.nameJp); })
       .to(root.current, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "+=0.2");
 
     return () => { window.clearInterval(glyphTimer); tl.kill(); document.body.classList.remove("is-loading"); };
@@ -58,10 +53,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   return (
     <div className="loader" ref={root} aria-hidden="true">
       <div className="loader__top mono"><span className="loader__name">{shared.name}</span><span>{t.meta.volume}</span></div>
-      <div className="loader__glyph">
-        <span className="loader__byte mono">{glyph}</span>
-        <LabMark variant="stamp" className="loader__stamp" />
-      </div>
+      <div className="loader__jp jp">{glyph}</div>
       <div className="loader__bottom">
         <span className="mono">{t.meta.location}</span>
         <span className="loader__count">{count}<small>%</small></span>

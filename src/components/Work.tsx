@@ -8,8 +8,6 @@ import { shared, longTitle, type Work as WorkItem } from "../data/content";
 import { actionLabels } from "../data/actionLabels";
 import { caseThemes } from "../data/caseStudy";
 import "../styles/project-editorial.css";
-import { Sticker } from "./lab/Sticker";
-import { hexId } from "../lib/hex";
 
 const CaseStudy = lazy(() => import("./CaseStudy").then((m) => ({ default: m.CaseStudy })));
 
@@ -38,15 +36,14 @@ function Poster({ w, position, featured, onOpen }: {
             style={brand ? ({ "--card-stage": brand.stage } as React.CSSProperties) : undefined}>
         {cover && brand ? (
           <span className="editorial-card__frame">
-            <span className="editorial-card__dots"><i /><i /><i /><b className="mono">lab://{w.id}</b></span>
+            <span className="editorial-card__dots"><i /><i /><i /></span>
             <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} />
           </span>
         ) : cover ? <img src={cover} alt="" loading="lazy" decoding="async" draggable={false} /> :
           <span className="editorial-card__placeholder display">{w.title.join(" ")}</span>}
-        <span className="editorial-card__index mono">EXP_{hexId(position)}</span>
+        <span className="editorial-card__index mono">{String(position).padStart(2, "0")} / PROJECT</span>
         <span className="editorial-card__corner" aria-hidden="true">↗</span>
       </span>
-      <Sticker icon={w.icon} rotate={position % 2 ? 7 : -6} tape={position % 3 ? "top" : "left"} className="editorial-card__sticker" />
       <span className="editorial-card__content">
         <span className="editorial-card__eyebrow mono"><span>{w.kind}</span><span>{w.year}</span></span>
         <span className="editorial-card__heading display">{w.title.join(" ")}</span>
@@ -119,10 +116,10 @@ export function Work() {
   return (
     <section className="section editorial-work" id="work" ref={root}>
       <div className="wrap">
-        <Label n="03" text={t.labels.work} />
+        <Label n="03" text={t.labels.work} jp="作品" />
         <div className="editorial-work__heading">
           <p className="editorial-work__intro serif-i">{t.labels.work}</p>
-          <span className="mono editorial-work__count">[{hexId(t.works.length)}] {String(t.works.length).padStart(2, "0")} · LAB</span>
+          <span className="mono editorial-work__count">{String(t.works.length).padStart(2, "0")} / SELECTED PROJECTS</span>
         </div>
         <div className="editorial-work__featured">
           {featured.map((w, i) => <Poster key={w.id} w={w} position={i + 1} featured onOpen={open} />)}

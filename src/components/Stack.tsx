@@ -2,8 +2,6 @@ import { useRef } from "react";
 import { usePrefs } from "../state/prefs";
 import { useReveal } from "../hooks/useReveal";
 import { Label } from "./Label";
-import { Pixel } from "./lab/Pixel";
-import { hexId } from "../lib/hex";
 import { shared } from "../data/content";
 import { toolbox } from "../data/toolbox";
 import cisco from "../assets/certs/cisco.png";
@@ -24,7 +22,7 @@ export function Stack() {
   return (
     <section className="section" id="stack" ref={root}>
       <div className="wrap">
-        <Label n="06" text={t.labels.stack} />
+        <Label n="06" text={t.labels.stack} jp="技術" />
         <div className="stack__wall display" data-reveal>
           {shared.stack.map((s) => <span className="stack__word" key={s}>{s}</span>)}
         </div>
@@ -33,9 +31,9 @@ export function Stack() {
           {toolbox.map((g, i) => (
             <div className="toolbox__row" key={g.id} data-reveal data-delay={Math.min(i, 3) * 0.04}>
               <dt>
-                <span className="mono toolbox__n">{hexId(i + 1)}</span>
+                <span className="mono toolbox__n">{String(i + 1).padStart(2, "0")}</span>
                 <b>{t.toolbox[g.id]}</b>
-                <Pixel name={g.icon} className="toolbox__px" />
+                <span className="jp toolbox__jp" aria-hidden="true">{g.jp}</span>
               </dt>
               <dd>{g.items.map((item) => <span className="tool" key={item}>{item}</span>)}</dd>
             </div>

@@ -7,9 +7,10 @@ import "../styles/recruiter.css";
 import { decode } from "../lib/decode";
 import { Landmarks } from "./Landmarks";
 import { useProximity } from "../hooks/useProximity";
-import { HeroCollage } from "./lab/HeroCollage";
-import { brandNote } from "../data/brand";
-import { LAB_BIN } from "../lib/hex";
+import { lazy, Suspense } from "react";
+
+// WebGL disc: pulled in after the first paint, it is decoration.
+const LiquidSun = lazy(() => import("./LiquidSun").then((m) => ({ default: m.LiquidSun })));
 
 export function Hero({ ready }: { ready: boolean }) {
   const { t, lang } = usePrefs();
@@ -23,6 +24,7 @@ export function Hero({ ready }: { ready: boolean }) {
     if (!ready || !root.current) return;
     const el = root.current;
     if (!motion.enabled) {
+      gsap.set(el.querySelector(".hero__sun"), { scale: 1 });
       el.querySelector(".hero__title")?.classList.add("is-live");
       return;
     }
@@ -31,17 +33,13 @@ export function Hero({ ready }: { ready: boolean }) {
       const lines = gsap.utils.toArray<HTMLElement>(".hero__title .line");
       const chars = lines.flatMap((l) => new SplitText(l, { type: "chars", charsClass: "char" }).chars);
       const role = el.querySelector<HTMLElement>(".scramble")!;
-      const stamp = el.querySelector<HTMLElement>(".collage__stamp")!;
-      const stickers = gsap.utils.toArray<HTMLElement>(".collage .sticker, .collage__bin", el);
+      const sun = el.querySelector<HTMLElement>(".hero__sun")!;
 
       // ---- intro
       gsap.timeline({ defaults: { ease: "power4.out" } })
         .from(chars, { yPercent: 110, rotate: 3, duration: 1.3, stagger: 0.03 }, 0.1)
-        // the stamp comes down hard and leaves its mark, then the pieces get taped around it
-        .fromTo(stamp, { scale: 1.9, opacity: 0, rotate: -14 }, { scale: 1, opacity: 1, rotate: -4, duration: 0.42, ease: "power4.in" }, 0.35)
-        .fromTo(".collage", { x: 0 }, { x: 4, duration: 0.05, yoyo: true, repeat: 3, ease: "none", clearProps: "x" }, 0.77)
-        .from(stickers, { scale: 0.2, opacity: 0, duration: 0.7, ease: "back.out(2.2)", stagger: 0.06 }, 0.85)
-        .from(".hero__bits", { opacity: 0, y: -16, duration: 1 }, 0.7)
+        .to(sun, { scale: 1, duration: 1.6, ease: "elastic.out(1, 0.55)" }, 0.35)
+        .from(".hero__jp", { opacity: 0, y: -16, duration: 1 }, 0.7)
         .from(".hero__meta > *, .hero__foot > *", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, 0.6)
         .add(decode(role, t.meta.role, 1.6), 0.8)
         .from(".hero__statement", { opacity: 0, y: 18, duration: 0.9 }, 1)
@@ -49,9 +47,7 @@ export function Hero({ ready }: { ready: boolean }) {
         .add(() => { title.classList.add("is-live"); setDistort(true); });
 
       // ---- pointer: depth layers follow the cursor with inertia
-      const layers: [string | HTMLElement, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5]];
-      // every collage piece carries its own depth, so the pile separates as the pointer moves
-      el.querySelectorAll<HTMLElement>(".collage [data-depth]").forEach((p) => layers.push([p, Number(p.dataset.depth) || 10]));
+      const layers: [string, number][] = [[".hero__title", 8], [".hero__statement", 5], [".hero__role", 5], [".hero__sun", 26]];
       const movers = layers.map(([sel, depth]) => ({ depth, x: gsap.quickTo(sel, "x", { duration: 1.1, ease: "power3" }), y: gsap.quickTo(sel, "y", { duration: 1.1, ease: "power3" }) }));
       const onMove = (e: PointerEvent) => {
         const r = el.getBoundingClientRect();
@@ -67,8 +63,8 @@ export function Hero({ ready }: { ready: boolean }) {
       const mid = (chars.length - 1) / 2;
       gsap.to(chars, { x: (i: number) => (i - mid) * 14, ease: "none", scrollTrigger: st });
       gsap.to(".hero__body", { yPercent: 10, scale: 0.96, transformOrigin: "left top", ease: "none", scrollTrigger: st });
-      gsap.to(".collage", { yPercent: -18, ease: "none", scrollTrigger: st });
-      gsap.to(".hero__bits", { yPercent: -40, ease: "none", scrollTrigger: st });
+      gsap.to(sun, { yPercent: -30, ease: "none", scrollTrigger: st });
+      gsap.to(".hero__jp", { yPercent: -40, ease: "none", scrollTrigger: st });
       const badgeSpin = gsap.to(".hero__badge svg", { rotation: 360, duration: 18, repeat: -1, ease: "none" });
       const skew = gsap.quickTo(title, "skewX", { duration: 0.5, ease: "power3" });
       const onScroll = (e: { velocity: number }) => {
@@ -100,12 +96,12 @@ export function Hero({ ready }: { ready: boolean }) {
       </div>
 
       <div className="hero__body grid">
-        <div className="hero__bits mono vertical" aria-hidden="true">{LAB_BIN} — L.A.B.</div>
+        <div className="hero__jp jp vertical" aria-hidden="true">{shared.nameJp} — {t.meta.roleJp}</div>
         <h1 className="hero__title display">
           <span className="line">{shared.first}</span>
           <span className="line">{shared.last}</span>
         </h1>
-        <HeroCollage note={brandNote[lang]} />
+        <Suspense fallback={<div className="hero__sun" aria-hidden="true" />}><LiquidSun area={root} /></Suspense>
         <div className="hero__role mono">
           <span className="scramble" aria-label={t.meta.role}>{t.meta.role}</span>
           <span className="hero__focus">{action.fullStack} · {shared.focus}</span>

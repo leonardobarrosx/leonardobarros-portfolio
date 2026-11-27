@@ -6,7 +6,6 @@ import { actionLabels } from "../data/actionLabels";
 import { decode } from "../lib/decode";
 import { LangMenu } from "./LangMenu";
 import { ThemeMenu } from "./ThemeMenu";
-import { LabMark } from "./lab/LabMark";
 
 function localTime() {
   return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZone: shared.timezone }).format(new Date());
@@ -103,7 +102,7 @@ export function Nav({ ready }: { ready: boolean }) {
       <header className={`nav ${dark ? "nav--dark" : ""}`}>
         <div className="nav__bar wrap" ref={bar} style={{ opacity: 0 }}>
           <div className="nav__left">
-            <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Top"><LabMark className="nav__lab" /><span>LAB</span></a>
+            <a className="nav__mark" href="#top" onClick={(e) => go(e, "top")} aria-label="Top"><i /><span>LB</span></a>
             <span className="nav__status mono"><i aria-hidden="true" />{t.nav.available}</span>
           </div>
           <nav className="pill nav__links" aria-label="Sections">{links}</nav>
@@ -131,7 +130,7 @@ export function Nav({ ready }: { ready: boolean }) {
 
       <div className="menu" ref={menu} aria-hidden={!open}>
         <div className="menu__top">
-          <span className="nav__mark"><LabMark className="nav__lab" /><span>LAB</span></span>
+          <span className="nav__mark"><i /><span>LB</span></span>
           <button className="pill seg" onClick={() => setOpen(false)}><span style={{ padding: "6px 10px" }}>{t.nav.close}</span></button>
         </div>
         <nav className="menu__links">

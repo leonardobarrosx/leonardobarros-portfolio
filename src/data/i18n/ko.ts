@@ -13,7 +13,7 @@ export const ko: Strings = {
   ask: { kicker: "짧은 질문 하나", question: "가장 좋아하는 색은 무엇인가요?", hint: "메뉴의 점에서 언제든지 바꿀 수 있어요.", thanks: "좋은 선택이에요. 이제 포트폴리오를 둘러보세요, 환영합니다!", skip: "건너뛰기" },
   labels: { about: "소개", services: "하는 일", work: "주요 작업", experience: "경력", stack: "기술 스택", contact: "연락", words: "추천사", certs: "자격증", education: "학력", orgs: "일했던 곳", toolbox: "전체 툴박스" },
   toolbox: { languages: "언어", web: "프론트엔드", services: "서비스와 API", data: "데이터", delivery: "배포" },
-  marquee: ["Full-Stack", "Front-end", "Back-end", "Data", "APIs"],
+  marquee: ["Full-Stack", "フルスタック", "Front-end", "フロントエンド", "Back-end", "バックエンド", "Data", "データ", "APIs", "連携"],
   about: {
     quote: "잘 작동하는지만이 아니라, 어떻게 보이고 어떻게 느껴지는지를 중요하게 생각합니다.",
     paragraphs: [

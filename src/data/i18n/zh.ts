@@ -13,7 +13,7 @@ export const zh: Strings = {
   ask: { kicker: "一个小问题", question: "你最喜欢哪种颜色？", hint: "随时可以通过菜单里的圆点更改。", thanks: "选得好。请随意浏览作品集，欢迎！", skip: "跳过" },
   labels: { about: "关于我", services: "我做什么", work: "精选作品", experience: "工作经历", stack: "技术栈", contact: "联系", words: "评价", certs: "证书", education: "教育", orgs: "我工作过的地方", toolbox: "完整工具箱" },
   toolbox: { languages: "语言", web: "前端", services: "服务与 API", data: "数据", delivery: "交付" },
-  marquee: ["Full-Stack", "Front-end", "Back-end", "Data", "APIs"],
+  marquee: ["Full-Stack", "フルスタック", "Front-end", "フロントエンド", "Back-end", "バックエンド", "Data", "データ", "APIs", "連携"],
   about: {
     quote: "我在意的不只是东西能不能用，还有它的样子和用起来的感觉。",
     paragraphs: [

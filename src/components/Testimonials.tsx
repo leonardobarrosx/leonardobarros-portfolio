@@ -14,7 +14,7 @@ export function Testimonials() {
   return (
     <section className="section" id="words" ref={root}>
       <div className="wrap">
-        <Label n="05" text={t.labelsExtra.words} />
+        <Label n="05" text={t.labelsExtra.words} jp="声" />
         <div className="grid quotes">
           {t.testimonials.map((q, i) => (
             <figure className="quote" key={q.name} data-reveal data-delay={i * 0.12}>

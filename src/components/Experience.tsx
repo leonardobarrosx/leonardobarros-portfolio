@@ -68,9 +68,9 @@ export function Experience() {
   const host = (url?: string) => (url ? url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") : "");
 
   return (
-    <section className="section section--dark bits-bg" id="experience" ref={root}>
+    <section className="section section--dark" id="experience" ref={root}>
       <div className="wrap">
-        <Label n="04" text={t.labels.experience} />
+        <Label n="04" text={t.labels.experience} jp="経歴" />
         <Orgs title={t.orgsTitle} orgs={ORGS} visit={t.xp.visit} close={t.sheet.close} />
         <ul className="xp">
           {t.experience.map((e, i) => (

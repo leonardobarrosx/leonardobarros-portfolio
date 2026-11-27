@@ -7,7 +7,6 @@ import { Label } from "./Label";
 import { shared } from "../data/content";
 import { actionLabels } from "../data/actionLabels";
 import { Landmarks } from "./Landmarks";
-import { toHex } from "../lib/hex";
 
 export function Contact() {
   const { t, lang } = usePrefs();
@@ -40,15 +39,15 @@ export function Contact() {
 
   const year = new Date().getFullYear();
   return (
-    <section className="section section--dark bits-bg" id="contact" ref={root}>
+    <section className="section section--dark" id="contact" ref={root}>
       <div className="wrap">
-        <Label n="07" text={t.labels.contact} />
+        <Label n="07" text={t.labels.contact} jp="連絡" />
         <div className="grid">
           <h2 className="contact__title display" ref={title}>
             <span className="line">{t.contact.title[0]}</span>
             <span className="line">{t.contact.title[1]}</span>
           </h2>
-          <div className="contact__hex mono" data-reveal aria-hidden="true">{toHex(t.contact.title.join(" "))}</div>
+          <div className="contact__jp jp" data-reveal>{t.contact.jp}</div>
           <p className="contact__note" data-reveal>{t.contact.note}</p>
           <div className="contact__links" data-reveal>
             <a className="btn" href={`mailto:${shared.email}`} ref={btn} onPointerMove={onMove} onPointerLeave={onLeave}>{shared.email} <span aria-hidden="true">↗</span></a>
