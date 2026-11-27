@@ -63,17 +63,19 @@ function loadCaseFonts(query?: string) {
 
 /** A screenshot in a browser window (or a phone, for mobile captures), the way the Figma presentations frame every screen. */
 function Browser({ shot, alt, className = "", eager = false }: { shot: Shot; alt: string; className?: string; eager?: boolean }) {
-  if (shot.phone) {
-    return (
-      <div className={`cs-phone ${className}`}>
-        <img src={shot.src} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" draggable={false} />
-      </div>
-    );
-  }
+  const { motionOn } = usePrefs();
+  const media = shot.video ? (
+    // muted + playsInline so it autoplays on phones too; with motion off it stays on the first frame
+    <video key={String(motionOn)} src={shot.src} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}
+           autoPlay={motionOn} loop muted playsInline preload={motionOn ? "auto" : "metadata"} disablePictureInPicture />
+  ) : (
+    <img src={shot.src} alt={alt} loading={eager || shot.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+  );
+  if (shot.phone) return <div className={`cs-phone ${className}`}>{media}</div>;
   return (
     <div className={`cs-browser ${className}`}>
       <span className="cs-browser__bar" aria-hidden="true"><i /><i /><i /></span>
-      <img src={shot.src} alt={alt} loading={eager || shot.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+      {media}
     </div>
   );
 }
@@ -328,7 +330,7 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
                 {shots.map((s, i) => {
                   const caption = captionFor(w.id, s.name, lang);
                   return (
-                    <figure key={s.src} className={s.motion ? "is-motion" : s.phone ? "is-phone" : undefined}>
+                    <figure key={s.src} className={[s.motion && "is-motion", s.phone && "is-phone"].filter(Boolean).join(" ") || undefined}>
                       <a href={s.src} target="_blank" rel="noreferrer" data-cursor="view"><Browser shot={s} alt={alt(s, i)} /></a>
                       {caption && <figcaption><span className="mono">{pad(i + 1)}</span>{caption}</figcaption>}
                     </figure>

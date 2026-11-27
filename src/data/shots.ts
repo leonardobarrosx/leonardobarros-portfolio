@@ -3,9 +3,10 @@
  *
  * Files live in `src/assets/cases/<work id>/` and are picked up here by name, so adding a capture
  * is a matter of dropping the file in the folder: `NN-name.webp` joins the sequence in order and
- * `loop.gif` becomes the moving one, which the gallery shows first.
+ * `loop.mp4` (or a legacy `loop.gif`) becomes the moving one, which the gallery shows first.
+ * A `-m` name (`loop-m.mp4`, `NN-m-name.webp`) is a phone-sized capture and is shown at phone width.
  */
-const files = import.meta.glob("../assets/cases/*/*.{webp,gif,svg}", {
+const files = import.meta.glob("../assets/cases/*/*.{webp,gif,svg,mp4}", {
   eager: true,
   query: "?url",
   import: "default",
@@ -13,12 +14,14 @@ const files = import.meta.glob("../assets/cases/*/*.{webp,gif,svg}", {
 
 export interface Shot {
   src: string;
-  /** The loop is a GIF: it leads the gallery and is never lazy-loaded. */
+  /** The loop (MP4 or GIF): it leads the gallery and is never lazy-loaded. */
   motion: boolean;
+  /** An MP4 loop, rendered as a muted inline <video> instead of an <img>. */
+  video: boolean;
+  /** A phone capture (`NN-m-name`, `loop-m`), framed as a phone instead of a browser window. */
+  phone: boolean;
   /** File name without the extension, which is what the captions are keyed by. */
   name: string;
-  /** A phone capture (`NN-m-name`), framed as a phone instead of a browser window. */
-  phone: boolean;
 }
 
 const byWork: Record<string, Shot[]> = {};
@@ -29,7 +32,14 @@ for (const path of Object.keys(files).sort()) {
   const [, work, name] = m;
   // cover is the card's own crop and never joins the sequence
   if (name.startsWith("cover.")) { covers[work] = files[path]; continue; }
-  (byWork[work] ??= []).push({ src: files[path], motion: name.endsWith(".gif"), name: name.replace(/\.[a-z]+$/, ""), phone: /^\d+-m-/.test(name) });
+  const base = name.replace(/\.[a-z0-9]+$/, "");
+  (byWork[work] ??= []).push({
+    src: files[path],
+    motion: /\.(gif|mp4)$/.test(name),
+    video: name.endsWith(".mp4"),
+    phone: /(^|-)m(-|$)/.test(base),
+    name: base,
+  });
 }
 // the moving one first, then the numbered sequence as sorted above
 for (const list of Object.values(byWork)) list.sort((a, b) => Number(b.motion) - Number(a.motion));
