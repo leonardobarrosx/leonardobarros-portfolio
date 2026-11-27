@@ -1,5 +1,5 @@
 /**
- * Screens captured from running projects, plus explicitly labelled source-based UI previews for VESTA.
+ * Screens captured from the running projects in a browser.
  *
  * Files live in `src/assets/cases/<work id>/` and are picked up here by name, so adding a capture
  * is a matter of dropping the file in the folder: `NN-name.webp` joins the sequence in order and
@@ -18,7 +18,7 @@ export interface Shot {
   motion: boolean;
   /** An MP4 loop, rendered as a muted inline <video> instead of an <img>. */
   video: boolean;
-  /** A portrait phone capture, shown at phone width instead of the full column. */
+  /** A phone capture (`NN-m-name`, `loop-m`), framed as a phone instead of a browser window. */
   phone: boolean;
   /** File name without the extension, which is what the captions are keyed by. */
   name: string;
@@ -30,8 +30,6 @@ for (const path of Object.keys(files).sort()) {
   const m = path.match(/\/cases\/([^/]+)\/([^/]+)$/);
   if (!m) continue;
   const [, work, name] = m;
-  // VESTA's earlier captures predate the current React UI: only show explicitly labelled updated SVG recreations.
-  if (work === "vesta") continue; // Require current, browser-captured screenshots; old files and mock SVGs are intentionally hidden.
   // cover is the card's own crop and never joins the sequence
   if (name.startsWith("cover.")) { covers[work] = files[path]; continue; }
   const base = name.replace(/\.[a-z0-9]+$/, "");
@@ -57,11 +55,12 @@ export function coverFor(id: string): string | undefined {
 
 /** The clearest real product view for each project's editorial card and case-study hero. */
 const preferred: Record<string, string> = {
-  ninho: "02-telas",
+  vesta: "01-landing",
+  ninho: "01-landing",
   cutucanois: "02-aparencia",
-  argus: "02-laboratorio",
+  argus: "01-landing",
   motor: "01-inicio",
-  "meu-chamado": "02-painel",
+  "meu-chamado": "01-landing",
   soluna: "01-vila",
   vault: "01-inicio",
 };

@@ -1,18 +1,20 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { gsap, lenisRef, SplitText } from "../lib/gsap";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { gsap, lenisRef, ScrollTrigger, SplitText } from "../lib/gsap";
 import { motion, usePrefs } from "../state/prefs";
 import { decode } from "../lib/decode";
-import { longTitle, type Work as WorkItem } from "../data/content";
+import { longTitle, shared, type Work as WorkItem } from "../data/content";
 import { Scrollbar } from "./Scrollbar";
 import { useFocusTrap } from "../hooks/useFocusTrap";
-import { coverFor, featureFor, shotsFor } from "../data/shots";
+import { shotsFor, type Shot } from "../data/shots";
 import { captionFor } from "../data/captions";
+import { caseLabels, caseThemes, type CaseTheme } from "../data/caseStudy";
+import "../styles/case-study.css";
 
 interface Props {
   works: WorkItem[];
   /** Index of the open case, -1 when closed. */
   index: number;
-  /** Where the clicked poster was, so the cover can grow out of it (null for deep links). */
+  /** Where the clicked poster was, so the panel can open out of it (null for deep links). */
   origin: DOMRect | null;
   onClose: () => void;
   onStep: (dir: 1 | -1) => void;
@@ -31,12 +33,57 @@ function paragraphs(text: string): string[] {
   return [text.slice(0, at).trim(), text.slice(at).trim()];
 }
 const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
-const paperRgb = () => getComputedStyle(document.documentElement).getPropertyValue("--paper-rgb").trim() || "239, 233, 223";
+
+/** The site's own look, for projects that have no brand of their own yet. */
+const SITE_THEME: CaseTheme = {
+  bg: "#efe9df", fg: "#141110", muted: "#6f655c", accent: "#e3301c", onAccent: "#ffffff", chrome: "#ffffff", card: "#e6dfd3",
+  stage: "#e3301c", onStage: "#141110", dark: "#1e1512", onDark: "#efe9df", accentDark: "#ff8a78",
+  palette: ["#e3301c", "#141110", "#efe9df", "#1e1512", "#1fb6a8"],
+  fonts: [{ family: "Anton", role: "display", upper: true }, { family: "Inter", weight: 400, role: "ui" }, { family: "IBM Plex Mono", weight: 400, role: "data" }],
+};
+
+function themeVars(th: CaseTheme): CSSProperties {
+  return {
+    "--cs-bg": th.bg, "--cs-fg": th.fg, "--cs-muted": th.muted, "--cs-accent": th.accent,
+    "--cs-accent-text": th.accentText ?? th.accent, "--cs-on-accent": th.onAccent, "--cs-chrome": th.chrome,
+    "--cs-card": th.card, "--cs-stage": th.stage, "--cs-on-stage": th.onStage, "--cs-dark": th.dark,
+    "--cs-on-dark": th.onDark, "--cs-accent-dark": th.accentDark,
+  } as CSSProperties;
+}
+
+const LOADED_FONTS = new Set<string>();
+function loadCaseFonts(query?: string) {
+  if (!query || LOADED_FONTS.has(query)) return;
+  LOADED_FONTS.add(query);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${query}&display=swap`;
+  document.head.appendChild(link);
+}
+
+/** A screenshot in a browser window (or a phone, for mobile captures), the way the Figma presentations frame every screen. */
+function Browser({ shot, alt, className = "", eager = false }: { shot: Shot; alt: string; className?: string; eager?: boolean }) {
+  const { motionOn } = usePrefs();
+  const media = shot.video ? (
+    // muted + playsInline so it autoplays on phones too; with motion off it stays on the first frame
+    <video key={String(motionOn)} src={shot.src} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}
+           autoPlay={motionOn} loop muted playsInline preload={motionOn ? "auto" : "metadata"} disablePictureInPicture />
+  ) : (
+    <img src={shot.src} alt={alt} loading={eager || shot.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
+  );
+  if (shot.phone) return <div className={`cs-phone ${className}`}>{media}</div>;
+  return (
+    <div className={`cs-browser ${className}`}>
+      <span className="cs-browser__bar" aria-hidden="true"><i /><i /><i /></span>
+      {media}
+    </div>
+  );
+}
 
 /**
- * Full-screen case study: the poster grows into a cover that stays pinned on the left while the
- * spread (facts, overview, highlights, deliverables, stack, next project) scrolls on the right.
- * Prev/next slide the spread sideways in place; the cover keeps its shape and changes colour.
+ * Full-screen case study in the project's own colours and type, built like the Figma presentations:
+ * hero with two tilted mockups, a stage band in the brand colour, the overview, the screens, a dark
+ * engineering band, the visual system and a closing call. Prev/next swap the project in place.
  */
 export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const work = index >= 0 ? works[index] : null;
@@ -44,14 +91,13 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   const shownIndex = shown ? works.findIndex((w) => w.id === shown.id) : -1;
   const next = shownIndex >= 0 ? works[(shownIndex + 1) % works.length] : null;
   const prev = shownIndex >= 0 ? works[(shownIndex - 1 + works.length) % works.length] : null;
-  const { t, lang, motionOn } = usePrefs();
+  const { t, lang } = usePrefs();
+  const L = caseLabels[lang] ?? caseLabels.en;
 
   const root = useRef<HTMLDivElement>(null);
   const dim = useRef<HTMLDivElement>(null);
   const panel = useRef<HTMLDivElement>(null);
-  const hero = useRef<HTMLDivElement>(null);
-  const slot = useRef<HTMLDivElement>(null);
-  const main = useRef<HTMLDivElement>(null);
+  const body = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const lastId = useRef<string | null>(null);
@@ -72,13 +118,11 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
 
   // Step with a direction-aware exit first, then let the parent swap the project.
   const step = useCallback((d: 1 | -1) => {
-    if (busy.current || !main.current) return;
+    if (busy.current || !body.current) return;
     dir.current = d;
     if (!motion.enabled) { onStep(d); return; }
     busy.current = true;
-    gsap.timeline({ onComplete: () => { busy.current = false; onStep(d); } })
-      .to(main.current, { x: d * -36, opacity: 0, duration: 0.3, ease: "power2.in" }, 0)
-      .to(".case__heroin, .case__hero .poster__deco, .case__jp", { opacity: 0, duration: 0.25 }, 0);
+    gsap.to(body.current, { x: d * -48, opacity: 0, duration: 0.32, ease: "power2.in", onComplete: () => { busy.current = false; onStep(d); } });
   }, [onStep]);
 
   // Mount on open; on close, play the exit first and unmount after.
@@ -86,29 +130,26 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
     if (work) { closing.current = false; setShown(work); return; }
     if (!shown || closing.current) return;
     closing.current = true;
-    const el = root.current, h = hero.current, pn = panel.current;
+    const el = root.current, pn = panel.current;
     const poster = document.querySelector<HTMLElement>(`[data-work="${shown.id}"]`);
     const done = () => { setShown(null); poster?.focus({ preventScroll: true }); };
-    if (!motion.enabled || !el || !h || !pn) { done(); return; }
+    if (!motion.enabled || !el || !pn) { done(); return; }
     const tl = gsap.timeline({ onComplete: done });
     const target = poster?.getBoundingClientRect();
-    if (target && target.bottom > -200 && target.top < window.innerHeight + 200) {
-      // the cover shrinks back into its poster while the panel and the dim fade away around it
-      const from = h.getBoundingClientRect();
-      gsap.set(h, { position: "fixed", top: from.top, left: from.left, width: from.width, height: from.height, zIndex: 3, margin: 0 });
-      tl.to(".case__heroin", { opacity: 0, duration: 0.2 }, 0)
-        .to([main.current, ".case__bar", ".case__cta"], { opacity: 0, duration: 0.3 }, 0)
-        .to(h, { top: target.top, left: target.left, width: target.width, height: target.height, duration: 0.7, ease: "power4.inOut" }, 0.05)
-        .to(pn, { backgroundColor: `rgba(${paperRgb()}, 0)`, duration: 0.4, ease: "power2.in" }, 0.2)
+    tl.to(".case__bar, .cs-body", { opacity: 0, duration: 0.25 }, 0);
+    if (target && target.bottom > 0 && target.top < window.innerHeight) {
+      // the panel folds back into the poster it came from
+      tl.to(pn, { clipPath: insetFor(pn, target), duration: 0.7, ease: "power4.inOut" }, 0.05)
         .to(dim.current, { opacity: 0, duration: 0.45 }, 0.3)
-        .to(h, { opacity: 0, duration: 0.18 }, 0.64);
+        .to(pn, { opacity: 0, duration: 0.18 }, 0.62);
     } else {
-      tl.to(el, { opacity: 0, duration: 0.4, ease: "power2.in" });
+      tl.to(pn, { y: 40, opacity: 0, duration: 0.4, ease: "power2.in" }, 0)
+        .to(dim.current, { opacity: 0, duration: 0.4 }, 0.1);
     }
     return () => { tl.kill(); };
   }, [work, shown]);
 
-  // Lock the page behind the spread while it is up.
+  // Lock the page behind the case while it is up.
   useEffect(() => {
     if (!shown) return;
     document.body.classList.add("is-locked");
@@ -127,62 +168,75 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [shown, onClose, step]);
 
-  // The cover's deco and kanji drift with the spread's scroll.
-  useEffect(() => {
-    const pn = panel.current, h = hero.current;
-    if (!shown || !pn || !h || !motion.enabled) return;
-    const onScroll = () => h.style.setProperty("--p", Math.min(1, pn.scrollTop / 900).toFixed(3));
-    pn.addEventListener("scroll", onScroll, { passive: true });
-    return () => pn.removeEventListener("scroll", onScroll);
-  }, [shown]);
+  useEffect(() => { if (shown) loadCaseFonts(caseThemes[shown.id]?.load); }, [shown]);
 
-  // Open / switch animation.
+  // Open / switch animation, then the scroll-driven reveals inside the panel.
   useLayoutEffect(() => {
-    const el = root.current, pn = panel.current, h = hero.current, s = slot.current, m = main.current;
-    if (!shown || !el || !pn || !h || !s || !m) return;
+    const el = root.current, pn = panel.current, b = body.current;
+    if (!shown || !el || !pn || !b) return;
     const switching = lastId.current !== null && lastId.current !== shown.id;
     lastId.current = shown.id;
     pn.scrollTop = 0;
-    h.style.setProperty("--p", "0");
     closeBtn.current?.focus({ preventScroll: true });
-    if (!motion.enabled) { gsap.set([el, pn, dim.current, m, h, ".case__bar", ".case__cta", ".case__heroin"], { clearProps: "all" }); return; }
+    if (!motion.enabled) { gsap.set([pn, dim.current, b, ".case__bar"], { clearProps: "all" }); return; }
 
     const ctx = gsap.context(() => {
       // a reopen can interrupt the exit: start from clean inline styles
-      gsap.set([el, pn, dim.current, m, h, ".case__bar", ".case__cta", ".case__heroin", ".case__hero .poster__deco", ".case__jp"], { clearProps: "all" });
-      const split = new SplitText(h.querySelectorAll(".case__title .line"), { type: "chars", charsClass: "char" });
+      gsap.set([pn, dim.current, b, ".case__bar"], { clearProps: "all" });
+      const split = new SplitText(el.querySelectorAll(".cs-hero__title .line"), { type: "words,chars", charsClass: "char" });
       const d = dir.current;
       const tl = gsap.timeline();
-      let at = 0; // when the content starts coming in
+      let at = 0;
       if (switching) {
-        tl.fromTo(m, { x: d * 48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out", clearProps: "transform,opacity" }, 0)
-          .fromTo([".case__hero .poster__deco", ".case__jp", ".case__heroin"], { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.05, clearProps: "opacity" }, 0.05);
+        tl.fromTo(b, { x: d * 56, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out", clearProps: "transform,opacity" }, 0);
       } else {
-        at = 0.5;
-        // the dim and the panel fade in around the growing cover (no opacity on the panel itself:
-        // the cover lives inside it and must stay solid)
+        at = 0.45;
         tl.fromTo(dim.current, { opacity: 0 }, { opacity: 1, duration: 0.45, clearProps: "opacity" }, 0)
-          .fromTo(pn, { backgroundColor: `rgba(${paperRgb()}, 0)` }, { backgroundColor: `rgba(${paperRgb()}, 1)`, duration: 0.45, clearProps: "backgroundColor" }, 0.05)
-          .fromTo(".case__bar", { opacity: 0 }, { opacity: 1, duration: 0.5, clearProps: "opacity" }, 0.35)
-          .fromTo(".case__heroin", { opacity: 0 }, { opacity: 1, duration: 0.3, clearProps: "opacity" }, 0.55)
-          .fromTo(".case__cta", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, clearProps: "all" }, 1);
-        const to = s.getBoundingClientRect();
+          .fromTo(".case__bar", { opacity: 0 }, { opacity: 1, duration: 0.5, clearProps: "opacity" }, 0.45);
         if (origin) {
-          // the cover grows out of the poster into its slot
-          gsap.set(h, { position: "fixed", top: origin.top, left: origin.left, width: origin.width, height: origin.height, zIndex: 3, margin: 0 });
-          tl.to(h, { top: to.top, left: to.left, width: to.width, height: to.height, duration: 0.95, ease: "power4.inOut", onComplete: () => gsap.set(h, { clearProps: "position,top,left,width,height,zIndex,margin" }) }, 0);
+          // the panel opens out of the poster that was clicked
+          tl.fromTo(pn, { clipPath: insetFor(pn, origin) }, { clipPath: "inset(0px 0px 0px 0px round 6px)", duration: 0.9, ease: "power4.inOut", clearProps: "clipPath" }, 0);
         } else {
-          tl.fromTo(h, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "all" }, 0.1);
+          tl.fromTo(pn, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "all" }, 0.05);
         }
       }
-      // spread: blocks slide in with a soft blur, hairlines draw, rows and chips follow
-      tl.fromTo(m.children, { x: 40, opacity: 0, filter: "blur(8px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "power3.out", stagger: 0.07, clearProps: "all" }, at)
-        .fromTo(".case__facts div", { "--w": 0 }, { "--w": 1, duration: 0.9, ease: "power3.inOut", stagger: 0.06 }, at + 0.1)
-        .from(".case__list li", { y: 14, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 }, at + 0.35)
-        .from(".case__main .chips li", { scale: 0.86, opacity: 0, duration: 0.5, ease: "back.out(1.8)", stagger: 0.025 }, at + 0.45)
-        .from(split.chars, { yPercent: 110, rotate: 2, duration: 1, ease: "power4.out", stagger: 0.03 }, switching ? 0.1 : 0.6)
-        .from(".case__roles > *", { y: 10, opacity: 0, duration: 0.5, stagger: 0.05 }, switching ? 0.35 : 0.9);
+      // hero: the title rises letter by letter, the copy follows, the mockups drop in tilted
+      tl.from(split.chars, { yPercent: 110, rotate: 3, duration: 1, ease: "power4.out", stagger: 0.025 }, at)
+        .from(".cs-hero__tag, .cs-hero__kind, .cs-hero__desc, .cs-hero__cta", { y: 24, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.07 }, at + 0.2)
+        .from(".cs-hero__shots > *", { y: 140, opacity: 0, rotate: 0, duration: 1.2, ease: "expo.out", stagger: 0.12 }, at + 0.1)
+        .fromTo(".cs-hero__meta", { "--w": 0 }, { "--w": 1, duration: 1, ease: "power3.inOut" }, at + 0.3)
+        .from(".cs-hero__meta > div", { y: 16, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 }, at + 0.45);
       if (bar.current) tl.add(decode(bar.current, bar.current.dataset.text || "", 0.9), switching ? 0 : 0.5);
+
+      const sc = { scroller: pn };
+      // hero mockups drift apart as the page scrolls past them
+      gsap.to(".cs-hero__shots > :first-child", { yPercent: -10, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-hero", start: "top top", end: "bottom top", scrub: true } });
+      gsap.to(".cs-hero__shots > :nth-child(2)", { yPercent: 14, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-hero", start: "top top", end: "bottom top", scrub: true } });
+      // stage: the window grows into place and the kanji slides behind it
+      gsap.fromTo(".cs-stage .cs-browser", { scale: 0.84, y: 60 }, { scale: 1, y: 0, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-stage", start: "top bottom", end: "center center", scrub: 0.6 } });
+      gsap.fromTo(".cs-stage__jp", { xPercent: -12 }, { xPercent: 8, ease: "none", scrollTrigger: { ...sc, trigger: ".cs-stage", start: "top bottom", end: "bottom top", scrub: true } });
+      // section heads, paragraphs and closing lines rise once as they come in
+      gsap.utils.toArray<HTMLElement>(".cs-reveal", el).forEach((node) => {
+        gsap.from(node, { y: 40, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { ...sc, trigger: node, start: "top 90%", once: true } });
+      });
+      // screens unmask from the bottom and settle their zoom
+      gsap.utils.toArray<HTMLElement>(".cs-shots figure", el).forEach((fig, i) => {
+        gsap.timeline({ scrollTrigger: { ...sc, trigger: fig, start: "top 92%", once: true } })
+          .from(fig, { clipPath: "inset(18% 0% 0% 0%)", y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: (i % 2) * 0.1 })
+          .from(fig.querySelector("img"), { scale: 1.08, duration: 1.4, ease: "power3.out" }, "<");
+      });
+      // engineering rows draw their rule, then the number and text slide in
+      gsap.utils.toArray<HTMLElement>(".cs-eng__list li", el).forEach((li) => {
+        gsap.timeline({ scrollTrigger: { ...sc, trigger: li, start: "top 90%", once: true } })
+          .fromTo(li, { "--w": 0 }, { "--w": 1, duration: 0.9, ease: "power3.inOut" })
+          .from(li.children, { x: -24, opacity: 0, duration: 0.7, ease: "power3.out", stagger: 0.08 }, 0.15);
+      });
+      gsap.utils.toArray<HTMLElement>(".cs-chips", el).forEach((list) => {
+        gsap.from(list.children, { scale: 0.8, opacity: 0, duration: 0.5, ease: "back.out(1.8)", stagger: 0.03, scrollTrigger: { ...sc, trigger: list, start: "top 92%", once: true } });
+      });
+      gsap.from(".cs-swatch", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.9, ease: "expo.out", stagger: 0.07, scrollTrigger: { ...sc, trigger: ".cs-palette", start: "top 88%", once: true } });
+      gsap.from(".cs-font", { y: 50, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, scrollTrigger: { ...sc, trigger: ".cs-fonts", start: "top 90%", once: true } });
+      ScrollTrigger.refresh();
     }, el);
     return () => ctx.revert();
   }, [shown, origin]);
@@ -190,116 +244,162 @@ export function CaseStudy({ works, index, origin, onClose, onStep }: Props) {
   if (!shown) return null;
   const w = shown;
   const n = shownIndex;
+  const th = caseThemes[w.id] ?? SITE_THEME;
   const shots = shotsFor(w.id);
+  const still = shots.filter((s) => !s.motion);
+  const wide = still.filter((s) => !s.phone);
+  const pick = (name?: string, fallback = 0) => (name && still.find((s) => s.name === name)) || still[fallback] || shots[0];
+  const heroA = still.length ? pick(th.heroA, 0) : undefined;
+  const heroB = still.length > 1 ? pick(th.heroB, 1) : undefined;
+  const stage = wide.length ? (wide.find((s) => s.name === th.stageShot) ?? wide[0]) : undefined;
+  const alt = (s: Shot, i: number) => captionFor(w.id, s.name, lang) ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`;
+  const fontName = (f: NonNullable<CaseTheme["fonts"]>[number]) => f.family === "system-ui" ? "System UI" : f.family;
+  const fontLabel = { display: L.display, ui: L.ui, data: L.data };
+  const counter = `${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`;
 
   return (
-    <div className="case case-editorial" ref={root} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
+    <div className="case cs" ref={root} style={themeVars(th)} data-lenis-prevent role="dialog" aria-modal="true" aria-label={w.title.join(" ")}>
       {/* the page shows through around the panel; clicking it closes, like the ✕ */}
       <div className="case__dim" ref={dim} onClick={onClose} data-cursor="close" aria-hidden="true" />
       <div className="case__panel" ref={panel}>
-      <div className="case__bar mono">
-        <span ref={bar} data-text={`${pad(n + 1)} / ${pad(works.length)} · ${w.kind} · ${w.year}`} aria-hidden="true">{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
-        <span className="sr-only">{pad(n + 1)} / {pad(works.length)} · {w.kind} · {w.year}</span>
-        <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
-        <span className="case__bar-right">
-          <span className="case__keys"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>
-          <button type="button" className="case__copy" onClick={copyLink} data-cursor="link">{copied ? `${t.contact.copied} ✓` : t.sheet.copy}</button>
-          <button type="button" className="case__close" onClick={onClose} ref={closeBtn} data-cursor="link">{t.sheet.close} ✕</button>
-        </span>
-      </div>
+        <div className="case__bar mono">
+          <span ref={bar} data-text={counter} aria-hidden="true">{counter}</span>
+          <span className="sr-only">{counter}</span>
+          <span className="case__bar-title" aria-hidden="true">{w.title.join(" ")}</span>
+          <span className="case__bar-right">
+            <span className="case__keys"><button type="button" onClick={() => step(-1)} aria-label={t.sheet.prev}>←</button><button type="button" onClick={() => step(1)} aria-label={t.sheet.next}>→</button></span>
+            <button type="button" className="case__copy" onClick={copyLink} data-cursor="link">{copied ? `${t.contact.copied} ✓` : t.sheet.copy}</button>
+            <button type="button" className="case__close" onClick={onClose} ref={closeBtn} data-cursor="link">{t.sheet.close} ✕</button>
+          </span>
+        </div>
 
-      <div className="case__grid wrap">
-        <aside className="case__side">
-          <div className="case__slot" ref={slot}>
-            <div className={`case__hero case__hero--${w.variant}${featureFor(w.id) ? " has-shot" : ""}`} ref={hero}>
-              <span className="poster__deco" aria-hidden="true" />
-              {featureFor(w.id) && (
-                <span className="case__cover" key={w.id} aria-hidden="true">
-                  <img src={featureFor(w.id) ?? coverFor(w.id)} alt="" decoding="async" draggable={false} />
-                </span>
-              )}
-              <span className="poster__jp jp vertical case__jp" aria-hidden="true">{w.jp}</span>
-              <div className="case__heroin">
-                <div className="poster__meta mono"><span>{w.kind}</span><span>{w.year}</span></div>
-                <h2 className={`case__title display${longTitle(w.title) ? " case__title--long" : ""}`}>{w.title.map((s) => <span className="line" key={s}>{s}</span>)}</h2>
-                <ul className="case__roles mono">{w.role.map((r) => <li key={r}>{r}</li>)}</ul>
+        <div className="cs-body" ref={body} key={w.id}>
+          {/* Hero */}
+          <header className={`cs-hero${heroA ? "" : " cs-hero--text"}`}>
+            <div className="cs-hero__top mono"><span>{shared.name} — {L.study} {pad(n + 1)}</span><span>{w.kind} · {w.year}</span></div>
+            <div className="cs-hero__grid">
+              <div className="cs-hero__copy">
+                <span className="cs-hero__tag mono">{w.role[0] ?? L.study}</span>
+                <h2 className={`cs-hero__title display${longTitle(w.title) ? " cs-hero__title--long" : ""}`}>{w.title.map((s) => <span className="line" key={s}>{s}</span>)}</h2>
+                <p className="cs-hero__kind serif-i">{w.kind}</p>
+                <p className="cs-hero__desc">{w.desc}</p>
+                <div className="cs-hero__cta">
+                  {w.href && <a className="cs-btn cs-btn--solid" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a>}
+                  {w.repo && <a className="cs-btn" href={w.repo} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.code} ↗</a>}
+                  {w.href && <span className="mono cs-host">{host(w.href)}</span>}
+                  {!w.href && !w.repo && <span className="mono cs-host">{t.sheet.private}</span>}
+                </div>
               </div>
+              {heroA && (
+                <div className="cs-hero__shots" aria-hidden="true">
+                  <Browser shot={heroA} alt="" className="cs-browser--a" eager />
+                  {heroB && <Browser shot={heroB} alt="" className={heroB.phone ? "cs-phone--b" : "cs-browser--b"} eager />}
+                </div>
+              )}
             </div>
-          </div>
-          <div className="case__cta">
-            {w.href && <><a className="btn btn--sm" href={w.href} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.open} ↗</a><span className="mono muted case__host">{host(w.href)}</span></>}
-            {w.repo && <a className="btn btn--sm" href={w.repo} target="_blank" rel="noreferrer" data-cursor="link">{t.sheet.code} ↗</a>}
-            {!w.href && !w.repo && <span className="mono muted">{t.sheet.private}</span>}
-          </div>
-        </aside>
+            <dl className="cs-hero__meta">
+              <div><dt className="mono">{t.sheet.year}</dt><dd>{w.year}</dd></div>
+              <div><dt className="mono">{t.sheet.type}</dt><dd>{w.kind}</dd></div>
+              <div><dt className="mono">{t.sheet.role}</dt><dd>{w.role.join(" · ")}</dd></div>
+              <div><dt className="mono">{t.sheet.stack}</dt><dd>{w.stack}</dd></div>
+            </dl>
+          </header>
 
-        <div className="case__main" ref={main}>
-          <dl className="case__facts mono">
-            <div><dt>{t.sheet.year}</dt><dd>{w.year}</dd></div>
-            <div><dt>{t.sheet.type}</dt><dd>{w.kind}</dd></div>
-            <div><dt>{t.sheet.role}</dt><dd>{w.role.join(" · ")}</dd></div>
-            <div><dt>{t.sheet.stack}</dt><dd>{w.stack}</dd></div>
-          </dl>
-          <section className="case__sec">
-            <h4 className="mono"><span>01</span>{t.sheet.overview}</h4>
-            <p className="case__lead serif-i">{w.desc}</p>
-            {paragraphs(w.long).map((para) => <p className="case__long" key={para}>{para}</p>)}
+          {/* Stage */}
+          {stage && (
+            <section className="cs-stage" aria-label={w.title.join(" ")}>
+              <span className="cs-stage__jp jp" aria-hidden="true">{w.jp}</span>
+              <Browser shot={stage} alt={alt(stage, still.indexOf(stage))} />
+            </section>
+          )}
+
+          {/* Overview */}
+          <section className="cs-sec cs-overview">
+            <div className="cs-head cs-reveal"><span className="mono">{t.sheet.overview}</span></div>
+            <div className="cs-overview__body">
+              <p className="cs-overview__lead serif-i cs-reveal">{w.desc}</p>
+              <div className="cs-overview__text">{paragraphs(w.long).map((para) => <p className="cs-reveal" key={para}>{para}</p>)}</div>
+            </div>
           </section>
+
+          {/* Screens */}
           {shots.length > 0 && (
-            <section className="case__sec">
-              <h4 className="mono"><span>02</span>{t.sheet.screens}</h4>
-              <div className="case__shots">
+            <section className="cs-sec cs-screens">
+              <div className="cs-head cs-reveal"><span className="mono">{t.sheet.screens}</span><h3 className="display">{L.screensTitle}</h3></div>
+              <div className="cs-shots">
                 {shots.map((s, i) => {
                   const caption = captionFor(w.id, s.name, lang);
                   return (
-                    <figure className="case__fig" key={s.src}>
-                      <a className={`case__shot${s.motion ? " case__shot--motion" : ""}${s.phone ? " case__shot--phone" : ""}`}
-                         href={s.src} target="_blank" rel="noreferrer" data-cursor="view">
-                        {s.video ? (
-                          // muted + playsInline so it autoplays on phones too; with motion off it stays on the first frame
-                          <video key={String(motionOn)} src={s.src} aria-label={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
-                                 autoPlay={motionOn} loop muted playsInline preload={motionOn ? "auto" : "metadata"}
-                                 disablePictureInPicture />
-                        ) : (
-                          <img src={s.src} alt={caption ?? `${w.title.join(" ")} — ${i + 1}/${shots.length}`}
-                               loading={s.motion ? "eager" : "lazy"} decoding="async" draggable={false} />
-                        )}
-                      </a>
-                      {caption && <figcaption className="case__cap mono"><span>{pad(i + 1)}</span>{caption}</figcaption>}
+                    <figure key={s.src} className={[s.motion && "is-motion", s.phone && "is-phone"].filter(Boolean).join(" ") || undefined}>
+                      <a href={s.src} target="_blank" rel="noreferrer" data-cursor="view"><Browser shot={s} alt={alt(s, i)} /></a>
+                      {caption && <figcaption><span className="mono">{pad(i + 1)}</span>{caption}</figcaption>}
                     </figure>
                   );
                 })}
               </div>
             </section>
           )}
-          <section className="case__sec">
-            <h4 className="mono"><span>{shots.length ? "03" : "02"}</span>{t.sheet.did}</h4>
-            <ol className="case__list">
-              {w.highlights.map((h, i) => <li key={h}><span className="mono">{pad(i + 1)}</span><p>{h}</p></li>)}
+
+          {/* Engineering */}
+          <section className="cs-eng">
+            <div className="cs-head cs-reveal"><span className="mono">{L.engineering}</span><h3 className="display">{L.engTitle}</h3></div>
+            <ol className="cs-eng__list">
+              {w.highlights.map((h, i) => <li key={h}><span className="display">{pad(i + 1)}</span><p>{h}</p></li>)}
             </ol>
-          </section>
-          <section className="case__sec">
-            <h4 className="mono"><span>{shots.length ? "04" : "03"}</span>{t.sheet.deliverables}</h4>
-            <ul className="chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul>
-          </section>
-          <section className="case__sec">
-            <h4 className="mono"><span>{shots.length ? "05" : "04"}</span>{t.sheet.stack}</h4>
-            <ul className="chips chips--stack">{w.stackList.map((d) => <li key={d}>{d}</li>)}</ul>
-          </section>
-          {next && prev && (
-            <div className="case__foot">
-              <button type="button" className="case__prev mono" onClick={() => step(-1)} data-cursor="link">← {t.sheet.prev} · {prev.title.join(" ")}</button>
-              <button type="button" className={`case__next poster--${next.variant}`} onClick={() => step(1)} data-cursor="view" aria-label={`${t.sheet.next}: ${next.title.join(" ")}`}>
-                <span className="mono">{t.sheet.next} — {pad((n + 1) % works.length + 1)} / {pad(works.length)}</span>
-                <span className="case__next-title display">{next.title.join(" ")}</span>
-                <span className="case__next-jp jp" aria-hidden="true">{next.jp}</span>
-              </button>
+            <div className="cs-eng__cols">
+              <div><h4 className="mono">{t.sheet.deliverables}</h4><ul className="cs-chips">{w.deliverables.map((d) => <li key={d}>{d}</li>)}</ul></div>
+              <div><h4 className="mono">{t.sheet.stack}</h4><ul className="cs-chips cs-chips--mono">{w.stackList.map((d) => <li key={d}>{d}</li>)}</ul></div>
             </div>
-          )}
+          </section>
+
+          {/* Visual system */}
+          <section className="cs-sec cs-visual">
+            <div className="cs-head cs-reveal"><span className="mono">{L.visual}</span><h3 className="display">{L.visualTitle}</h3></div>
+            <ul className="cs-palette">
+              {th.palette.map((c) => <li key={c}><span className="cs-swatch" style={{ background: c }} /><span className="mono">{c.toUpperCase()}</span></li>)}
+            </ul>
+            {th.fonts && th.fonts.length > 0 && (
+              <ul className="cs-fonts">
+                {th.fonts.map((f) => (
+                  <li className="cs-font" key={`${f.family}-${f.weight ?? 400}-${f.role}`}>
+                    <span className="cs-font__aa" style={{ fontFamily: f.family === "system-ui" ? "system-ui, sans-serif" : `"${f.family}", var(--font-body)`, fontWeight: f.weight ?? 400, textTransform: f.upper ? "uppercase" : undefined }}>Aa</span>
+                    <span className="cs-font__name">{fontName(f)}{f.weight ? ` ${f.weight}` : ""}</span>
+                    <span className="mono">{fontLabel[f.role]}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          {/* Closing */}
+          <section className="cs-close">
+            <p className="cs-close__title display cs-reveal">{L.closeTitle}</p>
+            <p className="cs-close__note serif-i cs-reveal">{L.closeNote}</p>
+            <div className="cs-close__cta cs-reveal">
+              <a className="cs-btn cs-btn--solid" href={`mailto:${shared.email}`} data-cursor="link">{L.email}</a>
+              <a className="cs-btn" href={shared.linkedin} target="_blank" rel="noreferrer" data-cursor="link">LinkedIn ↗</a>
+            </div>
+            {next && prev && (
+              <div className="cs-close__nav">
+                <button type="button" className="cs-prev mono" onClick={() => step(-1)} data-cursor="link">← {t.sheet.prev} · {prev.title.join(" ")}</button>
+                <button type="button" className="cs-next" onClick={() => step(1)} data-cursor="view" aria-label={`${L.next}: ${next.title.join(" ")}`}>
+                  <span className="mono">{L.next} — {pad((n + 1) % works.length + 1)} / {pad(works.length)}</span>
+                  <span className="cs-next__title display">{next.title.join(" ")} →</span>
+                </button>
+              </div>
+            )}
+          </section>
         </div>
-      </div>
       </div>
       <Scrollbar target={panel} className="sb--case" />
     </div>
   );
+}
+
+/** clip-path inset that crops the panel down to a viewport rectangle (the poster). */
+function insetFor(pn: HTMLElement, r: DOMRect): string {
+  const p = pn.getBoundingClientRect();
+  const top = Math.max(0, r.top - p.top), left = Math.max(0, r.left - p.left);
+  const right = Math.max(0, p.right - r.right), bottom = Math.max(0, p.bottom - r.bottom);
+  return `inset(${top}px ${right}px ${bottom}px ${left}px round 6px)`;
 }

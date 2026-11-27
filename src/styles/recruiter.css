@@ -30,3 +30,35 @@
 .about__background summary:focus-visible {outline:3px solid var(--accent);outline-offset:3px;}
 .about__background[open] summary span { transform:rotate(45deg); }
 .about__background .army { margin-top:10px; }
+
+/* Hero: one primary action, one secondary, and the role with the stack the target jobs ask for. */
+.hero__role { flex-wrap: wrap; row-gap: 6px; }
+.hero__focus { color: var(--accent-text); letter-spacing: .08em; }
+.hero__focus::before { content: ""; display: inline-block; width: 18px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 12px; opacity: .6; }
+.hero__action { min-height: 48px; padding: 14px 20px; font-size: 12px; }
+.hero__action--secondary { background: transparent; border-color: var(--ink); }
+.hero__action--secondary:hover { background: var(--ink); color: var(--paper); }
+@media (max-width:560px) {
+  .hero__actions { grid-template-columns: 1fr 1fr; }
+  .hero__action--primary { grid-column: auto; }
+  .hero__focus::before { display: none; }
+}
+
+/* The disc multiplies into paper; on a dark ground that turns it black, so there it glows instead. */
+html[data-scheme="dark"] .hero__sun { mix-blend-mode: normal; filter: drop-shadow(0 0 60px rgba(var(--accent-rgb), .45)) saturate(1.08) brightness(1.08); }
+@media (prefers-color-scheme: dark) {
+  html:not([data-scheme="light"]) .hero__sun { mix-blend-mode: normal; filter: drop-shadow(0 0 60px rgba(var(--accent-rgb), .45)) saturate(1.08) brightness(1.08); }
+}
+
+/* The mark: the sun with the initials inside, readable at a glance. */
+.nav__mark { gap: 0; padding: 4px 12px 4px 0; }
+.nav__mark i { width: 40px; height: 40px; display: inline-grid; place-items: center; margin-right: -14px; position: relative; z-index: 0; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.nav__mark { position: relative; font-size: 24px; letter-spacing: .01em; }
+.nav__mark:hover i { transform: scale(1.12) translateX(-2px); }
+.nav__mark span { position: relative; z-index: 1; }
+
+/* Experience: role in sentence case, company and place in mono. Anton stays on section titles. */
+.xp__role { font-family: var(--font-body, "Inter", system-ui, sans-serif); font-weight: 600; text-transform: none; letter-spacing: -.01em; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; }
+.xp__org { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--on-dark, var(--paper)); opacity: .82; }
+.xp__note { max-width: 62ch; line-height: 1.5; }
+html[lang="ko"] .xp__role, html[lang="zh-CN"] .xp__role, html[lang="ja"] .xp__role { line-height: 1.3; }
